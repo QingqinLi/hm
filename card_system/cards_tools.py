@@ -8,9 +8,11 @@ def show_menu():
     :return:
     """
     print("*" * 50)
+    print("")
     print("【1】新增名片")
     print("【1】展示名片")
     print("【1】搜索名片")
+    print("")
     print("*" * 50)
 
 
