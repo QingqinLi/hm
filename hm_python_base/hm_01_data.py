@@ -23,3 +23,9 @@ for i in test_list:
         continue
 else:
     print("here")
+
+
+# test checkout
+# test 119
+def test():
+    print("test merge git")
