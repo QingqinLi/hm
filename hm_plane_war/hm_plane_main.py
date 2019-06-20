@@ -1,5 +1,6 @@
 import pygame
 import time
+from hm_plane_war.plane_sprites import *
 
 
 def play_game():
@@ -22,20 +23,27 @@ def play_game():
     # 绘制英雄图像
     hero = pygame.image.load("./images/plane.png")
     screen.blit(hero, (300, 700))
-    pygame.display.update()
 
     # 创建时钟对象
     clock = pygame.time.Clock()
 
-    # 记录飞机的初始位置
-    hero_rect = pygame.Rect(300, 800, 104, 166)
+    # 记录飞机的初始位置rect(起点，宽度，高度）
+    hero_rect = pygame.Rect(300, 700, 104, 166)
+
+    sprite = GameSprite("./images/plane_small.png", speed=5)
+    sprite2 = GameSprite("./images/plane_small.png", speed=10)
+    sprite_group = pygame.sprite.Group(sprite, sprite2)
+
+    pygame.display.update()
 
     while True:
         # 设置每秒刷新频率，指定循环体内部执行频率
         clock.tick(10)
+
+        sprite_group.update()
         # 捕获事件
         event_list = pygame.event.get()
-        print(event_list)
+        # print(event_list)
         # 事件监听
         for event in event_list:
             if event.type == pygame.QUIT:
@@ -54,6 +62,7 @@ def play_game():
         # 调用blit绘制图像
         screen.blit(hero, hero_rect)
         # 调用update更新显示
+        sprite_group.draw(screen)
         pygame.display.update()
 
 
