@@ -26,7 +26,7 @@ print(circle.lenght)
 class Person:
     def __init__(self, name, age):
         self.name = name
-        self.__age = age
+        self.__age = age  # 实际上在类中是_类名__方法名
 
     # 方法伪装为属性
     @property

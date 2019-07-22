@@ -1,0 +1,10 @@
+Fri, 19 Jul 2019 15:14:28 28__模块.py[line:409] DEBUG debug message
+Fri, 19 Jul 2019 15:14:28 28__模块.py[line:410] INFO info message
+Fri, 19 Jul 2019 15:14:28 28__模块.py[line:411] WARNING warning message
+Fri, 19 Jul 2019 15:14:28 28__模块.py[line:412] ERROR error message
+Fri, 19 Jul 2019 15:14:28 28__模块.py[line:413] CRITICAL critical meaage
+Fri, 19 Jul 2019 15:15:59 28__模块.py[line:413] DEBUG debug message
+Fri, 19 Jul 2019 15:15:59 28__模块.py[line:414] INFO info message
+Fri, 19 Jul 2019 15:15:59 28__模块.py[line:415] WARNING warning message
+Fri, 19 Jul 2019 15:15:59 28__模块.py[line:416] ERROR error message
+Fri, 19 Jul 2019 15:15:59 28__模块.py[line:417] CRITICAL critical meaage
