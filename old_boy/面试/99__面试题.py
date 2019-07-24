@@ -52,25 +52,55 @@
 import random
 
 
-def get_code(n):
-    code = ''
-    for i in range(n):
-        code_ran = random.randint(0, 9)
-        code += str(code_ran)
-    return code
-print(get_code(4))
+# def get_code(n):
+#     code = ''
+#     for i in range(n):
+#         code_ran = random.randint(0, 9)
+#         code += str(code_ran)
+#     return code
+# print(get_code(4))
+#
+#
+# # 生成6位随机数（数字+字母）
+# def get_code_mix(n, flag=True):
+#     code = ''
+#     for i in range(n):
+#         code_ran = random.randint(0, 9)
+#         if flag:
+#             random_alpha = chr(random.randint(97, 122))
+#             random_alpha_cap = chr(random.randint(65, 90))
+#             code_ran = random.choice([code_ran, random_alpha, random_alpha_cap])
+#         code += str(code_ran)
+#
+#     return code
+# print(get_code_mix(6))
 
+# """
+# 路由器与交换机的区别
+#     交换机的主要功能是组织局域网，经过交换机内部处理解析信息之后，将信息以点对点，点对多的形式发送给固定端
+#     路由器的主要功能：进行跨网段的数据传输， 路由选择最佳路径
+#     eg. 需要将多台电脑连接到一根网线，用交换机即可， 如果只有一个外网ip，但是你有好多台电脑需要上网，用路由器即可
+# arp协议： 通过目标ip地址获取目标mac地址的一个协议
+# """
 
-# 生成6位随机数（数字+字母）
-def get_code_mix(n, flag=True):
-    code = ''
-    for i in range(n):
-        code_ran = random.randint(0, 9)
-        if flag:
-            random_alpha = chr(random.randint(97, 122))
-            random_alpha_cap = chr(random.randint(65, 90))
-            code_ran = random.choice([code_ran, random_alpha, random_alpha_cap])
-        code += str(code_ran)
+"""
+交换两个变量的值 a = 1, b = 2
+"""
 
-    return code
-print(get_code_mix(6))
+# b = 1
+# a = 2
+# print(a, b)
+
+# b, a = a, b
+# print(a, b)
+
+# c = a
+# a = b
+# b = c
+# print(a, b)
+#
+# a = a+b
+# b = a-b
+# a = a-b
+# print(a, b)
+
