@@ -86,7 +86,7 @@ multiprocessing 内置模块 用于多进程编程， Process from multiprocessi
 
 
 IPC--进程间通信：
-    锁机制：
+    锁机制：为了多进程通信时，保护数据的安全心
         l = Lock()
         l.acquire() 获得锁（其他进程不能访问）
         l.release() 释放锁（其他进程可以访问）
@@ -106,7 +106,74 @@ IPC--进程间通信：
         e.wait() 判断is_set()的值 ，True:非阻塞，False：zuse
         e.is_set() 标志
 
+    正常情况下，多进程之间无法直接通信，因为每个进程都有自己独立的内存空间
+
 生产者消费者模型：
-    主要是用于解耦
+    主要是用于解耦：借助队列来实现生产者消费者模型
+    栈：先进后出
+    队列：先进先出
+
+    import queue  # 不能进行多进程之间的数据传输
+    from multiprocessing import Queue 借助Queue解决生产者消费者模型
+        队列是安全的
+        q = Queue(num)
+        num: 队列的最大长度
+        q.get() 阻塞等待获取数据，如果有数据直接获取，如果没有则阻塞等待
+        q.put() 阻塞 如果可以继续往队列中放数据，就直接放，不能放就阻塞等待
+
+        q.get_nowait() 不阻塞 如果有数据直接获取，没有数据就报错
+        q.put_nowait() 不阻塞 如果可以继续往队列中放数据，就直接放，不能放就报错
+
+    from multiprocessing import JoinableQueue 可连接的队列
+        继承Queue，可以使用queue的方法
+        多的方法：
+        q.join() 用户生产者 接收消费者的返回结果，接收全部生产的数量，以便知道什么时候队列里的数据被消费完了
+        q.task_done（） 每消费一个数据，就返回一个表示 返回结果 生产者就能获得当前消费者消费量多少个数据 没消费队列中的一个数据，就给join返回一个表示
+    管道：
+        from multiprocessing import Pipe
+        con1, con2 = Pipe()
+        管道是不安全的
+        管道是用于多进程之间通信的一种方式，
+        单进程中：
+            con1发则con2收。con2发则con1收
+        多进程中：
+            父进程con1发，子进程的con2收，
+        管道中的错误EOFError 腹肌 in 成如果关闭来发送端，子进程还继续接收，就会导致EOFError
+
+进程间的内存共享
+        from multiprocessing import Manager, Value
+        m = manager()
+        num = m.dict({}) num = m.list([])
+
+进程池：（一个池子，里面有固定数量的进程，且处在待命状态，一旦有任务来，马上就有进程去处理
+    开启进程需操作系统消耗大量的时间去管理它，大量的时间让cpu去调度它
+    进程池会帮助程序员去管理池中的进程
+    from multiprocessing import Pool
+    p = Pool(os.cpu_count() + 1)
+
+    进程池的三个方法：
+        map(func, iterable)
+        func: 进程池中进程执行的任务函数
+        iterable：可迭代对象，是把可迭代对象中的每个元素一次传给任务函数当参数
+
+        apply（func, args =()）同步的执行，也就是说池中的进程一个个的去执行任务
+        func: 进程池中进程执行的任务函数
+        args: 可迭代对象型的参数，是传给任务函数的参数
+        同步处理任务，不需要close和join
+        同步处理任务时, 进程池中所有进程都是普通进程（主进程需要等待其结束）
+
+        apply_async(func, args=(), callback=None) 异步： 池中的进程一次性去执行任务
+        func: 进程池中进程执行的任务函数
+        args: 可迭代对象型的参数，是传给任务函数的参数
+        callback：回调函数 当进程池中有进程处理完任务来，返回的结果可以交给回调函数，由回调函数进一步的处理，只有异步才有
+        异步处理任务，要close和join
+        异步处理任务时, 进程池中所有进程都是守护进程
+
+        回调函数:
+            进程的任务函数的返回值，被当成回调函数的形参接收到，以此进一步的处理操作
+            回调函数是由主进程调用的，而不是子进程，子进程只负责把结果给回调函数
+
+IPC: 管道 队列 （锁，信号量，事件）
+
 
 """
