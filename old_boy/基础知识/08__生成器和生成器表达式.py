@@ -49,20 +49,20 @@ len(生成器）
 # print(cl.__next__())
 
 
-# def eat():
-#     print("我吃 么啊")
-#     a = yield "馒头"
-#     print("a=",a)
-#     b = yield " 饼"
-#     print("b=",b)
-#     c = yield " 菜盒 "
-#     print("c=",c)
-#     yield "GAME OVER"
-#
-# gen = eat()
-# print(gen.__next__())
-# print(gen.send("122"))
-# print(gen.__next__())
+def eat():
+    print("我吃 么啊")
+    a = yield "馒头"
+    print("a=",a)
+    b = yield " 饼"
+    print("b=",b)
+    c = yield " 菜盒 "
+    print("c=",c)
+    yield "GAME OVER"
+
+gen = eat()
+print(gen.__next__())
+print(gen.send("122"))
+print(gen.__next__())
 
 
 # 列表推导式
@@ -95,18 +95,18 @@ len(生成器）
 # print(s)
 
 # 面试题目 惰性机制, 不到最后不会拿值,所以最后n是10
-def add(a, b):
-    return a + b
-
-
-def test():
-    for r_i in range(4):
-        yield r_i
-
-
-g = test()
-
-for n in [2, 10]:
-    g = (add(n, i) for i in g)
-#     g = (add(n, i) for i in ((add(n, i) for i [0, 1, 2, 3]))
-print(list(g))
+# def add(a, b):
+#     return a + b
+#
+#
+# def test():
+#     for r_i in range(4):
+#         yield r_i
+#
+#
+# g = test()
+#
+# for n in [2, 10]:
+#     g = (add(n, i) for i in g)
+# #     g = (add(n, i) for i in ((add(n, i) for i [0, 1, 2, 3]))
+# print(list(g))

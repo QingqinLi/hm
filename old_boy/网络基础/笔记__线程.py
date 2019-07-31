@@ -35,6 +35,30 @@
 同一个进程内的队列（多线程）：
     import queue
     queue.Queue() 先进先出
+    queue.LifoQueue() 后进先出
+    queue.PriorityQueue() 优先级队列
+        q = queue.PriorityQueue()
+            q.put() 接收的是一个元组，第一个表示当前数据的优先级，第二个是要存放到队列中的数据
+        优先级的比较：（首先需要保证在整个队列中，所有表示优先级的数据类型必须一致）
+            如果都是int， 比较数字的大小
+            如果都是str，比较字符串的大小（从第一个字符的ASCII开始比较）
+
+线程池：
+    在一个池子中，放固定数量的线程，这些线程等待任务，一旦有任务来，就有线程自发的去执行任务
+        concurrent.futures 这个模块是异步调用的机制
+        concurrent.futures 提交任务都是用submit
+        for + submit 提交多任务
+        shutdown 等效于pool中的close + join，不允许再继续向池中增加任务，然后让父进程（线程）等待池中所有的任务执行完成
+
+    提交多任务的方式：
+        for + submit 多个任务的提交 result拿结果
+        map（func, iterable) 结果是一个生成器,使用__next__拿结果
+
+    回调函数：
+        不管死活pool进程池的方式，还是ProcessPoolExecutor的方式开启进程池，回调函数都是由父进程调用
+        ThreadPoolExecutor 的回调函数是
+
+多线程运行的时候是共享内存的，线程不安全，多线程用在无关的方向（没有需要共同操作的数据）是好的（爬虫等）
 
 
 """

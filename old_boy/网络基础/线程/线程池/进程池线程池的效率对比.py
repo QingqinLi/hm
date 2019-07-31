@@ -1,0 +1,50 @@
+from concurrent.futures import ThreadPoolExecutor, ProcessPoolExecutor
+from multiprocessing import Pool
+import time
+
+#  concurrent.futures 这个模块是异步调用的机制
+#  concurrent.futures 提交任务都是用submit
+#  for + submit 多个任务的提交
+#  shutdown 是等效于Pool中的close+join，是指不允许再继续向池中增加任务，然后让父进程(线程)等待池中所有进程执行完所有任务。
+
+
+def func(num):
+    sum = 0
+    for i in range(num):
+        for j in range(i):
+            for x in range(j):
+                sum += j ** 2
+    # print(sum)
+
+
+if __name__ == '__main__':
+    # 进程池的效率演示
+    p = Pool(5)
+    start = time.time()
+    for i in range(100):
+        p.apply_async(func, args=(i, ))
+    p.close()
+    p.join()
+    print("pool async time is", time.time() - start)
+
+    # 多进程的效率
+    tp = ProcessPoolExecutor(5)
+    start = time.time()
+    for i in range(100):
+        tp.submit(func, i)
+    tp.shutdown()  # 等效于进程池中的close + join
+    print("multi process time is", time.time() - start)
+
+    # 多线程的效率
+    t = ThreadPoolExecutor(20)
+    start = time.time()
+    for i in range(100):
+        t.submit(func, i)
+    t.shutdown()
+    print("multi thread time is", time.time() - start)
+
+"""
+针对计算密集的程序来说 
+    不管是pool的进程池还是ProcessPoolExecutor()的进程池，执行效率相当
+    ThreadPoolExecutor 的效率要差很多，应该使用多进程
+"""
