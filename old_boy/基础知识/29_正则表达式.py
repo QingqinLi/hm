@@ -103,10 +103,10 @@ import re
 # ret = re.findall('\d+', '19277vvgvuhuhu344h')
 # print(ret)
 
-# ret2 = re.search('\d+', '*7@hbnnjj2233kkk333')
-# print(ret2)  # 匹配到会输出一个对象，否则输出None
-# if ret2:
-#     print(ret2.group())  # 返回的对象通过group来获取匹配的第一个结果
+ret2 = re.search('\d+', '*7@hbnnjj2233kkk333')
+print(ret2)  # 匹配到会输出一个对象，否则输出None
+if ret2:
+    print(ret2.group())  # 返回的对象通过group来获取匹配的第一个结果
 
 # match 从头开始匹配
 # ret4 = re.match('\d+', '123hhh345')
@@ -119,8 +119,8 @@ import re
 # sub(要替换的目标字符，要替换成的字符串，字符串, [n--替换几个]）
 # ret = re.sub('\d+', "H", 'replace789bbbbb')
 # print(ret)
-# ret2 = re.sub('\d', "H", "replae789jjjj", 1)
-# print(ret2)
+ret2 = re.sub('\d', "H", "replae789jjjj", 1)
+print(ret2)
 #
 # # subn 返回的是一个元祖，一个替换之后的字符串，一个替换了几次的整数
 # ret3 = re.subn('\d', "H", "replace334ddd44ddd")
@@ -156,11 +156,11 @@ import re
 
 # ret = re.split("\d+", 'alex83egon20taibai40')
 # # print(ret)
-# # ret1 = re.split("(\d+)", 'alex83egon20taibai40')
-# # print(ret1)
+# ret1 = re.split("(\d+)", 'alex83egon20taibai40')
+# print(ret1)
 
-# ret = re.search('\d+(.\d+)(.\d+)(.\d+)?', '1.2.3.4-2*(60+(-40.35/5)-(-4*3))')
-# print(ret.group(), ret.group(1), ret.group(2), ret.group(3))
+ret = re.search('\d+(.\d+)(.\d+)(.\d+)?', '1.2.3.4-2*(60+(-40.35/5)-(-4*3))')
+print(ret.group(), ret.group(1), ret.group(2), ret.group(3))
 
 # 分组练习
 # ret = re.findall(r"\d+(?:\.\d+)|(\d+)", "1-2*(60+(-40.35/5)-(-4*3))")
