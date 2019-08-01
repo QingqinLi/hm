@@ -88,9 +88,28 @@ body中的常用标签：
             button --普通按钮，通常用js给他绑定事件
             submit 提交按钮，默认将form中的数据提交
             reset 重置按钮,将当前form的输入框都清空
+            enctype --> 当form表单中有文件类型的数据需要上传时multipart/form-data
+            placeholder: 设置提示语
+            value属性用来设置输入框的默认值
+            name属性 指定form表单提交数据时的key，用户填写的是value
 
-        select
-        textarea
+
+
+        select：
+            multiple=multiple 简写为multiple
+            内部包含option 设置value属性
+            通过selected属性设置默认选中
+        textarea：
+            cols 列数
+            rows 行数
+            name 属性
+
+        label
+            多用于和输入框搭配使用
+            绑定方式
+                label包输入标签
+                for=id来绑定
+
 
 
 特殊符号：
