@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="content-type" charset="UTF-8">
+    <meta http-equiv="x-ua-compatible" content="IE=edge">
+    <title>css display属性学习</title>
+    <style>
+        .s1 {
+            /*可以设置行内标签按照块级标签展示*/
+            display: block;
+            width: 100%;
+            height: 100px;
+        }
+        .d1, .d2 {
+            height: 100px;
+            width: 100px;
+            background-color: red;
+            border: 2px solid green;
+        }
+        .d2 {
+            background-color: aquamarine;
+        }
+
+    </style>
+</head>
+<body>
+<span class="s1">this is a span</span>
+<span style="color: chartreuse">this is another span</span>
+<span>this is another another span</span>
+<hr>
+<div class="d1"></div>
+<div class="d2"></div>
+</body>
+</html>

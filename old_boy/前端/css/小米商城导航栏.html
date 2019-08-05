@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta http-equiv="content-Type" charset="UTF-8">
+    <meta http-equiv="x-ua-compatible" content="IE=edge">
+    <title>Title</title>
+    <style>
+        body {
+            margin: 0;
+        }
+
+        ul {
+            margin: 0;
+            padding: 0;
+        }
+
+        .c1 {
+            height: 50px;
+            width: 100%;
+            background-color: #4d4d4d;
+        }
+        .sep {
+            float: left;
+            line-height: 50px;
+            margin-right:15px;
+            color:grey;
+        }
+
+        .c2 {
+            color: #eee;
+            float: left;
+            margin-right: 15px;
+            margin-top: 13px;
+            /*padding-right: 15px;*/
+        }
+
+        .c3 {
+            float: right;
+            list-style-type: none;
+        }
+
+        .c3 > li {
+            float: right;
+            margin-left: 15px;
+            /*height: 50px;*/
+        }
+
+        a {
+            text-decoration: none;
+            color: #eee;
+
+        }
+
+        .c3 > li > a {
+            /*让行高等于父标签的高度， 实现单行文本的垂直居中*/
+            line-height: 50px;
+            padding: 15px;
+        }
+
+        .c3 > li > a:hover {
+            background-color: white;
+            color: #ff4700;
+        }
+
+        .clearfix:after {
+            content: "";
+            clear: both;
+            display: block;
+        }
+    </style>
+</head>
+<body>
+
+<div class="c1 clearfix">
+    <div>
+        <div class="c2">玉米商城</div>
+        <span class="sep">|</span>
+    </div>
+
+    <div class="c2">局嘤嘤</div>
+    <span class="sep">|</span>
+    <div class="c2">康抻</div>
+    <span class="sep">|</span>
+    <div class="c2">空调</div>
+    <span class="sep">|</span>
+    <div class="c2">风扇</div>
+
+    <ul class="c3">
+        <li><a href="">购物车</a></li>
+        <li><a href="">登录</a></li>
+        <li><a href="">注册</a></li>
+    </ul>
+
+</div>
+
+<!--<div style="background-color: blue;height: 100px"></div>-->
+
+<!--<div class="c5 clearfix">-->
+
+</div>
+</body>
+</html>

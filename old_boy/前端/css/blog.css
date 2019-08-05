@@ -1,0 +1,130 @@
+body {
+    margin: 0;
+}
+.left {
+    height: 100%;
+    width: 20%;
+    /*float: left;*/
+    position: fixed;
+    top:0;
+    left:0;
+    background-color: #4d4d4d;
+}
+.avatar {
+    margin: 20px auto;
+    width: 150px;
+    height: 150px;
+    border: solid white 3px;
+    border-radius: 50%;
+    overflow: hidden;
+}
+.image {
+    width: 150px;
+    height: 150px;
+    overflow: hidden;
+
+}
+
+.blog-title {
+    width: 100%;
+    text-align: center;
+    margin: 30px auto;
+    font-weight: bold;
+    font-size: 25px;
+    color:rgb(238, 238, 238)
+}
+.blog-link li,
+.blog-tag li {
+    text-align: center;
+}
+
+.blog-link a,
+.blog-tag a {
+    color: rgb(136, 136, 136);
+    font-size: 14px;
+}
+.blog-link a:hover,
+.blog-tag a:hover {
+    color: white;
+}
+.blog-link {
+    /*text-align: center;*/
+    width: 100%;
+    margin-top: 50px;
+    margin-bottom: 20px;
+}
+
+/*.blog-link>ul {*/
+    /*list-style-type: none;*/
+    /*!*text-align: center;*!*/
+/*}*/
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+a {
+    /*width: 100%;*/
+    text-decoration: none;
+    /*color: rgb(136, 136, 136);*/
+    /*font-size: 14px;*/
+    /*color: black;*/
+    /*text-align: center;*/
+}
+/*.blog-tag>ul {*/
+    /*list-style-type: none;*/
+/*}*/
+
+.blog-tag {
+    .blog-tag
+}
+.right {
+    /*height: 700px;*/
+    overflow: scroll;
+    float:right;
+    width:80%;
+    background-color: #eeeeee;
+
+}
+.article-list {
+    margin: 20px 20px;
+}
+.article {
+    background-color: white;
+    margin-bottom: 20px;
+}
+.article:hover {
+    box-shadow: 0 5px 10px rgba(0,0,0 0.2);
+    transform: translate3d(0, -3px, 0);
+    transition: all 300ms linear;
+
+}
+.article-title {
+    font-weight: bold;
+    font-size:25px;
+    float: left;
+    padding: 15px 20px;
+    border-left: 5px solid darkred;
+}
+.article-date{
+    float: right;
+    font-size: 16px;
+
+}
+.article-middle {
+    padding: 5px 20px;
+}
+.article-bottom>span {
+    /*display: block;*/
+    font-size: 12px;
+}
+.article-bottom {
+    border-top: 1px solid #eee;
+    margin: 0 20px;
+    padding: 15px 0;
+}
+.clearfix:after {
+    content: "";
+    clear: both;
+    display: block;
+}
