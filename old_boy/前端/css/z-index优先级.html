@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="content-type" charset="UTF-8">
+    <meta http-equiv="x-ua-compatible" content="IE=edge">
+    <title>z-index</title>
+    <style>
+        /*<!--z-index值大的展示在上一层-->*/
+        .cover {
+            position: fixed;
+            top:0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: navy;
+            z-index: 999;
+        }
+        .yingying {
+            position: absolute;
+            top: 50%;
+            left:50%;
+            margin-top: -100px;
+            margin-left: -200px;
+            width: 400px;
+            height: 200px;
+            background-color: burlywood;
+            z-index: 1000;
+        }
+    </style>
+</head>
+<body>
+<div class="cover"></div>
+<div class="yingying"></div>
+</body>
+
+</html>

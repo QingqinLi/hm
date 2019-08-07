@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="content-type" charset="UTF-8">
+    <meta http-equiv="x-ua-compatible" content="IE=edge">
+    <title>Title</title>
+    <style>
+        body {
+            margin:0;
+        }
+        .c {
+            height: 100px;
+            width: 100px;
+        }
+        .c1 {
+            background-color: #ff4700;
+            float: right;
+        }
+        .c2 {
+            background-color: aqua;
+            float: left;
+        }
+        .c3 {
+            height:200px;
+            width: 100%;
+            background-color: blue;
+        }
+        .clearfix:after {
+            content: "";
+            display: block;
+            clear:both;
+        }
+
+    </style>
+</head>
+<body>
+<div class="clearfix">
+    <div class="c c1"></div>
+    <div class="c c2"></div>
+</div>
+<div class="c3">
+
+</div>
+</body>
+
+</html>

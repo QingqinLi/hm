@@ -7,7 +7,7 @@ sk = socket.socket()
 sk.setblocking(False)# 设置accept和recv两个方法的阻塞与非阻塞状态
 # 参数为False   代表设置为非阻塞状态
 # 参数为True 或者不写，默认为阻塞状态
-sk.bind(('127.0.0.1',8080))
+sk.bind(('127.0.0.1', 8080))
 # sk.settimeout(4)# 设置等待超时时间
 # print(sk.gettimeout())# 获取等待超时时间
 sk.listen()

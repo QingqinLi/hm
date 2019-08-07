@@ -1,7 +1,7 @@
 import socket
 
 
-# 不需要编码解码
+# 不需要编码解码，自定义socket udp类
 class Mysocket(socket.socket):
     def __init__(self, encoding='utf-8'):  # 执行父类中的__init__方法
         super().__init__(type=socket.SOCK_DGARM)

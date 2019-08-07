@@ -8,6 +8,7 @@ sk.connect_ex(('127.0.0.1', 9090))
 menu_dic = {'1': 'upload',
             '2': 'download',
             }
+# 菜单
 for k, v in menu_dic.items():
     print(k, v)
 
