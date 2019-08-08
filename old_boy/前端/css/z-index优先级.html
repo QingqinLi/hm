@@ -6,12 +6,17 @@
     <title>z-index</title>
     <style>
         /*<!--z-index值大的展示在上一层-->*/
+        body {
+            margin:0;
+        }
         .cover {
             position: fixed;
-            top:0;
-            left: 0;
-            right: 0;
-            bottom: 0;
+            /*top:0;*/
+            /*left: 0;*/
+            /*right: 0;*/
+            /*bottom: 0;*/
+            width:100%;
+            height: 80%;
             background-color: navy;
             z-index: 999;
         }
@@ -24,13 +29,40 @@
             width: 400px;
             height: 200px;
             background-color: burlywood;
-            z-index: 1000;
+            z-index: 0;
+        }
+        .bt{
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+        }
+        .btt {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            font-size: larger;
+            font-weight: bolder;
+
         }
     </style>
 </head>
 <body>
 <div class="cover"></div>
-<div class="yingying"></div>
+<div class="yingying">
+    <input type="button" class="btt" value="x" onclick="changeIndex2()">
+</div>
+<input type="button" value="点击我" onclick="changeIndex()" class="bt">
+<script>
+    var ying = document.getElementsByClassName("yingying")[0];
+    function changeIndex() {
+        ying.style.zIndex=1000;
+    }
+    function changeIndex2() {
+        ying.style.zIndex=1;
+
+    }
+</script>
+
 </body>
 
 </html>

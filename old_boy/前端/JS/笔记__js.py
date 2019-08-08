@@ -211,6 +211,9 @@ BOM(Browser Object Model):
             screen对象 不常用
             history 包含浏览器的对象
             location 获得当前页面的地址，并把浏览器重定向到新的页面
+                location.href 获取当前访问的URL
+                location.href='url' js控制页面跳转到指定url
+                location.reload() 重新加载当前页面
             弹出框
                 警告框alert（）
                 确认框 confirm（）
@@ -306,6 +309,7 @@ DOM Document Object Model 对文档的内容进行抽象和概念化的方法
             onsubmit      确认按钮被点击，使用的对象是form。
 
         绑定事件的方式：
+            this指的是调用函数的标签本身
             方式一：
                 <div id="d1" onclick="changeColor(this);">点我</div>
                 <script>
@@ -333,12 +337,34 @@ DOM Document Object Model 对文档的内容进行抽象和概念化的方法
     innerText 不能识别标签，按照文本来显示
     innerHTML 能正常识别标签
 
+计时器的练习
+
+jquery
+    库
+    轻量级的js框架
+    使用：
+        1、下载jQuery
+        2、导入 一个页面导入一次就可以
+        3、使用（不能在导入的script中使用）
+            基本语法：
+                jQuery
+                $ 一般用这个
+                $("").xxx()
+                不能对jquery对象调用原生的属性或方法
+                jquery对象取原生对象，索引0的 $("")[0] 可以用原生的属性方法
+
+    查找标签：
+        选择器
+            id选择器 #id
+            标签选择器 直接使用
+
+        筛选器
+        has--早子孙后代中找
+        jquery变量约定-变量前加$前缀
+        select和checked的选择
 
 
-
-
-
-浮点数为什么都是不精确的
+计算机中的浮点数为什么都是不精确的
 """
 
 
