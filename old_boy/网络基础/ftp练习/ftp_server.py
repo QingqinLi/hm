@@ -7,6 +7,7 @@ __author__ = 'qing.li'
 import socketserver
 import subprocess
 import os
+import json
 
 os.chdir("/Users/qing.li/Desktop")
 
@@ -51,9 +52,40 @@ class MySocket(socketserver.BaseRequestHandler):
 
     def opration(self, t, option):
         if t == '1':
-            pass
+            file_name = "upload_" + option[1]
+            file_size = int(option[2])
+            # 接收文件具体内容
+            if os.path.exists(file_name):
+                self.request.send(b"file is already exists,retry!")
+            else:
+                with open(file_name, 'wb') as f:
+                    while file_size:
+                        content = self.request.recv(1024)
+                        f.write(content)
+                        file_size -= len(content)
+                self.request.send(b"upload success!")
         elif t == '2':
-            pass
+            file_name = option[1]
+            file_path = os.path.join('/Users/qing.li/Desktop', file_name)
+            print(file_path)
+            if os.path.exists(file_path):
+                # 文件存在，告诉客户端文件大小
+                file_size = os.path.getsize(file_path)
+                info = {'is_exist': 1,
+                        'file_size': file_size,
+                        }
+                self.request.send(json.dumps(info).encode('utf-8'))
+                with open(file_path, 'rb') as f:
+                    while file_size:
+                        content = f.read(1024)
+                        self.request.send(content)
+                        file_size -= len(content)
+
+            else:
+                info = {'is_exist': 2,
+                        }
+                self.request.send(json.dumps(info).encode('utf-8'))
+
         else:
             cmd = option[1]
             ret = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)

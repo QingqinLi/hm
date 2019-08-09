@@ -342,9 +342,17 @@ DOM Document Object Model 对文档的内容进行抽象和概念化的方法
 jquery
     库
     轻量级的js框架
+    在页面的标签加载完之后执行 window.onload = function(){...}
+    通常会把给标签绑定事件的JS代码都放在body标签的最后面
+
+    计时器的练习
+
     使用：
         1、下载jQuery
-        2、导入 一个页面导入一次就可以
+            1.x 兼容ie678
+            2.x
+            3.x
+        2、导入 一个页面导入一次就可以（一个页面导入一次就可以了）
         3、使用（不能在导入的script中使用）
             基本语法：
                 jQuery
@@ -355,35 +363,55 @@ jquery
 
     查找标签：
         选择器
-            id选择器 #id
-            标签选择器 直接使用
+            基本选择器：
+                1. $("#id值")
+                2. $("标签名")
+                3. $(".class名")
+                4. $("*")
+                5. $("div.c1")
+                6. $("div,.c1")
+            层级选择器：
+                $("dic .c1")  div下面子孙中有c1样式类的标签
+                $("div>.c1") div下面儿子中有c1样式类的标签
+                $("label+input") 找到紧挨着label的input标签
+                $("div~p") 找到div同级下面的所有的p标签
+            属性选择器
+                $("[s1]")
+                $("[type='submit']")
+                $("[type!='submit']")
 
-        筛选器
-        has--早子孙后代中找
+            基本筛选器：
+                $("div:first")/$("div:last")
+                $("div:eq(3)")/$("div:gt(3)")/$("div:lt(3)")
+                $(div:even")/$("div:odd")
+                $("div:not(.c1)")  找到没有c1样式累的div标签
+                $("div:has(.c1)")  找到内部有c1样式类的div标签
+            表单筛选器：
+                $(":text")/$(":password")
+                $("input:checked")
+                $(":seleced")
+        筛选器：
+            上一个
+            下一个
+            祖先标签
+            儿子和兄弟
+            查找
+            筛选
+        操作class
+            addClass()
+            removeClass()
+            hasClass()
+            toggleClass()
+
+
+
+        has--早子孙后代中找，与not不是相反的关系
         jquery变量约定-变量前加$前缀
         select和checked的选择
+
+    属性选择器
+
 
 
 计算机中的浮点数为什么都是不精确的
 """
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

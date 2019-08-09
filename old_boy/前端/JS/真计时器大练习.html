@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="content-type" charset="UTF-8">
+    <meta http-equiv="x-ua-compatible" content="IE=edge">
+    <title>计时器</title>
+</head>
+<body>
+<input type="text" id="i1">
+<button id="d1">开始</button>
+<button id="d2">结束</button>
+</body>
+<script>
+    var inEle = document.getElementById("i1");
+    var b1Ele = document.getElementById("d1");
+    var b2Ele = document.getElementById("d2");
+    var t
+
+    function f() {
+        var now = new Date();
+        inEle.value = now.toLocaleString();
+    }
+    f();
+    b1Ele.onclick=function () {
+        if(!t) {
+            t = setInterval(f, 1000);
+        }
+    };
+    b2Ele.onclick=function () {
+        clearInterval(t);
+        t=null;
+    };
+
+</script>
+</html>

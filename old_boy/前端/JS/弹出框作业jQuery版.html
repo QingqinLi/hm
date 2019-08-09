@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="content-type" charset="UTF-8">
+    <meta http-equiv="x-ua-compatible" content="IE=edge">
+    <title>弹出框</title>
+    <style>
+        .c1 {
+            position: fixed;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            background-color: rgba(0,0,0,0.4);
+            z-index: 99;
+        }
+        .c2 {
+            width: 700px;
+            height: 400px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            margin-left: -350px;
+            margin-top: -200px;
+            background-color: white;
+            z-index: 100;
+        }
+        .close {
+            float: right;
+            margin-right: 15px;
+            margin-top: 10px;
+            font-size: 16px;
+        }
+        .hide {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+<!--<input type="button" value="点击展示" id="t1">-->
+<button id="t1">
+    点我弹出
+</button>
+<div class="c1 hide">
+</div>
+<div class="c2 hide">
+    <!--<label id="l1">X</label>-->
+    <span class="close" id="l1">x</span>
+</div>
+
+<script src="jquery-3.4.1.min.js"></script>
+<script>
+    // console.log($(".c1"),$(".c2"),$("#t1"));
+    var $c1Ele = $(".c1");
+    var $c2Ele = $(".c2");
+    var bEle = $("#t1")[0];
+    bEle.onclick = function () {
+        console.log(bEle);
+        $c1Ele.removeClass("hide");
+        $c2Ele.removeClass("hide");
+    };
+
+    $("#l1")[0].onclick = function () {
+        $c1Ele.addClass("hide");
+        $c2Ele.addClass("hide");
+    };
+
+</script>
+</body>
+
+</html>
