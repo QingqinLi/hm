@@ -2,6 +2,7 @@
 
 https://www.cnblogs.com/liwenzhou/p/8004649.html
 https://www.cnblogs.com/liwenzhou/p/8011504.html
+https://www.cnblogs.com/liwenzhou/p/8178806.html
 html: 文档的结构
 css: 修改文档的外观样式
 js： 实现页面的动态效果
@@ -341,7 +342,7 @@ DOM Document Object Model 对文档的内容进行抽象和概念化的方法
 
 jquery
     库
-    轻量级的js框架
+    轻量级的js框架，一个js插件，相比较原生的DOM操作更简单，开发效率更高
     在页面的标签加载完之后执行 window.onload = function(){...}
     通常会把给标签绑定事件的JS代码都放在body标签的最后面
 
@@ -352,13 +353,18 @@ jquery
             1.x 兼容ie678
             2.x
             3.x
+            jquery.js jquery.min.js(压缩过的，为了加载速度更快）
         2、导入 一个页面导入一次就可以（一个页面导入一次就可以了）
         3、使用（不能在导入的script中使用）
             基本语法：
-                jQuery
-                $ 一般用这个
+                1、jQuery
+                2、$ 一般用这个
                 $("").xxx()
-                不能对jquery对象调用原生的属性或方法
+                支持链式操作
+                不能对jquery对象调用原生的属性或方法， jquery对象才能调用jquery方法，DOM对象只能调用DOM方法
+                jquery对象和dom对象的相互转化：
+                    jQuery --- > DOM        $("div") --- > $("div")[0]
+                    DOM ---> jQuery         this --- > $(this)
                 jquery对象取原生对象，索引0的 $("")[0] 可以用原生的属性方法
 
     查找标签：
@@ -368,6 +374,7 @@ jquery
                 2. $("标签名")
                 3. $(".class名")
                 4. $("*")
+
                 5. $("div.c1")
                 6. $("div,.c1")
             层级选择器：
@@ -390,18 +397,49 @@ jquery
                 $(":text")/$(":password")
                 $("input:checked")
                 $(":seleced")
+                $(":disabled")
         筛选器：
-            上一个
-            下一个
-            祖先标签
-            儿子和兄弟
-            查找
-            筛选
+            上一个.prev()
+            下一个.next()
+            祖先标签.parent()
+            儿子和兄弟 .children()/.siblings()
+            查找.find('选择器条件）在后代中查找符合要求的
+            筛选.filter('选择器条件'） 根据条件对已经找到的结果进行二次过滤
+            .first()
+            .last()
+            .not()/.has()
+            .eq()
         操作class
             addClass()
             removeClass()
             hasClass()
             toggleClass()
+
+        操作样式
+            操作样式只直接操作css
+                .css("color") 获取样式的值
+                .css("color", "red") 设置样式的值
+            位置
+                position（）相对父元素的偏移位置
+                offset（） 相对页面的偏移位置
+                scrollTop()
+                scrollLeft()
+            尺寸
+                height（） 元素的高度 设置的height
+                width（） 元素的宽度 设置的width
+                innerHeight()  height+padding
+                innerWidth()
+                outerHeight()  height+padding+border
+                outerWidth()
+            求值
+                text()
+                html()
+                val()
+            属性
+                attr（）
+                prop（） checked。。。有true和false的属性用这个取值
+            绑定时间的方式
+                .click(function(){...})
 
 
 

@@ -11,7 +11,7 @@
             width:10%;
             top:0;
             bottom: 0;
-            background-color: #e7e1cd;
+            background-color: white;
         }
         .d2{
             margin-bottom: 15px;
@@ -25,6 +25,11 @@
         .s1 {
             font-size: 20px;
             font-weight: bolder;
+            text-align: center;
+            background-color: dodgerblue;
+        }
+        .s2 {
+            text-align: center;
         }
         .s1:hover {
             font-size: 22px;
@@ -68,15 +73,31 @@
 
 </script>
 <script>
-    $("#s1")[0].onclick = function () {
-        $("#d31").toggleClass("hide");
-    };
-    $("#s2")[0].onclick = function () {
-        $("#d32").toggleClass("hide");
-    };
-    $("#s3")[0].onclick = function () {
-        $("#d33").toggleClass("hide");
-    };
+    var menu = $(".s1");
+    var menu_s = $(".d3");
+    console.log(menu, menu_s);
+    for(var i=0;i<menu.length; i++){
+        // console.log(menu[i]);
+        // var m_item = menu[i];
+        // $(m_item).click(function () {
+        //     console.log("mw", $(m_item).next());
+        //     $(m_item).next().removeClass("hide")
+        //
+        // })
+        menu[i].onclick = function () {
+            $(this).next().toggleClass("hide");
+            $(this).parent().siblings().find(".d3").addClass("hide");
+        }
+    }
+    // $("#s1")[0].onclick = function () {
+    //     $("#d31").toggleClass("hide");
+    // };
+    // $("#s2")[0].onclick = function () {
+    //     $("#d32").toggleClass("hide");
+    // };
+    // $("#s3")[0].onclick = function () {
+    //     $("#d33").toggleClass("hide");
+    // };
 </script>
 </body>
 
