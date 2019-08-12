@@ -421,9 +421,9 @@ jquery
                 .css("color", "red") 设置样式的值
             位置
                 position（）相对父元素的偏移位置
-                offset（） 相对页面的偏移位置
-                scrollTop()
-                scrollLeft()
+                offset（） 相对当前窗口的偏移位置
+                scrollTop() 相对顶部的偏移
+                scrollLeft()  相对左侧的偏移
             尺寸
                 height（） 元素的高度 设置的height
                 width（） 元素的宽度 设置的width
@@ -435,21 +435,63 @@ jquery
                 text()
                 html()
                 val()
+                val(新值）
+                val(["1", "2"])
             属性
-                attr（）
-                prop（） checked。。。有true和false的属性用这个取值
+                attr（） 可以看到的属性等的值
+                prop（） checked radio...有true和false的属性用这个取值
             绑定时间的方式
                 .click(function(){...})
-
-
 
         has--早子孙后代中找，与not不是相反的关系
         jquery变量约定-变量前加$前缀
         select和checked的选择
 
     属性选择器
+    操作样式：
+        操作class
+        操作css
+            $("").css("color") 获取选中标签的某个属性
+            $("").css("color", red) 设置选中标签的属性值
 
-
+    文档操作：
+        创建标签：document.createElement("div")
+        内部添加：
+            前面加：
+                $(A).prepend(B)
+                $(A).prependTo(B)
+            后面加：
+                $(A).append(B)
+                $(A).appendTo(B)
+        外部添加
+            前面加
+                $(A).before(B)
+                $(B).insertBefore(A)
+            后面加
+                $(A).after(B)
+                $(B).insertBefore(A)
+        移除和清空
+            remove（） 把选中过得标签从文档树中移除
+            empty（） 把选中的标签内部的元素都移除
+        替换
+            $(A).replaceWith(B)
+            $(B).replaceAll(A)
+        clone
+            注意参数true，加上true会吧标签绑定的事件也复制
+    事件
+        1、jquery绑定事件的方式
+            1、给标签绑定事件的方式
+                onclick=函数（）
+                js中，标签对象.onclick=function(){}
+            2、jquery绑定事件
+                $("选择器").click(function(){...})
+            3、事件委托
+                原理：事件冒泡
+                    1、如何阻止事件冒泡（向上传递）
+                        e.stopPropagation()
+                目的：解决未来的标签如何绑定事件
+                语法：
+                    $("祖先标签").on("click", "选择器", function(){...})
 
 计算机中的浮点数为什么都是不精确的
 """
