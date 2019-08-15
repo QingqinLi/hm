@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="content-type" charset="UTF-8">
+    <meta http-equiv="x-ua-compatible" content="IE=edge">
+    <title>阻止事件冒泡</title>
+</head>
+<body>
+<div id="d1">d1
+    <p id="p1">p1
+        <span id="s1">span</span>
+    </p>
+</div>
+<hr>
+<form action="">
+    <input type="text" id="i2">
+    <input type="submit" id="i1" value="提交">
+</form>
+<script src="jquery-3.4.1.min.js"></script>
+<script>
+    $("#d1").click(function () {
+        alert("this is div tag");
+    });
+    $("#p1").click(function () {
+        alert("this is p tag");
+    });
+    $("#s1").click(function (event) {
+        alert("this is span tag");
+        //阻止事件向上冒泡
+        event.stopPropagation();
+    });
+//    点击submit按钮，先校验input的值是不是为空（为空不提交。不为空的时候才能提交
+    $("#i1").on("click", function () {
+        if($("#i2").val().length === 0){
+        //    阻止默认事件的执行
+        //     event.preventDefault();
+            return false;
+        }
+
+    })
+
+</script>
+</body>
+
+</html>

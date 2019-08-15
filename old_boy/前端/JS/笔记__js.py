@@ -383,25 +383,26 @@ jquery
                 $("label+input") 找到紧挨着label的input标签
                 $("div~p") 找到div同级下面的所有的p标签
             属性选择器
-                $("[s1]")
-                $("[type='submit']")
-                $("[type!='submit']")
+                $("[s1]") 有属性
+                $("[type='submit']") 属性等于
+                $("[type!='submit']")  属性不等于
 
             基本筛选器：
                 $("div:first")/$("div:last")
-                $("div:eq(3)")/$("div:gt(3)")/$("div:lt(3)")
+                $("div:eq(index)")/$("div:gt(3)")/$("div:lt(3)")
+                eq是找索引等于index的那个元素 gt找大于给定索引值的元素，lt找小于给定索引值的元素
                 $(div:even")/$("div:odd")
                 $("div:not(.c1)")  找到没有c1样式累的div标签
-                $("div:has(.c1)")  找到内部有c1样式类的div标签
+                $("div:has(.c1)")  找到内部有c1样式类的div标签（是在后代标签中查找）
             表单筛选器：
                 $(":text")/$(":password")
                 $("input:checked")
                 $(":seleced")
-                $(":disabled")
+                $(":disabled")   表单对象属性
         筛选器：
-            上一个.prev()
-            下一个.next()
-            祖先标签.parent()
+            上一个.prev() prevALl() prevUntil()
+            下一个.next() nextAll() nextUntil()
+            祖先标签.parent() parents() 查找当前元素的所有父辈元素 parentsUntil() 查找当前元素的所有父类元素，直到匹配到那个元素为止
             儿子和兄弟 .children()/.siblings()
             查找.find('选择器条件）在后代中查找符合要求的
             筛选.filter('选择器条件'） 根据条件对已经找到的结果进行二次过滤
@@ -413,7 +414,7 @@ jquery
             addClass()
             removeClass()
             hasClass()
-            toggleClass()
+            toggleClass() 相反没有就添加 有就删除
 
         操作样式
             操作样式只直接操作css
@@ -434,12 +435,14 @@ jquery
             求值
                 text()
                 html()
-                val()
+                val() 取第一个匹配元素的内容
                 val(新值）
-                val(["1", "2"])
+                val(["1", "2"]) 设置多选的checkbox， select的值
             属性
-                attr（） 可以看到的属性等的值
-                prop（） checked radio...有true和false的属性用这个取值
+                attr（） 可以看到的属性等的值，设置（两个参数，{}对象可以用来设置多个属性）  --- 显示的，用于获取可以看到的属性和自定义属性
+                removeAttr() 从第一个匹配的元素中删除一个属性
+                prop（） checked radio...有true和false的属性用这个取值   ---隐式的， 不支持获取标签的自定义属性，可以获取返回布尔值，checkbox， radio， option
+                removeProp（） 移除属性
             绑定时间的方式
                 .click(function(){...})
 
@@ -458,8 +461,8 @@ jquery
         创建标签：document.createElement("div")
         内部添加：
             前面加：
-                $(A).prepend(B)
-                $(A).prependTo(B)
+                $(A).prepend(B)  b追加到a
+                $(A).prependTo(B) a追加到b
             后面加：
                 $(A).append(B)
                 $(A).appendTo(B)
@@ -479,19 +482,78 @@ jquery
         clone
             注意参数true，加上true会吧标签绑定的事件也复制
     事件
+        常用事件：
+            click，hover, blur, focus, change, keyup
         1、jquery绑定事件的方式
             1、给标签绑定事件的方式
                 onclick=函数（）
                 js中，标签对象.onclick=function(){}
             2、jquery绑定事件
                 $("选择器").click(function(){...})
+                .on(events, [, selector--选择器（可选）], function(){}) 绑定事件
+                .off(events, [, selector, ], [funcition(){}]) 移除用on绑定的事件
             3、事件委托
-                原理：事件冒泡
+                原理：事件冒泡，利用副标签去捕获自标签的事件
                     1、如何阻止事件冒泡（向上传递）
                         e.stopPropagation()
+                    2、阻止默认事件的执行（通常是用于阻止form表单的提交）
+                        e.preventDefault()
+                    3、阻止后续事件的执行
+                        return false
                 目的：解决未来的标签如何绑定事件
                 语法：
                     $("祖先标签").on("click", "选择器", function(){...})
+            dom中定义的事件，可以用on的方式来绑定， 但是hover这种的jquery中定义的事件是不能用on的方式来绑定的
 
+    动画效果：
+        // 基本
+        show([s,[e],[fn]])
+        hide([s,[e],[fn]])
+        toggle([s],[e],[fn])
+        // 滑动
+        slideDown([s],[e],[fn])
+        slideUp([s,[e],[fn]])
+        slideToggle([s],[e],[fn])
+        // 淡入淡出
+        fadeIn([s],[e],[fn])
+        fadeOut([s],[e],[fn])
+        fadeTo([[s],o,[e],[fn]])
+        fadeToggle([s,[e],[fn]])
+        // 自定义（了解即可）
+        animate(p,[s],[e],[fn])
+    each
+        1、$.each(要遍历的对象，fnnction(){})
+        2、$("").each(function(){
+        //this 是进入循环体的标签
+        console.log(this)
+        })
+        3、退出本次循环
+        4、退出each循环 return false
+        注意: jQuery的方法返回一个jQuery对象，遍历jQuery集合中的元素 - 被称为隐式迭代的过程。当这种情况发生时，它通常不需要显式地循环的 .each()方法：
+    data
+        任意的jquery标签都有一个，类似全局变量，页面刷新之后就没有了，两个函数之间传递消息的时候
+        .data(key, value) 存值
+        .data(key) 根据key取值
+        .data() 取所有的键值对
+        .removeData(key) 根据key删除值
+        .removeData() 删除所有的键值对
+    页面载入：
+        1、$(documents).ready(function(){
+        js代码
+        }
+        2、$（funcition)(){}
+        与window.onload的区别： window.onload()函数有覆盖的现象，文档加载完整之后才能调用
+        jquery的这个入口函数没有覆盖现象，文档加载完整之后可以调用
+    拓展
+        $.extend() 对jquery拓展一个自定义方法{"函数名"：function(){}}
+        $.fn.extend() 给jquery对象拓展自定义方法，固定写法
+
+    页面的开发：
+        DOM里只需要记忆document.createElement()
+        主要使jquery操作
+
+
+
+Bootstrap ：https://v3.bootcss.com/
 计算机中的浮点数为什么都是不精确的
 """

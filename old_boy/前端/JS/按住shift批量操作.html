@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="content-type" charset="UTF-8">
+    <meta http-equiv="x-ua-compatible" content="IE=edge">
+    <title>批量操作</title>
+    <style>
+        table td,th{
+            border:solid 1px black;
+    }
+    </style>
+
+</head>
+<body>
+<table>
+    <thead>
+    <tr>
+        <th>#</th>
+        <th>姓名</th>
+        <th>操作</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td><input type="checkbox"></td>
+        <td>Egon</td>
+        <td>
+            <select name="">
+                <option value="1">上线</option>
+                <option value="2">下线</option>
+                <option value="3">停职</option>
+            </select>
+        </td>
+    </tr>
+    <tr>
+        <td><input type="checkbox"></td>
+        <td>Egon1</td>
+        <td>
+            <select name="">
+                <option value="1">上线</option>
+                <option value="2">下线</option>
+                <option value="3">停职</option>
+            </select>
+        </td>
+    </tr>
+    <tr>
+        <td><input type="checkbox"></td>
+        <td>Egon2</td>
+        <td>
+            <select name="">
+                <option value="1">上线</option>
+                <option value="2">下线</option>
+                <option value="3">停职</option>
+            </select>
+        </td>
+    </tr>
+    <tr>
+        <td><input type="checkbox"></td>
+        <td>Egon3</td>
+        <td>
+            <select name="">
+                <option value="1">上线</option>
+                <option value="2">下线</option>
+                <option value="3">停职</option>
+            </select>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<input type="button" id="b1" value="全选">
+<input type="button" id="b2" value="取消">
+<input type="button" id="b3" value="反选">
+<script src="jquery-3.4.1.min.js">
+</script>
+<script>
+    $("#b1").click(function () {
+        $(":checkbox").prop("checked", true)
+
+    });
+    $("#b2").click(function () {
+        $(":checkbox").prop("checked", false)
+    });
+    $("#b3").click(function () {
+        $(":checkbox").each(function () {
+            var flag = $(this).prop("checked");
+            $(this).prop("checked", !flag);
+        })
+    });
+    var flag = false;
+    $(window).on("keydown", function (e) {
+        if(e.keyCode === 16){
+            flag = true;
+        }
+    });
+    $(window).on("keyup", function (e) {
+        if(e.keyCode === 16){
+            flag = false;
+        }
+    });
+    $("table select").on("change", function () {
+        if(flag){
+            var selectValue = $(this).val();
+            $("input:checked").parent().parent().find("select").val(selectValue);
+        }
+    })
+</script>
+</body>
+
+</html>

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="content-type" charset="UTF-8">
+    <meta http-equiv="x-ua-compatible" content="IE=edge">
+    <title>hover购物车</title>
+    <style>
+        body {
+            margin: 0;
+        }
+        ul {
+            display: block;
+            height: 50px;
+            width: 100%;
+            background-color: #f5f2f0;
+            list-style-type: none;
+
+        }
+        ul li {
+            float: left;
+            line-height: 50px;
+            font-size:20px;
+            margin-left: 15px;
+            position: relative;
+            display: block;
+        }
+        .shop-cart {
+            width: 100px;
+            height: 80px;
+            font-size: 15px;
+            background-color: #eaffea;
+            position: absolute;
+            right:0;
+        }
+        .hover {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+<ul>
+    <li>登陆</li>
+    <li>注册</li>
+    <li id="car">购物车
+        <div class="shop-cart hover">
+            空空如也～～
+        </div>
+    </li>
+</ul>
+<script src="jquery-3.4.1.min.js">
+
+</script>
+<script>
+$("#car").hover(function () {
+    $(".shop-cart").css("display", "block")
+},
+function () {
+    $(".shop-cart").css("display", "none")
+})
+
+// $('.menu').on('mouseenter', '.cart', function() {//绑定鼠标进入事件
+//         $(this).addClass('hover');
+//     });
+//
+//     $('.menu').on('mouseleave', '.cart', function() {//绑定鼠标划出事件
+//         $(this).removeClass('hover');
+//     });
+</script>
+</body>
+
+</html>
