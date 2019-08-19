@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="content-type" charset="UTF-8">
+    <meta http-equiv="x-ua-compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>fontawesome</title>
+    <link rel="stylesheet" href="bootstrap-3.3.7-dist/css/bootstrap.css">
+    <link rel="stylesheet" href="font-awesome-4.7.0/css/font-awesome.css">
+    <style>
+        .fa {
+            /*font-size: 40px;*/
+            color: #2b669a;
+        }
+        i {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+<div>
+    <i class="fa fa-address-book fa-lg"></i>
+    <br>
+    <i class="fa fa-bath fa-2x"></i>
+    <i class="fa fa-thermometer-empty fa-3x"></i>
+    <i class="fa fa-plane fa-4x"></i>
+    <i class="fa fa-spinner fa-spinx"></i>
+
+    <ul class="fa-ul">
+        <li class="fa-li fa fa-check-square"></li>
+        <li class="fa-li fa fa-check-square"></li>
+        <li class="fa-li fa fa-spinner fa-spin"></li>
+        <li class="fa-li fa fa-square"></li>
+        <li></li>
+    </ul>
+<!--两个图标叠加展示，1x第一层， 2x-第二层...-->
+    <span class="fa-stack fa-lg">
+        <i class="fa fa-weixin fa-stack-1x"></i>
+        <i class="fa fa-ban fa-stack-2x text-danger"></i>
+
+    </span>
+
+    <button class="btn btn-success"><i class="fa fa-weixin" style="color:red"></i>点击</button>
+</div>
+</body>
+
+</html>

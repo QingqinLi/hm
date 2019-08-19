@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="content-type" charset="UTF-8">
+    <meta http-equiv="x-ua-compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>进度条</title>
+    <link rel="stylesheet" href="bootstrap-3.3.7-dist/css/bootstrap.css">
+</head>
+<body>
+<div class="progress">
+    <div class="progress-bar progress-bar-success progress-bar-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100"
+         style="min-width: 0.1em; width: 0">
+        <label id="l1"></label>
+    </div>
+</div>
+<button class="btn-success" id="start">开始</button>
+<script src="../JS/jquery-3.4.1.min.js"></script>
+<script>
+    var value = 0;
+    var t;
+    function start_process() {
+        console.log(value);
+        if (value < 100) {
+            value++;
+            $(".progress-bar").attr("aria-valuenow", value);
+            $(".progress-bar").css("width", value + "%");
+            $("#l1").text(value+"%")
+
+
+        }
+        else{
+            clearInterval(t);
+        }
+
+    }
+
+    $("#start").click(function () {
+        t = setInterval(start_process, 100);
+    })
+</script>
+</body>
+
+
+</html>

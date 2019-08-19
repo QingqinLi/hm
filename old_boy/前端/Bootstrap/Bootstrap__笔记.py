@@ -13,10 +13,12 @@ Bootstrap 是twitter开源的一个前端开发框架（HTML+CSS+JS）
 
 常用样式类：
     1、容器
-        container
-        container-fluid
-    2、栅格系统
+        container 类似于固定宽度并且支持响应式布局的容器
+        container-fluid 类似于占用100%宽度，占据全部视口（viewport）的容器
+        
+    2、栅格系统 响应式 移动设备优先的流式栅格系统
         把一行平均分成最多12列
+        大于12分会重新起一行排列
         可以设置标签占多少列
         1、row表示行
         2、col-xx-** 表示一列
@@ -43,5 +45,40 @@ Bootstrap 是twitter开源的一个前端开发框架（HTML+CSS+JS）
         3、快速浮动
         4、清除浮动
         
+    1. Bootstrap
+		1. 图标
+			1. Bootstrap内置的： https://v3.bootcss.com/components/
+			    图标类只能应用在不包含任何文本内容或子元素的元素上
+			2. font-awesome图标：http://www.fontawesome.com.cn/
+			    设置css前缀fa和图标的具体名称。把图标放在任意的位置，被设计为行内元素，一般使用<i>标签，使语义更加精确
+			    为了增加图标大小相对于它们的容器, 使用 fa-lg (33% 递增), fa-2x, fa-3x, fa-4x, 或 fa-5x classes.
+                    <i class="fa fa-camera-retro fa-lg"></i> fa-lg
+                    <i class="fa fa-camera-retro fa-2x"></i> fa-2x
+                    <i class="fa fa-camera-retro fa-3x"></i> fa-3x
+                    <i class="fa fa-camera-retro fa-4x"></i> fa-4x
+                    <i class="fa fa-camera-retro fa-5x"></i> fa-5x
+			3. 阿里图标：        http://iconfont.cn/
+		2. 面板
+		3. ...
+		4. jS插件
+			1. 模态框
+			2. 轮播图
+
+	2. 插件
+		弹出插件SweetAlert：http://mishengqiang.com/sweetalert/
+    	
+	<mark></mark> 高亮显示文本
+	<del></del> 展示为被删除的文本
+	<s></s> 没用的文本---机器识别
+	<ins></ins> 额外插入的文本使用
+	<u></u> 带下划线的标签
+	<small></small> 其中的文本被设置为父容器字体大小的85%；
+	<strong></strong> 强调一段文本
+	<em></em> 用斜体强调一段文本
+	
+	不能将表单组和输入框组混合使用
+	不要将表单直接和输入框组混合使用，建议将输入框组嵌套到表单组中使用
+	表单框组中一定要设置label标签，
+	
 
 """
