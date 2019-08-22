@@ -4,7 +4,7 @@ import time
 
 def get_money(num, l):
     l.acquire()
-    for i in range(10):
+    for i in range(100):
         num.value -= 1
         time.sleep(0.1)
         print('get' + str(num.value))
@@ -13,15 +13,15 @@ def get_money(num, l):
 
 def put_money(num, l):
     l.acquire()
-    for i in range(10):
+    for i in range(100):
         num.value += 1
-        time.sleep(0.2)
+        time.sleep(0.12)
         print(num.value)
     l.release()
 
 
 if __name__ == '__main__':
-    num = Value('i', 10)
+    num = Value('i', 100)
     l = Lock()
     p = Process(target=get_money, args=(num, l))
 

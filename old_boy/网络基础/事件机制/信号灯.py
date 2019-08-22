@@ -6,11 +6,11 @@ def tra(e):
     print(e.is_set())
     while 1:
         if e.is_set():  # True
-            time.sleep(1)
+            time.sleep(0.5)
             e.clear()
             print("\033[31m 红灯 \033[0m")
         else:
-            time.sleep(1)
+            time.sleep(2)
             e.set()
             print("\033[32m 绿灯 \033[0m")
 

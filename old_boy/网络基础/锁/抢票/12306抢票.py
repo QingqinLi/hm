@@ -33,6 +33,6 @@ if __name__ == '__main__':
     for i in range(10):
         p = Process(target=check, args=(i,l))
         p.start()
-    for i in range(100):
+    for i in range(10):
         p = Process(target=buy, args=(i, l))
         p.start()

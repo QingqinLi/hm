@@ -553,6 +553,12 @@ jquery
         主要使jquery操作
 
 
+    1、jQuery插件库的下载和使用
+		插件网站：http://www.jq22.com/
+		jQuery UI 官网：http://www.jqueryui.org.cn/
+			   中文文档：http://www.css88.com/jquery-ui-api/
+
+
 
 Bootstrap ：https://v3.bootcss.com/
 计算机中的浮点数为什么都是不精确的

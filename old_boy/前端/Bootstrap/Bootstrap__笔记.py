@@ -80,5 +80,51 @@ Bootstrap 是twitter开源的一个前端开发框架（HTML+CSS+JS）
 	不要将表单直接和输入框组混合使用，建议将输入框组嵌套到表单组中使用
 	表单框组中一定要设置label标签，
 	
+	2、Bootstrap的使用
+		
+		1.编译化
+		为什么前端静态文件需要编译？
+		
+			html/css/js/图片/mp3/mp4/ett/woff/word/zip/....
+			服务器承载的压力大（访问量，请求多==》公司的服务器施加压力）
+			负载均衡
+		2.打包
+		
+		了解到：
+			grant| gulp| ****webpack****
+			
+		
+		
+		模块化开发
+		
+			前端中后端语言 nodejs|koa “当红炸子鸡” 火  express  
+			后端中         python    flask|django|Tornado
+			
+			一个半月以后
+				npm init --yes
+				npm install jquery
+				
+				
+				
+				script	同步
+				commonjs  node  var $ = require('jquery');
+				python  from xxx import ooo
+				es6Module   import $ from 'jquery'
+				
+				
+				$.ajax({})
+				
+			less sass	==>css的升级版
+				less编译器网站 http://tool.oschina.net/less
+				
+			animate.css : https://www.awesomes.cn/repo/daneden/animate-css
+				awesome:社区
+				
+			font-awesome:http://www.fontawesome.com.cn/examples/
+			
+			
+			
+			******博客、crm、路飞项目  一定要跟上*******
+	
 
 """
