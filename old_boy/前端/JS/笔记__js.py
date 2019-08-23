@@ -558,8 +558,15 @@ jquery
 		jQuery UI 官网：http://www.jqueryui.org.cn/
 			   中文文档：http://www.css88.com/jquery-ui-api/
 
+	存储：
+	    localstorage: 不会随着关闭网页清除记录而消失
+	    sessionstorage: session存储，数据会随着cookie的清除而消失
+    overflow:浮动 marigin塌陷问题
+    定时器：先清除，再开始（保证没有问题）
+    浮动 绝对定位 固定定位 都是脱离了文档标准流，不是标准文档流中的标签，不符合行内和块级标签的特点，可以任意设置宽和高
+    子绝父相：子元素设置绝对定位，父元素设置相对定位
 
 
 Bootstrap ：https://v3.bootcss.com/
-计算机中的浮点数为什么都是不精确的
+计算机中的浮点数为什么都是不精确的'
 """

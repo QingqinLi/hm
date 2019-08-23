@@ -5,7 +5,6 @@ Given a string, find the length of the longest substring without repeating chara
 enumerate:下标和元素
 """
 
-
 class Solution:
     def lengthOfLongestSubstring(self, s: str) -> int:
         s_len = len(s)
@@ -128,8 +127,62 @@ class Solution:
             result = "".join(result_list)
             return result
 
+    """
+    Implement atoi which converts a string to an integer.
+    The function first discards as many whitespace characters as necessary until the first non-whitespace character is 
+    found. Then, starting from this character, takes an optional initial plus or minus sign followed by as many 
+    numerical digits as possible, and interprets them as a numerical value. 
+    The string can contain additional characters after those that form the integral number, which are ignored and have 
+    no effect on the behavior of this function.
+    If the first sequence of non-whitespace characters in str is not a valid integral number, or if no such sequence 
+    exists because either str is empty or it contains only whitespace characters, no conversion is performed.
+    If no valid conversion could be performed, a zero value is returned.
+    """
+    def myAtoi(self, s: str) -> int:
+        num_pre = s.strip()
+        result = 0
+        if len(num_pre) > 0:
+            first = num_pre[0]
+            result_list = []
+            if first == '-':
+                for i in num_pre[1:]:
+                    if i.isdigit():
+                        result_list.append(str(i))
+                    else:
+                        break
+                if result_list:
+                    result =int(''.join(result_list))*(-1)
+            elif first == '+':
+                for i in num_pre[1:]:
+                    if i.isdigit():
+                        result_list.append(str(i))
+                    else:
+                        break
+                if result_list:
+                    result = int(''.join(result_list))
+            elif first.isdigit():
+                for i in num_pre:
+                    if i.isdigit():
+                        result_list.append(str(i))
+                    else:
+                        break
+                if result_list:
+                    result = int(''.join(result_list))
+            else:
+                result = 0
+            if result > pow(2, 31)-1:
+                result = pow(2, 31)-1
+            elif result < pow(2, 31)*(-1):
+                result = pow(2, 31)*(-1)
+        else:
+            result = 0
+        return result
+    """
+    Given an input string (s) and a pattern (p), implement regular expression matching with support for '.' and '*'.
+    """
+
 
 s = Solution()
-print(s.convert("ABC",3))
+print(s.myAtoi("42"))
 # array = [[1,2,3],[4,5,6]]
 # print(array[0][1])
