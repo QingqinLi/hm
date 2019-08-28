@@ -181,8 +181,77 @@ class Solution:
     Given an input string (s) and a pattern (p), implement regular expression matching with support for '.' and '*'.
     """
 
+    """
+    Given an input string (s) and a pattern (p), implement regular expression matching with support for '.' and '*'.
+    """
+
+    def isMatch(self, s: str, p: str) -> bool:
+        list_s = list(s)
+        # list_s.reverse()
+        list_p = list(p)
+        list_pp = []
+        if len(list_p) == 0 and len(list_s) == 0:
+            return True
+        elif len(list_p) == 0:
+            return False
+        elif len(list_s) == 0:
+            if list_p == ['*',]:
+                return True
+        if list_s[0] in list_p:
+            list_p = list_p[list_p.index(list_s[0]):]
+        else:
+            list_p = list_p[:]
+        for i in list_p:
+            list_pp.append(i)
+
+        for i in range(len(list_p)):
+            print(list_p[i], list_s)
+            if list_s:
+                if list_p[i:] == ['*', '.']:
+                    if len(list_s) > 1:
+                        return True
+                if list_p[i] == '.':
+                    list_s.pop(0)
+                elif list_p[i] == '*':
+                    if i == len(list_p)-1:
+                        return True
+
+                    while (not i == len(list_p)-1) and list_s and list_p[i + 1] != list_s[0]:
+                        # if list_p[i+1] == '.':
+                        #     pass
+                        list_s.pop(0)
+
+                        # print("while", list_p[i], list_s)
+                    else:
+                        if i == len(list_p)-1:
+                            # print("heer")
+                            return True
+                    while len(list_s) >= 2 and list_s[0] == list_s[1]:
+                        # print("test")
+                        list_s.pop(0)
+                        # print("end", list_s)
+
+                else:
+                    if list_s and list_p[i] == list_s[0]:
+                        list_s.pop(0)
+                    else:
+                        return False
+                # print(list_s)
+                list_pp.pop(0)
+
+            else:
+                break
+
+        print("list_s", list_p, list_pp, list_s)
+
+        if not list_s and not list_pp:
+            return True
+        else:
+            return False
+        # print(list_s)
+
 
 s = Solution()
-print(s.myAtoi("42"))
+print(s.isMatch("aaa", "ab*ac*a"))
 # array = [[1,2,3],[4,5,6]]
 # print(array[0][1])
