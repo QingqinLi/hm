@@ -4,6 +4,9 @@
 __author__ = 'qing.li'
 """
 """
+https://www.cnblogs.com/liwenzhou/p/8296964.html
+http://www.cnblogs.com/liwenzhou/p/7931828.html
+
 内容回顾：
     1. MySQL  ****
         1. SQL语句
@@ -95,21 +98,31 @@ Django安装：
             
             
 from表单提交数据：
-    form表单必须要有action和method属性
-    所有获取用户输入的标签必须放在form表单中，必须要有name属性
+    form表单必须要有action和method属性， 上传文件需要额外指定enctype属性 enctype="multipart/form-data"
+    所有获取用户输入的标签必须放在form表单中，必须要有name属性(input, select, textarea)
     必须要有submit按钮
 
 Django基础必会三件套
     from django.shortcuts import HttpResponse, render, redirect
-        1、HttpResponse 返回一个指定的字符串时
-        2、render： 返回一个HTML文件
-        3、redirect 跳转
+        1、HttpResponse 返回一个指定的字符串时, 把一个字符串成二进制，按照HT，TP响应的格式要求返回
+        2、render： 返回一个HTML文件，打开文件，读取内容，按照响应格式返回， {'key': 'value'} 替换特殊符号，按照响应格式返回
+        3、redirect 跳转 绝对地址（不同网站之间的跳转），相对地址（同一个网站之间的跳转），锚点（同一个网站页面位置的跳转）
     request相关的属性
         request.method  返回的是请求的方法（全大写）：GET/POST
         request.GET 获取URL里面的参数。类似与字典的数据结构
         request.POST post提交的数据，类似与字典的数据结构
     Django的模版语言
-        {{变量名}}
+        1、{{变量名}} {'key': value}
+        2、for循环
+            {% for i in ret%}   
+                {{i}
+                {{forloop.connter }} 计数 counter0是从0开始计数
+            {% endfor %}
+            {% if %}
+            {% else %}
+            {% endif %}
+        {% %} 逻辑相关
+        {{ }} 变量相关
     程序连接mysql
         使用pymysql模块
         1、导入pymsql模块
@@ -164,6 +177,58 @@ DJango中ORM的使用
             python manage.py migrate 把变更预计翻译称sql语句，去数据库中去执行
 ORM查询
     uer.objects.filter(email='', pwd='')
+ORM增删改查：
+    class_name.objects.all() 返回一个列表，查询全部内容
+    class_name.objects.filter() 查询条件，返回一个列表
+    class_name.objects.get() 返回一个对象 有且只有一个结果的时候正常，否则会报错
+    
+    class_name.objects.create(name='') 创建一个对象，返回的就是刚创建的对象
+    class_name.objects.filter(condition).delete() 删除
+    
+    obj = class_name.objects.get(id='')
+    obj.name = new_name 修改对象的属性（修改数据行某个字段的值）
+    obj.save() 把修改同步到数据库
+    
+    多对多的操作：
+        1、不能直接操作第三张关系表
+        2、借助orm提供的方法
+            1、all（）
+            2、add(id1, id2)
+            3、set([id1, id2])
+            4、clear()
+    创建model：
+        AutoField 必须指定primary_key=True
+        外键：
+            sql语句：
+                create table book (
+                    id int primary key auto_increment,
+                    title varchar(30) not null,
+                    press_id int not null,
+                    constraint fk_press foreign key(press_id) references press(id) 
+                    on delete cascade
+                    on update cascade
+                )
+            press = models.ForrignKey(to=''---表， on_delete-models.CASCADE--django1.x模式是联级的删除，不写也可以，2.x中需要写明)
+            press在数据库中自动变成press_id
+            查询的时候press_id是press的id，press是press的对象
+    给数据库中已经存在的表中添加另外一个字段的时候，这个字段即没有默认值也不能为空，ORM就不知搭配数据库中已经存在的字段该怎么处理这个字段，所以一般在新增字段de
+    时候。会指定一个默认值或者允许为空
+    
+    多对多的关系创建表：
+        1、自己创建第三张表
+        2、让ORM创建第三张表
+        3、
+        
+    
+图书管理系统：
+    编辑或者删除的时候隐式的提交id， path/?id={{}} url传递参数， ？后的参数不会影响路由判断路径
+        id 和name都使用post提交，设置id的框为隐藏不展示
+    select标签把已经存在的出版社在页面上展示出来，使用模版语言的for循环
+    删除增加一个几秒后跳转到指定页面的操作：
+        location.href
+        setTimeout()
+        setinterval()
+request.GET 是取url里面的参数，和什么请求是没有关系的
         
     
 """

@@ -21,11 +21,11 @@
     // jquery绑定事件的方式
     $("#b1").click(function () {
         f();
-    })
+    });
 //    jquery on绑定事件
     $("#b1").on("click", function () {
         f();
-    })
+    });
 //    利用事件冒泡的原理，进行事件委托，委托给副标签处理，实现给未来的标签绑定事件
     $("body").on("click", ".c1", function(){
         alert(122);

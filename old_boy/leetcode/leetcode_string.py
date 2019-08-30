@@ -250,8 +250,107 @@ class Solution:
             return False
         # print(list_s)
 
+    """
+    Roman numerals are represented by seven different symbols: I, V, X, L, C, D and M.
+    """
+
+    def intToRoman(self, num: int) -> str:
+        s_v = {
+            0: ['I', 'V', 'X'],  # 1, 5, 10
+            1: ['X', 'L', 'C'],  # 10, 50, 100
+            2: ['C', 'D', 'M'],  # 100, 500, 1000
+            3: ['M'],
+               }
+        result_list = []
+        num_list = [int(i) for i in str(num)]
+        num_list.reverse()
+        for i in range(len(num_list)):
+            num = num_list[i]
+            s = s_v[i]
+            if 0 < num <= 3:
+                result_list.insert(0, s[0] * num)
+            elif num == 4:
+                result_list.insert(0, s[0]+s[1])
+            elif num == 5:
+                result_list.insert(0, s[1])
+            elif 5 < num <= 8:
+                result_list.insert(0, s[1]+s[0]*(num-5))
+            elif num == 9:
+                result_list.insert(0, s[0] + s[2])
+
+        return ''.join(result_list)
+
+    """
+    Given a string containing just the characters '(', ')', '{', '}', '[' and ']', determine if the input string is valid.
+    解题思路： list模拟栈的用法，进栈出栈来匹配
+    """
+
+    def isValid(self, s: str) -> bool:
+        if not s:
+            return True
+        else:
+            len_s = len(s)
+            list_s = list(s)
+            if len_s % 2 == 0:
+                temp_list = []
+                for i in list_s:
+                    if i == '(' or i == '[' or i == '{':
+                        temp_list.append(i)
+                    elif i == ')':
+                        if temp_list and temp_list[len(temp_list) - 1] == '(':
+                            temp_list.pop(len(temp_list) - 1)
+                        else:
+                            return False
+                    elif i == '}':
+                        if temp_list and temp_list[len(temp_list) - 1] == '{':
+                            temp_list.pop(len(temp_list) - 1)
+                        else:
+                            return False
+                    elif i == ']':
+                        if temp_list and temp_list[len(temp_list) - 1] == '[':
+                            temp_list.pop(len(temp_list) - 1)
+                        else:
+                            return False
+
+            else:
+                return False
+        if not temp_list:
+            return True
+        else:
+            return False
+
+    """
+    Given n pairs of parentheses, write a function to generate all combinations of well-formed parentheses.
+    解题思路：递归， 结束条件：左右括号都用完的情况下
+    """
+
+    def generateParenthesis(self, n):
+        resList = []
+
+        def generate(left, right, res, n):
+            if right == n:
+                resList.append(res)
+            else:
+                if left < n:
+                    generate(left+1, right, res+'(', n)
+                if right < n and right < left:
+                    generate(left, right+1, res+")", n)
+        generate(0, 0, '', n)
+
+        return resList
+
+    """
+    You are given a string, s, and a list of words, words, that are all of the same length. Find all starting indices of substring(s) in s that is a concatenation of each word in words exactly once and without any intervening characters.
+    """
+
+    def findSubstring(self, s: str, words):
+        res_list = []
+        for i in words:
+            pass
+
+
 
 s = Solution()
-print(s.isMatch("aaa", "ab*ac*a"))
+print(s.generateParenthesis(3))
 # array = [[1,2,3],[4,5,6]]
 # print(array[0][1])

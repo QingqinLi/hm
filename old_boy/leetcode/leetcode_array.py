@@ -3,7 +3,7 @@
 """
 __author__ = 'qing.li'
 """
-
+from itertools import permutations, chain
 
 class Solution:
     """中值"""
@@ -50,7 +50,8 @@ class Solution:
     Given an array nums of n integers, are there elements a, b, c in nums such that a + b + c = 0? Find all unique 
     triplets in the array which gives the sum of zero.
     3和问题：
-        2和问题演化而来，常见的解法：利用哈希表和两用双指针（性能会好一点， 和max_container解决方式一致，使用前后两个指针
+        2和问题演化而来，常见的解法：利用哈希表和两用双指针（性能会好一点， 和max_container解决方式一致，使用前后两个指针,
+        基础是列表必须要先排序
     """
 
     def threeSum(self, nums):
@@ -74,6 +75,7 @@ class Solution:
         nums.sort()
 
         for i in range(len(nums)-2):
+            # 去重精髓
             if i != 0 and nums[i] == nums[i-1]:
                 continue
             j = i + 1
@@ -128,8 +130,119 @@ class Solution:
         key = min(result_dict.keys())
         return result_dict[key]
 
-    """Given an array nums of n integers and an integer target, are there elements a, b, c, and d in nums such that a + b + c + d = target? Find all unique quadruplets in the array which gives the sum of target."""
+    """Given an array nums of n integers and an integer target, are there elements a, b, c,
+     and d in nums such that a + b + c + d = target? Find all unique quadruplets in the array which gives the sum of target."""
+    """
+    Given an array nums of n integers and an integer target, are there elements a, b, c, and d in nums such that a + 
+    b + c + d = target? Find all unique quadruplets in the array which gives the sum of target.
+    4sum问题建立在3sum问题的基础上，在3sum问题的基础上再加一层循环，先给list排序。一层循环，加两个指针，对比和和target 的关系来移动指针的
+    位置，关键是要排序！排序！排序！
+    去重用上面的方法会导致0，0，0，0的情况被排除
+    
+    """
+    def fourSum(self, nums, target):
+        nums.sort()
+        result = []
+        len_nums = len(nums)
+        for i in range(len_nums-3):
+            for j in range(i+1, len_nums):
+                z = j + 1
+                k = len_nums - 1
+                while z < k:
+                    sum = nums[i]+nums[j]+nums[z]+nums[k]
+                    if sum > target:
+                        k -= 1
+                    elif sum < target:
+                        z += 1
+                    else:
+                        if [nums[i], nums[j], nums[z], nums[k]] not in result:
+                            result.append([nums[i], nums[j], nums[z], nums[k]])
+                        # result.append([nums[i], nums[j], nums[z], nums[k]])
+                        z += 1
+                        k -= 1
+        return result
+
+    """
+    Given a sorted array nums, remove the duplicates in-place such that each element appear only once 
+    and return the new length.
+    去重，在原list上修改 
+        真正的删除， 需要知道不能在循环中删除的原理
+    """
+
+    def removeDuplicates(self, nums):
+
+        # for i in range(len(nums)):
+        #     while i != 0 and nums[i] == nums[i - 1] and nums[i] != 'flag':
+        #         nums.pop(i)
+        #         nums.append('flag')
+        #
+        #     # else:
+        #     #     count += 1
+        #     # result.append(nums[i])
+        #     # result.insert(0, count)
+        # try:
+        #     index = nums.index('flag')
+        #     nums = nums[:index]
+        # except Exception as e:
+        #     print(e)
+        # return len(nums)
+        i = 1
+        while 1:
+            if i < len(nums):
+                if nums[i] == nums[i-1]:
+                    nums.pop(i)
+                else:
+                    i += 1
+            else:
+                break
+        return len(nums), nums
+
+    """
+    Implement next permutation, which rearranges numbers into the lexicographically next greater permutation of numbers.
+
+    If such arrangement is not possible, it must rearrange it as the lowest possible order (ie, sorted in ascending 
+    order).
+
+    The replacement must be in-place and use only constant extra memory.
+
+    Here are some examples. Inputs are in the left-hand column and its corresponding outputs are in the right-hand 
+    column.
+    permutation的题目， 因为是要求比现有的数字大的最少的数字，所以是从后往前遍历去交换，交换之后对交换之后的数字去排序取最小值。
+        这样来保证获得的是比当前数字大最少的数字，当全部循环完成也没有交换数字（break）的时候，使用else，来把list反转（需求相关）
+    关注点：
+        解题思路，临界条件，细节判断
+    """
+
+    def nextPermutation(self, nums) -> None:
+        """
+        Do not return anything, modify nums in-place instead.
+        range()倒序，需要加-1的步长
+        """
+        for i in range(len(nums)-2, -1, -1):
+            flag = False
+            j = len(nums) - 1
+            while j > i:
+                if nums[i] < nums[j]:
+                    pre = nums[i]
+                    after = nums[j]
+                    nums[j] = pre
+                    nums[i] = after
+                    sub_list = nums[i+1:]
+                    sub_list.reverse()
+                    print(nums[:i+1], sub_list)
+                    if sub_list:
+                        for k in range(len(sub_list)):
+                            nums[i+k+1] = sub_list[k]
+                    flag = True
+                    break
+                else:
+                    j -= 1
+            if flag:
+                break
+        else:
+            nums.reverse()
+        print(nums)
 
 
 s = Solution()
-print(s.threeSumClosest([-10,0,-2,3,-8,1,-10,8,-8,6,-7,0,-7,2,2,-5,-8,1,-4,6], 18))
+print(s.nextPermutation([3,2,1]))
