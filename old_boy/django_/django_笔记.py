@@ -182,6 +182,7 @@ ORM增删改查：
     class_name.objects.filter() 查询条件，返回一个列表
     class_name.objects.get() 返回一个对象 有且只有一个结果的时候正常，否则会报错
     
+    
     class_name.objects.create(name='') 创建一个对象，返回的就是刚创建的对象
     class_name.objects.filter(condition).delete() 删除
     
@@ -191,7 +192,7 @@ ORM增删改查：
     
     多对多的操作：
         1、不能直接操作第三张关系表
-        2、借助orm提供的方法
+        2、借助orm提供的方法,使用查询到的对象操作（一定是一条数据，不然会报错）【0】
             1、all（）
             2、add(id1, id2)
             3、set([id1, id2])
@@ -218,7 +219,7 @@ ORM增删改查：
         1、自己创建第三张表
         2、让ORM创建第三张表
         3、
-        
+        搜索数据的时候，s
     
 图书管理系统：
     编辑或者删除的时候隐式的提交id， path/?id={{}} url传递参数， ？后的参数不会影响路由判断路径
@@ -229,6 +230,9 @@ ORM增删改查：
         setTimeout()
         setinterval()
 request.GET 是取url里面的参数，和什么请求是没有关系的
+request.POST.getlist() 用来获取list数据
+取一条数据的时候如果用的是filter，一定要取第一条数据[0]!!!
+
         
     
 """
