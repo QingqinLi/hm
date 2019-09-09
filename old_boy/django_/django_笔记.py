@@ -6,6 +6,8 @@ __author__ = 'qing.li'
 """
 https://www.cnblogs.com/liwenzhou/p/8296964.html
 http://www.cnblogs.com/liwenzhou/p/7931828.html
+看图：https://www.cnblogs.com/liwenzhou/p/8296964.html
+https://www.cnblogs.com/liwenzhou/p/7931828.html
 
 内容回顾：
     1. MySQL  ****
@@ -105,8 +107,8 @@ from表单提交数据：
 Django基础必会三件套
     from django.shortcuts import HttpResponse, render, redirect
         1、HttpResponse 返回一个指定的字符串时, 把一个字符串成二进制，按照HT，TP响应的格式要求返回
-        2、render： 返回一个HTML文件，打开文件，读取内容，按照响应格式返回， {'key': 'value'} 替换特殊符号，按照响应格式返回
-        3、redirect 跳转 绝对地址（不同网站之间的跳转），相对地址（同一个网站之间的跳转），锚点（同一个网站页面位置的跳转）
+        2、render： 返回一个HTML文件，打开文件，读取内容，按照响应格式返回， {'key': 'value'} 替换特殊符号，按照响应格式返回.特殊符号的替换发生在Django服务端
+        3、redirect 跳转 绝对地址（不同网站之间的跳转），相对地址（同一个网站之间的跳转），锚点（同一个网站页面位置的跳转），给浏览器返回的是一个特殊的响应，这个响应类似于一个命令，让浏览器去访问我指定的URL
     request相关的属性
         request.method  返回的是请求的方法（全大写）：GET/POST
         request.GET 获取URL里面的参数。类似与字典的数据结构
@@ -123,6 +125,91 @@ Django基础必会三件套
             {% endif %}
         {% %} 逻辑相关
         {{ }} 变量相关
+        (.)在模版语言中有特殊的含义，当模版语言遇到.的时候，会按照这样的顺序查询：
+            字典查询
+            属性或者方法查询
+            数字索引查询
+        如果使用的变量不存在，模版系统将插入string_if_invalid 选项的值，它将默认设置为''（空字符串）
+        
+        过滤器（filter）https://www.cnblogs.com/maple-shaw/articles/9333821.html
+            {{value| filter_name:参数}} 参数最多只有一个
+            | 过滤器
+            过滤器支持链式操作： 即一个过滤器的输出作为另一个过滤器的输入
+            过滤器参数包含空格的话必须用引号包裹起来。|的左右都没有空格
+            常用的过滤器：
+                default：如果一个变量是false或者是空的时候，使用给定的默认值，否则使用变量的值 {{value|default:"nothing"}}， 在settings中设置
+                        TEMPLATES的options中增加一个选项string_if_invalid:'string' 可以替代default的作用
+                filesizeformat: 将值格式化为"人类可读"的文件尺寸
+                add: 给变量加参数 {{ value|add:"2" }} {{ first|add:second }}---如果first是[1,2,3]，second是 [4,5,6]，那输出结果是 [1,2,3,4,5,6] 。
+                length: 返回值的长度，作用域字符串和列表
+                lower: 把字母都转换为小写
+                upper: 把字母都转换为大写
+                title：首字母大写
+                ljust：左对齐 "{{ value|ljust:"10" }}" 参数表示一共占几个字符
+                rjust：右对齐 "{{ value|rjust:"10" }}"
+                center：居中
+                slice：切片，参数是切的范围
+                first：取第一个元素
+                last：取最后一个元素
+                join：使用字符串凭借列表， 参数是拼接用的字符串
+                truncatechars:如果字符串字符多于指定的字符数量，那么会被截断， 截断的字符串将会以可翻译的省略号序列（...)结尾， 参数：保留的字符数（包括...){{ value|truncatechars:9}}
+                date:time格式化,{{ value|date:"Y-m-d H:i:s"}}
+                     在setting中配置：DATETIME_FORMAT = 'Y-m-d H:i:s'
+                                          USE_P20N = False
+                safe: django的模版中会对html标签和js等语法标签进行自动转义，为了安全，但是有时不希望这些html元素被转义，可以使用safe
+            自定义filter：
+                自定义过滤器只是带有一个或者两个参数的python函数
+                位置：
+                    app01/
+                    __init__.py
+                    models.py
+                    templatetags/  # 在app01下面新建一个package package
+                        __init__.py
+                        app01_filters.py  # 建一个存放自定义filter的py文件
+                    views.py
+                编写filter：
+                    from django import template
+                    register = template.Library()
+                    
+                    
+                    @register.filter
+                    def fill(value, arg):  value是过滤器前的内容
+                        return value.replace(" ", arg)
+                    
+                    
+                    @register.filter(name="addSB") --name是别名， 可以用这个名字来调用filter
+                    def add_sb(value):
+                        return "{} SB".format(value)
+                使用：
+                    {# 先导入我们自定义filter那个文件 #}
+                    {% load app01_filters %}
+                    
+                    {# 使用我们自定义的filter #}
+                    {{ somevariable|fill:"__" }}
+                    {{ d.name|addSB }}
+                    
+        tags：{% %}
+            for 可用的一些参数:
+                forloop.counter: 当前循环的索引值（从1开始）
+                forloop.counter0 当前循环的索引值（从0开始）
+                forloop.revcounter 当前循环的倒序索引值（到1结束）
+                forloop.revcounter0 当前循环的倒序索引值（到0结束）
+                forloop.first 当前循环是不是第一次循环（布尔值）
+                forloop.last 当前循环是不是最后一次循环（布尔值）
+                forloop.parentloop 本层循环的外层循环
+            for empty: 如果循环为空时候的操作
+            if..elif..else 不支持连续判断 a>b>c 应该使用 a>b and b>c,不支持算数运算 + - * ／ add
+            if语句支持 and or == > < != <= >= in not in is not 判断
+            with: 定义一个中间变量 ？？？
+                {% with 变量 as 别名%}
+                {{别名}}
+                {% endwith %} 一般用在变量名比较长的情况下
+    django模版语言不支持连续判断，a>b>c
+    属性的优先级大于方法
+    
+            
+            
+            
     程序连接mysql
         使用pymysql模块
         1、导入pymsql模块
@@ -154,7 +241,7 @@ DJango中ORM的使用
     2、使用
         1、创建一个数据库（手动，orm不支持操作数据库）
             create database mysite;
-        2、告诉djamgo连接哪个数据库
+        2、告诉django连接哪个数据库
             databases = {
                 'default': {
                     'ENGINE': 'django.db.backends.mysql', 连接数据库的类型
@@ -209,18 +296,33 @@ ORM增删改查：
                     on delete cascade
                     on update cascade
                 )
-            press = models.ForrignKey(to=''---表， on_delete-models.CASCADE--django1.x模式是联级的删除，不写也可以，2.x中需要写明)
+            press = models.ForeignKey(to=''---表， on_delete-models.CASCADE--django1.x模式是联级的删除，不写也可以，2.x中需要写明)
             press在数据库中自动变成press_id
             查询的时候press_id是press的id，press是press的对象
+            外键修改：
+                book_obj = Book.objects.create(title='', press=出版社对象）
+                book_obj = Book.objects.create(title='',press_id=出版社的id）
     给数据库中已经存在的表中添加另外一个字段的时候，这个字段即没有默认值也不能为空，ORM就不知搭配数据库中已经存在的字段该怎么处理这个字段，所以一般在新增字段de
     时候。会指定一个默认值或者允许为空
     
     多对多的关系创建表：
         1、自己创建第三张表
         2、让ORM创建第三张表
+        books = models.ManyToManyField(to='Book')
         3、
-        搜索数据的时候，s
-    
+        搜索数据:
+            author_obj.books.all()
+        修改：
+            author_obj.set([id1, id2, id3])
+            author_obj.add(id1, id2, id3)
+        清空：
+            author_obj.clear() 清除对应关系
+            
+Django框架：
+    MVC：Model View Controller 模型（Model） 视图（View）控制器（Controller) 具有耦合低，重用性高，生命周期成本低等的特点
+    django框架把它拆分成三个部分，MTV（Model---负责业务对象和数据库的对象（ORM），Template---负责如何把页面展示给用户， View---负责业务逻辑，并且在适当的时候调用Model和Template）
+csrf_token： 这个标签用来跨站请求伪造保护在页面的表单上写{% csrf_token %}
+
 图书管理系统：
     编辑或者删除的时候隐式的提交id， path/?id={{}} url传递参数， ？后的参数不会影响路由判断路径
         id 和name都使用post提交，设置id的框为隐藏不展示
@@ -232,7 +334,58 @@ ORM增删改查：
 request.GET 是取url里面的参数，和什么请求是没有关系的
 request.POST.getlist() 用来获取list数据
 取一条数据的时候如果用的是filter，一定要取第一条数据[0]!!!
+注释csrf， form表单可以提交请求
+    相当于在form表单中添加了一个隐藏的input标签。name csrfmiddlewaretoken value asss... 64
 
+
+装饰器：
+    def wrapper(fn):
+        def inner(*args, **kwargs):
+            执行被装饰函数之前的操作
+            ret = fn(*args, **kwargs)
+            执行被装饰函数之后的操作
+            return ret
+        return inner
+        
+    def func(tools):
+        pass
+        
+    func = wrapper(func)
+    print(func(tools))
+    
+母版继承：（避免写重复的代码）
+    1、定义一个母版， 普通的html代码。base.html
+    2、在母版中定义block块
+    3、子页面中继承的母版 {% extends 'base.html' %}
+    4、重写block块
+    
+    注意事项：
+        1、{% extends 'base.html' %}写在第一行
+        2、{% extends name %} name写继承的母版的名字的字符串
+        3、自定义的内容写在block中
+        4、定义几个blcok块，一般要有js css
+    通常会在模板中定义页面专用的css和js块。方便子页面替换
+
+模板：
+    组件：
+        可以将页面常用的页面内容， 如导航条，页尾信息等组件保存在单独的文件中，然后在需要使用的地方按照如下语法导入即可
+        1、写一段代码 nav.html
+        2、{% include 'nav.html' %}
+        
+    静态文件相关：
+        1、{% load static %}
+        2、{% static '相对路径' [as 别名] --- 保存为一个变量%}  去settigs中获取STATIC_URL '／static／'和相对路径进行拼接
+        3、{% get_static_prefic %}去settings中获取static_url, '/static/'
+            {% get_static_prefic %}相对路径
+    
+    自定义inclusion_tag
+        1、在app下创建一个templatetags的python包（名字不能错）
+        2、在包下写py文件 eg.mytags
+        3、编辑文件 from django import template
+                   register  = template.Library()
+        4、定义函数 可以接收参数， 返回一个字典
+        5、函数加上装饰器 @register.inclusion_tag('pagination.html'_
+        6、函数返回的字典，交给pagination.html渲染
         
     
 """

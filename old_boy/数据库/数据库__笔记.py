@@ -462,7 +462,7 @@ mysql备份命令行：
     备份数据表结构：
         mysqdump -u root -d db1 > db1.sql -p
     #导入现有的数据到某个数据库
-        #1.先创建一个新的数据库
+        #1.先创建一个新的数据
         create database db10;
         # 2.将已有的数据库文件导入到db10数据库中
         mysqdump -u root -d db10 < db1.sql -p
