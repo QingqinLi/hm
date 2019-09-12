@@ -14,6 +14,7 @@ https://www.cnblogs.com/maple-shaw/articles/9502602.html
 https://www.cnblogs.com/maple-shaw/articles/9414626.html
 https://www.cnblogs.com/maple-shaw/articles/9333824.html#4289892
 9414626
+https://www.cnblogs.com/maple-shaw/articles/9524153.html
 
 内容回顾：
     1. MySQL  ****
@@ -847,7 +848,8 @@ CSRF中间件
         csrf_protect  给单个视图必须校验
         
     
-            
+Ajx:
+    提交数据，但是不刷新页面            
         
         
     
