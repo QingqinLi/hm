@@ -243,6 +243,37 @@ class Solution:
             nums.reverse()
         print(nums)
 
+    """
+    Suppose an array sorted in ascending order is rotated at some pivot unknown to you beforehand.
+    (i.e., [0,1,2,4,5,6,7] might become [4,5,6,7,0,1,2]).
+    You are given a target value to search. If found in the array return its index, otherwise return -1.
+    You may assume no duplicate exists in the array.
+    Your algorithm's runtime complexity must be in the order of O(log n)---二分查找. 
+    二分查找的变种，高低指针，先找到有序的部分再来使用二分查找，注意边界条件
+    """
+    def search(self, nums, target):
+        low = 0
+        high = len(nums)-1
+        while low <= high:
+            mid = (low + high) // 2
+            if nums[mid] == target:
+                return mid
+            # 左半边是有序的
+            if nums[mid] >= nums[low]:
+                # 目标在当前范围内的时候
+                if nums[low] <= target <= nums[mid]:
+                    high = mid - 1
+                else:
+                    low = mid + 1
+            # 右边有序的情况
+            else:
+                if nums[mid] <= target <= nums[high]:
+                    low = mid + 1
+                else:
+                    high = mid - 1
+        else:
+            return -1
+
 
 s = Solution()
-print(s.nextPermutation([3,2,1]))
+print(s.search([3, 1], 1))

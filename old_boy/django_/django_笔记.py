@@ -8,6 +8,12 @@ https://www.cnblogs.com/liwenzhou/p/8296964.html
 http://www.cnblogs.com/liwenzhou/p/7931828.html
 看图：https://www.cnblogs.com/liwenzhou/p/8296964.html
 https://www.cnblogs.com/liwenzhou/p/7931828.html
+https://www.cnblogs.com/maple-shaw/articles/9323320.html
+https://www.cnblogs.com/maple-shaw/articles/9403501.html
+https://www.cnblogs.com/maple-shaw/articles/9502602.html
+https://www.cnblogs.com/maple-shaw/articles/9414626.html
+https://www.cnblogs.com/maple-shaw/articles/9333824.html#4289892
+9414626
 
 内容回顾：
     1. MySQL  ****
@@ -318,6 +324,11 @@ ORM增删改查：
         清空：
             author_obj.clear() 清除对应关系
             
+    拆表：一对一（foreign_key unique)
+        不是经常查询的字段，分表
+        
+        
+            
 Django框架：
     MVC：Model View Controller 模型（Model） 视图（View）控制器（Controller) 具有耦合低，重用性高，生命周期成本低等的特点
     django框架把它拆分成三个部分，MTV（Model---负责业务对象和数据库的对象（ORM），Template---负责如何把页面展示给用户， View---负责业务逻辑，并且在适当的时候调用Model和Template）
@@ -386,6 +397,458 @@ request.POST.getlist() 用来获取list数据
         4、定义函数 可以接收参数， 返回一个字典
         5、函数加上装饰器 @register.inclusion_tag('pagination.html'_
         6、函数返回的字典，交给pagination.html渲染
+        
+    simple_tag 
+        和自定义filter类似，只不过接收更加灵活的参数
+        注册simple tag 
+            @register.simle_tag(name="plus")
+            def plus(a, b, c)
+                return "{}+{}+{}".format(a, b, c)
+                
+        使用自定义simple tag
+            {% load app01_demo %}
+            simple_tag
+            {% plus "1", "2", "abc" %}
+    
+    inclusion_tag
+        多用于返回html代码片段
+        templatetags/my_inclusion.py
+        from django import template
+
+        register = template.Library()
+        
+        @register.inclusion_tag('result.html')
+        def show_results(n):
+            n = 1 if n < 1 else int(n)
+            data = ["第{}项".format(i) for i in range(1, n+1)]
+            return {"data": data}
+            
+        templates/snippets/result.html
+
+        <ul>
+          {% for choice in data %}
+            <li>{{ choice }}</li>
+          {% endfor %}
+        </ul>  
+        
+        templates/index.html
+        <!DOCTYPE html>
+        <html lang="en">
+        <head>
+          <meta charset="UTF-8">
+          <meta http-equiv="x-ua-compatible" content="IE=edge">
+          <meta name="viewport" content="width=device-width, initial-scale=1">
+          <title>inclusion_tag test</title>
+        </head>
+        <body>
+        
+        {% load inclusion_tag_test %}
+        
+        {% show_results 10 %}
+        </body>
+        </html>
+        
+        流程：页面中使用inclusion_tag 传参数给函数，函数返回一个数据，给inclusion_tag的页面调用
+        
+    视图：
+        1、CBV和FBV
+            FBV function based view
+            CBV class based view
+        
+        2、CBV的流程
+            定义：
+                from django.views import View
+                class AddPress(View):  # 类一定要继承View
+                    def dispatch(self, request, *args, **kwargs):
+                        ret = super().dispatch(request, *args, **kwargs)
+                        return ret
+                        
+                    def get(self, request):
+                        print("get")
+                        print(self.request)
+                        print render(self.request, 'add_press2.html')
+                        
+                    def post(self, request):
+                        print("post")
+                        press_name = request.POST.get("name")
+                        press.objects.create(name = press_name)
+                        return redirect('/press_list/')
+            使用： 
+                url(r'^add_press/$', views.AddPress.as_view())  # 固定写法， 添加出版社
+            流程：
+                1、AddPress.as_view()  view函数
+                2、当请求到来的时候执行view函数
+                    1、实例化自己的类 self
+                        self = cls(**initkwargs)
+                    2、self.request = request
+                    3、执行self.dispatch(request, *args, **kwargs)
+                        1、执行父类的dispatch方法
+                            判断请求方式是否被允许 http_method_names = []
+                                允许的情况
+                                 handler = 通过反射获取 get  post 方法
+                                不允许的情况
+                                 handler = 不允许的方法
+                                handler（request，*args, **kwargs)
+                        2、返回httpResponse对象
+                    4、返回httpResponse对象给django
+                1、加在方法上：
+                    @method_decorator(timer)
+                    def get(self, request):
+                        pass
+                2、加在dispatch上
+                    @method_decorator(timer):
+                    def dispatch(self, request, *args, **kwargs)
+                        pass
+                3、加在类上
+                    @method_decorator(timer, name='post')
+                    @method_decorator(timer, name='get')
+                    class AddPress(View):
+                        pass
+                    
+        3、request
+            print(request.method) GET PIST PUT DELETE OPTION
+            request.GET request.POST request.FILES(获取文件参数） request.path_info url, 不包括域名端口和参数
+            request.body request.scheme request.path 
+            request.encoding
+            request.META request.get_host() request.get_full_path() request.is_secure() request.is_ajax()
+        4、response
+            from django.shortcuts import render, HttpResponse, redirect
+            1、HttpResponse, HttpResponse('str')
+            2、render(request, 'html文件名'， {})  html代码
+            3、redirect(跳转的地址）Location: /press_list/
+            4、HttpResponse(json.dumps(ret)) Content-Type:text/html;
+               charset = utf-8
+               JsonResponse(ret) Content-Type: application/json
+    3、路由
+        pass
+    
+    url命名和反向解析
+        1、命名：
+            url(r'^press_list/$', views.press_list, name = 'press_list),
+            url(r'^home/$', views.press_list, name = 'press_list'),
+            分组
+            url(r'^home/([0-9]{4}/([0-9]{2})/$', views.home, name='home'),
+            命名分组
+            url(r'^home/(?P<year>[0-9]{4})/(?P<month>[0-9]{2})/$', views.home, name='home')
+            分组和命名分组区别： views中接收参数一个是位置参数，一个是关键字参数
+        2、反向解析：
+            1、在视图中的应用
+                from django.urls import reverse
+                reverse('press_list') '/press_list/'
+                分组：
+                    reverse('home', args=('2008', '09')) 'app01/home/2008/09'
+                命名分组：
+                    reverse（'home', args=('2008', '09')) 'app01/home/2009/01'
+                    reverse('home', kwargs = {'year': '2019', 'month': '10'})
+            2、在模板中的应用：
+                {% url 'press_list' %}  '/press_list/'
+                分组
+                {% url 'home' '2019' '10' %} '/app01/home/2008/09/'
+                命名分组：
+                {% url 'home' '2009', '10' %} 'app01/home/2009/10'
+                {% url 'home' month='10' year='2018' %} '/app01/home/2019/10/'
+                
+    namespace 
+        url(r'app02/', include('app02.urls', namespace='app02')),
+        
+        reverse('app02:home', kwargs={'year': '2019', 'month': '1'})
+        
+        {% url 'app02:home' '2018' '10' %}
+                
+ORM:（对象和关系型数据库的映射，将程序中的对象自动持久的持久化到关系型数据库中， 在业务逻辑层和数据库层之间充当了桥梁的作用）--操作对象来操作数据库数据
+    优点：
+        开发效率高，
+    缺点：
+        有一定的局限性，效率低
+    常用字段(记住常用的自定义类型）
+        autoField 一个model不能有两个autoField
+        DateTimeFiled9(auto_now_add--添加的时候把当前时间数据填进去，auto_now, 修改的时候也会更新时间数据) auto_now/auto_now_add/default是互斥的，不能同时设置
+        charField
+        IntegerField
+        BooleanField
+        choice 
+        ...
+        自定义字段
+        
+        null=True 可以为空 （数据库层面）
+        blank=True 可以为空（django层面，）一般这两个都写
+        db_column 数据列的名字， 自定义名字，一般用本身的名字
+        db_index 字段是否可以建立索引
+        choices admin中显示选择框的内容
+        error_messages 自定义错误类型， {'null': '不能为空'}
+        在数据类的下边在定一个类Meta
+        class Meta:
+            db_table = 'new_name'  # 数据库生成的表名称，默认是app名称，下划线，类名
+            # 联合索引
+            index_together = [
+            ]两个存在的字段
+            # 联合唯一索引
+            unique_together =((),)两个存在的字段
+            #排序
+            ordering = （"id")
+     
+    必知必会13条       
+        get 查询不到或者查询到多个就报错
+        filter 查询所有满足条件的对象 -- 对象列表
+        exclude 排除 查询出所有不满足条件的对象 -- 对象列表
+        values 取具体的数据，对象列表，里面的元素是字段，字段：值 没有指定参数，获取全部字段，指定字段，则获取指定的字段数据  ，返回字典序列     
+        values_list 获取具体的数据，对象列表 元素 值， 返回元组序列
+        order_by('id/-id') -为降序， 多个字段（一个字段重复，按照第二个字段排序）
+        reverse 对查询结果反序，前面需要先进行排序，才有效
+        distinct() 去重复
+        count() 计数， 返回总数
+        first（） 获取当前结果的第一条，是一个对象，类似之前取出来是一个queryset之后用索引[0]取第一个的方法
+        exists() 数据是否存在
+        返回的是对象列表的方法：
+            all. filter exclude order_by reverse distinct values values_list
+        返回对象的方法：
+            get first last create
+        返回布尔值：
+            exist
+        返回数字的：
+            count
+    单表查询之双下划线：
+        __gt greater than 大于
+        __lt less than 小于
+        __gte greater than equal 大于等于
+        __lte less than equal 小于等于
+        __in=[] list in
+        __range = [1, 3] 范围， 大于等于小于等于,等价与between and
+        __contains 包含 模糊查询
+        __icontains 包含 忽略大小写
+        __startswith 以什么开头
+        __istartswith 以什么开头 忽略大小写
+        __endswith 以什么结尾
+        __isnull 是否为空
+        [limit: offset] 
+        __regex正则匹配，__iregex 不区分大小写
+    
+    外键的查询：
+        book_obj.publisher 查询外键的出版社对象
+        obj = models.Book.objects.filter(publisher__name = 'xxx') 内联查询方式, 两张表的时候__表示跨表查询
+        obj = models.Book.objects.all().vaues("title', 'publisher__name') 查询字段。
+        从book 到 publisher为正向查询
+        
+        从publisher 到 book是反向查询
+        obj = models.publisher.objects.get(id=1)
+        print(obj.book_set.all()) book_set 固定写法，管理对象（表名小写_set)
+        obj.books.all
+        obj.books.set(set_list对象列表)
+        obj.books.add(set对象)  books--related_name
+        在models中：
+            publisher = models.ForeignKey(to ='publisher;, related_name = 'books') 此上边的book_set要改成这里的relate_name
+            查出版社 
+                models.publisher.objects.filter(id=models.Book.objects.get(title='xxx').publisher_id) 比较麻烦
+                models.publisher.objects.filter(books__title = 'xxx')
+        related_query_name 设置了之后查询只能用这个名字查询，不影响create等
+        Publisher.objects.filter(xxxx__title='跟太白学理发') 书名
+        字段查找（跨表）：
+            关联字段__字段
+        对象查找：
+            obj.表名_set 
+        字段查找:
+            表名__字段
+    多对多的查询
+        正向：
+            obj = Author.objects.filter(id=1)
+            
+            obk.books.set(list)
+            obj.books.add(*list)
+            obj.books.remove(*list)
+            obj.books.clear()
+            obj.books.create(title = 'xxx', price=12, pulisher_id=1) 创建author关联的书籍的对象
+        反向：
+            obj = Book.objects.get(id=1)
+            obj.author_set.all()
+            在author中book设置related_name. 替代author_set
+    在关联的任何一段，不需要调用save方法
+    
+            
+聚合和分组：
+    聚合：aggregate(Max('price'))
+        是一个终止子句， 可以查询多个，但是不能在有其他的操作，
+        aggregate(max = Max('price')) 新命名，位置传参要放在关键字传参前面
+        from django.db.models import Avg, Sum, Max, Min, Count
+        models.Book.objects.all().aggregate(Avg("price"))
+    分组：annotate() 返回的是对原来的查询结果增加一列聚合结果的querySet， 键的名称是按照字段和聚合函数的名称自动生成的
+    
+F和Q：
+    F:
+        from django.db.models import F
+        models.Book.objects.filter(sale__gt=F("kucun").values()
+        把字段的值拿出来
+            应用：翻倍， 
+    Q:
+        from django.db.models import Q
+        使用：
+            Q(id__lte=3)|Q(id__gte=6)
+            & | ~ 与或非
+            
+事务：
+    同数据库中的事务概念（原子性）
+    from django.db import transaction
+    with transaction.atomic():
+        new_publisher = '''
+        
+    
+cookie:
+    是一个保存在浏览器本地的一组组键值对，特征：是服务器让浏览器去保存的，浏览器有权利是否进行保存
+    为什么要有cookie：
+        http协议是无状态的，每次请求都是无关联的，都没有办法保存状态，使用cookie保存状态
+    一般用在登录
+        在登录成功之后
+            ret = redirect('home')
+            ret.set_cookie('is_login', '1'， max_age=xx) 设置键值对
+            ret.set_signed_cookie(key, value, max_age, salt='xx') 加盐加密cookie
+            return ret
+        获取cookies：
+            request.COOKIES
+            request.get_sgined_cookie(key, salt='xxx', default=''--取不到时候的默认值)
+        在需要使用cookie的时候去判断cookie的值是否为为期望值
+        request.get_full_path 提交数据的时候，提交给当前的路径
+        
+        设置cookie：
+        删除cookie：
+            登录注销的时候
+            ret.delete_cookie(key)
+            
+        参数：
+            max_age: 最大存活时间
+            path: 一级域名，二级域名
+            
+    不允许使用cookie之后，网站登录会出现问题
+    数据不能太长
+    不安全(明文）
+    
+    
+session：
+    与cookie配合使用
+    存在服务器上的键值对
+    为什么要用session：
+        cookie保存在浏览器上，不安全
+        cookie的长度收到限制
+    使用：
+        设置 request.session['is_login'] = 1
+            request.session.setdefault(key, value)
+        获取：
+            request.session[key]
+            request.session.get(key)
+        删除：
+            del request.session[key] 删除某一个键值对
+            request.session.delete() 删除该用户的所有session数据，不删除cookie （拿着钥匙却找不到箱子了）
+            request.session.flush() 删除该用户的所欲session数据， 删除cookie （钥匙也删除了）
+        
+        配置：
+            默认存放在django_session
+            setting中有两个相关设置
+            默认到期时间是两周之后
+            
+            # Cookie name. This can be whatever you want.
+			SESSION_COOKIE_NAME = 'sessionid'
+			# Age of cookie, in seconds (default: 2 weeks).
+			SESSION_COOKIE_AGE = 60 * 60 * 24 * 7 * 2
+			
+			# Whether to save the session data on every request.
+			SESSION_SAVE_EVERY_REQUEST = False
+			# Whether a user's session cookie expires when the Web browser is closed.
+			SESSION_EXPIRE_AT_BROWSER_CLOSE = False
+			
+			SESSION_ENGINE = 'django.contrib.sessions.backends.db'
+            
+        浏览器中存session_key 叫做session_id
+        常用：
+            删除数据库中的内容，但是不删除浏览器中的
+        设置超时时间：
+            request.session/set_exipry()
+        清除所有过期的session
+            request.session.clear_exipred()
+            
+            
+        
+中间件：
+    可以实现给多有请求加上相同的操作
+    是一个中间类，用来在全局范围内处理和响应的一个钩子，使用不当，会影响性能
+    五个方法：
+        process_request(self, request)
+        process_view(self, request, view_func, view_args, view_kwargs)
+        process_template_response(self, request, response)
+        process_exception(self, request, exception)
+        process_response(self, request, response)
+        
+        process_request:
+            执行时间：
+                在视图函数执行之前
+            参数 
+                request  视图函数中用到的request
+            执行顺序
+                按照注册顺序 顺序执行
+            返回值：
+                None: 正常流程走
+                HttpResponse对象
+                    当前中间减后面的中间件的process_request和process_response方法，视图函数都不执行，执行当前中间的process_response方法及之前的中间的process_response方法
+                    执行当前中间件的process_response方法以及之前的中间的process_response方法
+        
+        process_response
+            执行时间：
+                在视图函数执行之后
+            参数
+                request  视图函数中用到的request
+                response 视图函数中返回的response
+            返回值：
+                必须是response对象
+            执行顺序；
+                按照注册顺序倒序执行
+        
+        process_view
+            执行时间
+                process_request之后，以及路由匹配之后，在视图函数执行之前
+            参数：
+                view_func   要执行的视图函数
+                view_args 视图函数的位置参数
+                view_kwargs 视图函数的关键字参数
+            返回值：
+                None 正常走
+                response: 不会调用其他中间件的process_view，视图函数，执行全部的response函数
+            
+            执行顺序
+                按照注册顺序 顺序执行
+            
+        process_exception(self, request, exception)
+            执行时间（触发条件：视图函数有异常才执行）
+                在视图函数之后，在process_response之前
+            参数
+                excepion  错误信息对象
+            返回值
+                None 正常走，给下一个中间件的process_exception来处理异常
+                HttpResponse对象
+                    注册顺序之前的中间件的process_exception方法不走了
+                    执行所有中间件的process_response方法， 返回给浏览器
+            执行顺序
+                按照注册顺序倒序执行
+        
+        process_template_response
+            执行时间（触发条件：response对象要求有一个render方法） 视图函数执行完成后立即执行
+                在视图函数之后，在process_response之前
+            参数
+            返回值
+                返回response
+                不返回视图函数的return的结果了，而是返回视图函数的return的值（对象）中render方法的结果）
+            执行顺序 
+                按照注册顺序倒序执行
+            
+    
+    
+CSRF中间件
+    CSRF跨站请求伪造
+    补充：
+        两个装饰器
+        from django.views.decorators.csrf import csrf_exempt, csrf_protect
+        csrf_exempt  给单个视图排除校验
+        csrf_protect  给单个视图必须校验
+        
+    
+            
+        
         
     
 """

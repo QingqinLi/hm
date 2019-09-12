@@ -340,17 +340,58 @@ class Solution:
         return resList
 
     """
-    You are given a string, s, and a list of words, words, that are all of the same length. Find all starting indices of substring(s) in s that is a concatenation of each word in words exactly once and without any intervening characters.
+    You are given a string, s, and a list of words, words, that are all of the same length. Find all starting indices of
+    substring(s) in s that is a concatenation of each word in words exactly once and without any intervening characters.
+    全排列算法
     """
 
     def findSubstring(self, s: str, words):
-        res_list = []
-        for i in words:
-            pass
+        result = []
+        result_list = []
+        if not words:
+            return []
+
+        def perm(l, s, e):
+            if s >= e:
+                result.append(''.join([i for i in l]))  # 使用列表生成式，实现第一层的深拷贝 https://www.cnblogs.com/Black-rainbow/p/9577029.html
+                # print(result)
+            else:
+                i = s
+                for num in range(s, e):
+                    l[i], l[num] = l[num], l[i]
+                    perm(l, s+1, e)
+                    l[i], l[num] = l[num], l[i]
+
+        perm(words, 0, len(words))
+        result = list(set(result))
+        print(result)
+        for i in result:
+            if i in s:
+                print(s, i)
+                count = s.count(i)
+                print(count)
+                if count == 1:
+                    result_list.append(s.index(i))
+                else:
+                    s1 = s
+                    count_now = count
+                    index = 0
+                    while count_now:
+                        result_list.append(s1.index(i, index))
+                        index = len(words) * (count - count_now + 1) + s1.index(i)
+                        count_now -= 1
+
+        return list(set(result_list))
+
+    def findSubstring2(self, s: str, words):
+
+        pass
+
+
 
 
 
 s = Solution()
-print(s.generateParenthesis(3))
+print(s.findSubstring2("aaa", ['a', 'a']))
 # array = [[1,2,3],[4,5,6]]
 # print(array[0][1])
