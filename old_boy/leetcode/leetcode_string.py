@@ -342,7 +342,10 @@ class Solution:
     """
     You are given a string, s, and a list of words, words, that are all of the same length. Find all starting indices of
     substring(s) in s that is a concatenation of each word in words exactly once and without any intervening characters.
-    全排列算法
+    全排列算法   暴力解法
+    先找到长度为n*单个字段长度的子字符串，子字符串按照每个字符的长度分割为列表，查看目标列表中的每个值是都都在这个子字符串中（比较一个，弹出一个）
+        避免重复字符串，注意输入为空的情况
+    
     """
 
     def findSubstring(self, s: str, words):
@@ -384,14 +387,47 @@ class Solution:
         return list(set(result_list))
 
     def findSubstring2(self, s: str, words):
+        """
+        找长度为n*length的子串，看是不是包含了全部的list中的值
 
-        pass
+        :param s:
+        :param words:
+        :return:
+        """
+        def split_n(s, n):
+            l = []
+            while s:
+                l.append(s[0:n])
+                s = s[n:]
+            return l
+
+        if s == '' or words == []:
+            return []
+        need_length = len(words) * len(words[0])
+        print(need_length)
+        ll = {}
+        result = []
+        for i in range(len(s) - need_length + 1):
+            ll[i] = s[i:i+need_length]
+        for i in ll:
+            res_l = split_n(ll[i], len(words[0]))
+            print(res_l)
+            for j in words:
+                if j not in res_l:
+                    break
+                else:
+                    res_l.remove(j)
+            else:
+                result.append(i)
+        print(ll, result)
+        return result
+
 
 
 
 
 
 s = Solution()
-print(s.findSubstring2("aaa", ['a', 'a']))
+print(s.findSubstring2("ababaab", ["ab","ba","ba"]))
 # array = [[1,2,3],[4,5,6]]
 # print(array[0][1])

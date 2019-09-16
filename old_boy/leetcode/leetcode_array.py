@@ -274,6 +274,41 @@ class Solution:
         else:
             return -1
 
+    """
+    Given an array of integers nums sorted in ascending order, find the starting and ending position of a given target value.
+    Your algorithm's runtime complexity must be in the order of O(log n).
+    If the target is not found in the array, return [-1, -1].
+    二分法查找：
+        找到目标之后，在目标的前后查找是否有相同的值，有的话就返回范围，没有就返回-1，-1
+    """
+    def searchRange(self, nums, target):
+        low = 0
+        high = len(nums)-1
+        start = -1
+        end = -1
+        while low <= high:
+            mid = (low + high) // 2
+            print(mid, low, high)
+            if(nums[mid]) == target:
+                start = mid
+                pre = mid-1  # 这里是-1的操作
+                after = mid + 1
+                end = mid
+                while pre >= 0 and nums[pre] == target:
+                    start = pre
+                    pre -= 1
+                while after < len(nums) and nums[after] == target:
+                    end = after
+                    after += 1
+                break
+            elif nums[mid] > target:
+                high = mid - 1
+            else:
+                low = mid + 1
+        return [start, end]
+
+
+
 
 s = Solution()
-print(s.search([3, 1], 1))
+print(s.searchRange([], 3))

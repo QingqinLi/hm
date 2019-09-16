@@ -15,6 +15,7 @@ https://www.cnblogs.com/maple-shaw/articles/9414626.html
 https://www.cnblogs.com/maple-shaw/articles/9333824.html#4289892
 9414626
 https://www.cnblogs.com/maple-shaw/articles/9524153.html
+https://www.cnblogs.com/maple-shaw/articles/9537320.html
 
 内容回顾：
     1. MySQL  ****
@@ -934,6 +935,8 @@ form：
             视图中
                 form_obj = RegForm()
                 return render(request, 'register2.html', {"form_obj": form_obj})
+                form_obj.is_valid() 布尔值
+                form_obj.cleaned_data 所有通过校验的字段的名字和值
                 
                 模板中：
                     {{ form_obj.as_p }}  自动生成多个p标签 包含label input框
@@ -951,6 +954,7 @@ form：
                 'min_length' : ''
                 'required': ''
             }
+            disabled 是否是不可修改的
             
             widget = widgets.PasswordInput()  插件 执行数据的类型
         
@@ -960,9 +964,9 @@ form：
                 max_length = 6
                 required = False
             2、自定义校验规则
-                validators = [校验器1， 校验器2]
+                validators = [校验器1， 校验器2--可以是函数，也可以是自定义]
                 1、
-                    from django.core.validators import RefexValidator
+                    from django.core.validators import RegexValidator
                     RegexValidator(r'^1[3-9]\d{9}$', '错误提示信息')
                 2、自定义函数
                     from django.core.exceptions import ValidationError
@@ -977,6 +981,8 @@ form：
                         if re.match(r'^[3-9]\d{9]$', value):
                             return value
                         raise ValidationError("xxx")
+                    通过校验： 返回当前字段的值
+                    不通过 raise ValidationError()
                 全局钩子
                     def clean(self):
                         pwd = self.cleaned_data.get("pwd")
@@ -986,7 +992,52 @@ form：
                             return self.cleaned_data
                         self.add_error("re_pwd", '')
                         raise ValidationError("两次密码不一致")
-                    
+                    通过校验：
+                        返回self.cleaned_data
+                    不通过：
+                        self.add_error('字段名'， '错误提示'）
+                        raise validationError()
+
+django自带的用户认证
+    auth:默认使用auth_user表来存储用户数据 from django.contrib import auth
+        创建超级用户
+            python manage.py createsuperuser 
+            密码是加密的
+        认证 校验用户名和密码
+            obj = auth.authenticate(request, username, password)
+            会在user对象上设置一个属性来标示后段已经认证了该用户，且该信息在后续的登录过程中是需要的
+            认证成功返回对象 失败None
+            is_authenticated() 判断当前请求是否通过了认证
+        保存登录状态 记录到session login(request, user-经过认证的user对象)
+            实现用户登录的功能，本质上会在后段为该用户生成相关的session数据
+            auth.login(request, obj)
+            from django.contrib,auth.decorators import login_required
+            装饰器 login_required() 给某个视图添加登录校验，没有登录会跳转到django默认的URL；／accounts/login'/
+                可以在setting文件中lOGIN_URL进行修改
+        注销 删除session logout(request) 无返回值， session信息会全部清除
+            from django.contrib.auth import logout
+        对象和匿名对象（不需要session的情况）
+        判读登录状态
+        创建用户 create_user() 密码是加密的
+            from django.contrib
+            create_superuser() 创建超级用户
+        is_active 是否可以登录  
+        检查密码：
+            check_password(password)
+            set_password(password) 
+            设置完之后一定要调用用户对象的save方法
+            
+        user对象的属性 
+            username 
+            password
+            is_staff 用户是否拥有网站的管理权限
+            is_active 是否允许用户登录
+        拓展默认的auth_user
+            继承AbstractUser类，定义一个自己的Model类
+            在setting中说明：
+                AUTH_USER_MODEL = 'app名.UserInfo;
+            一旦执行类新的认证系统所用的表，就要在数据库中创建该表，不能继续使用原来默认的auth_user表了
+         
                         
         
     
