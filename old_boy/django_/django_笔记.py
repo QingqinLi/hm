@@ -852,5 +852,142 @@ Ajx:
     提交数据，但是不刷新页面            
         
         
+        
+        
+json：
+    一种数据结构，跨平台跨语言
+    python中json数据的转换
+    1、数据类型
+        字符串 数字 布尔值 列表 字典 None
+    2、序列化 python的数据类型 -》json字符串
+        json.dumps(python的数据结构）
+        json.dump(python的数据类型,f-文件句柄）
+    3、反序列化 json字符串 -》python放入数据类型
+        json.loads(json字符串）
+        json.load(json字符串，f--文件句柄）
+    js中json数据的转换
+    1、数据类型 
+        字符串 数字 布尔值 数组 对象 null
+    2、序列化 js的数据类型 0》 json字符串
+        JSON.stringify(js的数据类型）
+    3、反序列化 json字符串 -》js数据类型
+        JSON.parse(json字符串）
+    JsonResponse({})
+    JsonResponse([], safe=False)
+    
+Ajax:
+    1、浏览器向服务器发请求的方式
+        在浏览器的地址栏中输入url 回车 GET
+        form表单发请求
+            action 提交的地址
+            method 请求方式 GET/POST
+            input标签必须要有name属性
+            一个类型是submit的input标签 或者button按钮
+        a标签 GET
+        Ajax：
+            AJax是一个与服务器交互的技术， JS技术
+            特点：异步 不刷新页面 数据量小
+    使用jq发送ajax请求：
+        导入jq
+        $.ajax({
+            url: 发送的地址,
+            type: 'post',
+            data:{
+                k1:v1,
+                k2:v2,
+            },
+            success:function(res){
+                res 返回的响应的响应体
+            }
+            error:function(res){
+                res 返回的响应的响应体
+            }
+        })
+    ajax如何通过django的CSRF验证：
+        1、在data中添加csrfmiddlewaretoken 的值
+            {% csrf_token %}
+            data: {
+                csrfmiddlewaretoken: $('[name="cerfmiddlewaretoken"]').val(),
+                k1:v1,
+                k2:v2,
+            }
+        2、设置请求头
+            headers:{"X-CSRFToken": $('[name="csrfmiddlewaretoken"]').val()
+        3、导入文件
+    上传文件
+    
+
+form：
+    form
+        完成的事情
+            有input标签，让用户可以填数据
+            校验form表单提交的数据
+            提示错误信息
+    django中的form
+        定义
+            from djsngo import forms
+            
+            class RegForm(forms.Form):
+                user = forms.CharFiled(label="用户名"）
+                pwd = forms.CharFiled(label="密码"）
+        使用
+            视图中
+                form_obj = RegForm()
+                return render(request, 'register2.html', {"form_obj": form_obj})
+                
+                模板中：
+                    {{ form_obj.as_p }}  自动生成多个p标签 包含label input框
+                    {{ form_obj.user }} 生成某个字符安的input框
+                    {{ form_obj.user.errors }} 某个字段的所有错误信息
+                    {{ from_obj.user.errors.0 }} 某个字段错误信息的第一个
+                    
+                    {{ form_obj.errors }} 所有字段的错误信息
+        字段和参数
+            参数
+            label = '用户名', 标签的展示
+            min_length 校验的规则 最小长度
+            initial = 'alex',  初始值
+            error_messages = { 自定义错误提示
+                'min_length' : ''
+                'required': ''
+            }
+            
+            widget = widgets.PasswordInput()  插件 执行数据的类型
+        
+        校验
+            1、每个字段有默认的校验方法
+                min_length = 6,
+                max_length = 6
+                required = False
+            2、自定义校验规则
+                validators = [校验器1， 校验器2]
+                1、
+                    from django.core.validators import RefexValidator
+                    RegexValidator(r'^1[3-9]\d{9}$', '错误提示信息')
+                2、自定义函数
+                    from django.core.exceptions import ValidationError
+                    
+                    def check_name(value):
+                        if 'alex' in value:
+                            raise ValidationError('xxxx')
+            3、钩子函数
+                局部钩子
+                    def clean_phone(self):
+                        value = self.cleaned_data.get("phone")
+                        if re.match(r'^[3-9]\d{9]$', value):
+                            return value
+                        raise ValidationError("xxx")
+                全局钩子
+                    def clean(self):
+                        pwd = self.cleaned_data.get("pwd")
+                        re_pwd = self.cleaned_data.get("re_pwd")
+                        
+                        if pwf == re_pwd:
+                            return self.cleaned_data
+                        self.add_error("re_pwd", '')
+                        raise ValidationError("两次密码不一致")
+                    
+                        
+        
     
 """
