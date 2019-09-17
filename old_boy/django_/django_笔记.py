@@ -847,13 +847,27 @@ CSRF中间件
         from django.views.decorators.csrf import csrf_exempt, csrf_protect
         csrf_exempt  给单个视图排除校验
         csrf_protect  给单个视图必须校验
-        
     
-Ajx:
-    提交数据，但是不刷新页面            
-        
-        
-        
+    处理过程：
+        process_request
+            从请求的cookie中获取csrftoken的值 csrf_token
+            request.META['CSRF_COOKIE']
+        process_view:
+            如果视图函数加上了csrf_exempt的指示器，则不作校验
+            如果请求方式是get, head, options, trace 也不作校验
+            其他的请求方式做校验
+                request.META.get('CSRF_COOKIE;)  csrf_token
+                
+                request_csrf_token = ''
+                # 从request.POST中获取csrfmiddlewaretoken的值
+                request_csrf_token = request.POST.get("csrfmiddlewaretoken', '')
+                # 从请求头中获取x-csrftoken的值
+                request_csrf_token = request.META.get(settings.CSRF_HEADER_NAME, '')
+                request_csrf_token 和 csrf_token校验
+                校验成功 正常走
+                校验失败 拒绝请求
+                
+            
         
 json：
     一种数据结构，跨平台跨语言
@@ -912,9 +926,19 @@ Ajax:
                 k1:v1,
                 k2:v2,
             }
+            {#注意点： url必须要有"" 使用反向解析的时候需要注意这个问题#}
         2、设置请求头
             headers:{"X-CSRFToken": $('[name="csrfmiddlewaretoken"]').val()
-        3、导入文件
+        3、导入文件 全局的设置
+            从cookie中取值，必须有cookie
+            有cookie的方式
+                1、使用{% csrf_token %}
+                2、不使用{% csrf_token%}
+                    from django.views.decorators.csrf import ensure_csrf_cookie
+                    将ensure_csrf_cookie加在视图上 保证返回的响应有cookie
+            ajax_set_up.js 通过js引入，可以实现全局的设置csrf
+                    
+    ajax提交数据不能再用form提交，会造成多次请求，无法获得数据的情况
     上传文件
     
 
@@ -1018,14 +1042,17 @@ django自带的用户认证
             from django.contrib.auth import logout
         对象和匿名对象（不需要session的情况）
         判读登录状态
-        创建用户 create_user() 密码是加密的
+        
+        创建用户 
+            普通model创建的密码是明文的， 登录会报错
+            create_user() 密码是加密的
             from django.contrib
             create_superuser() 创建超级用户
         is_active 是否可以登录  
         检查密码：
             check_password(password)
             set_password(password) 
-            设置完之后一定要调用用户对象的save方法
+            设置完之后一定要调用用户对象的save方法 request.user.save()
             
         user对象的属性 
             username 

@@ -307,8 +307,50 @@ class Solution:
                 low = mid + 1
         return [start, end]
 
+    """
+    Given a sorted array and a target value, return the index if the target is found. If not, return the index where it would be if it were inserted in order.
+    You may assume no duplicates in the array.
+    经典例子：
+        二分法，找不到目标值的情况下，low指针指向的是该值应该插入的位置，恰好停在比target大的index上
+    """
 
+    def searchInsert(self, nums, target):
+        low = 0
+        high = len(nums) - 1
+        mid = (low + high) // 2
+        while low <= high:
+            mid = (low + high) // 2
+            if nums[mid] == target:
+                return mid
+            elif nums[mid] > target:
+                high = mid - 1
+            else:
+                low = mid + 1
+        else:
+            return low
+
+    """
+    Given a set of candidate numbers (candidates) (without duplicates) and a target number (target),
+    find all unique combinations in candidates where the candidate numbers sums to target.The same repeated number may be chosen from candidates unlimited number of times.
+    """
+    def combinationSum(self, candidates, target):
+        candidates.reverse()
+        result = []
+        for i in range(len(candidates)):
+            if not candidates[i] > target:
+                if candidates[i] == target:
+                    result.append(candidates[i])
+                else:
+                    l = [candidates[i],]
+                    while target - i:
+                        if len(candidates) > i:
+                            for j in range(i+1, len(candidates)):
+                                if
+
+
+
+        pass
 
 
 s = Solution()
-print(s.searchRange([], 3))
+print(s.combinationSum([2, 3, 6, 7], 7))
