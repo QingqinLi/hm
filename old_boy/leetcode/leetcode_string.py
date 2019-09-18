@@ -423,11 +423,47 @@ class Solution:
         return result
 
 
+    """
+    Given a string containing just the characters '(' and ')', 
+    find the length of the longest valid (well-formed) parentheses substring.
+    使用列表模拟栈，匹配则出栈,未匹配到则重新开始计数， 列表嵌套标记字符是否匹配到数据
+    """
 
+    def longestValidParentheses(self, s: str) -> int:
+        all_list = []
+        left_list = []
+        for i in range(len(s)):
+            if s[i] == '(':
+                left_list.append([i, 1])
+            else:
+                if left_list:
+                    end = len(left_list) - 1
+                    while left_list[end][1] == 0:
+                        if end == 0:
+                            all_list.append(left_list)
+                            left_list = []
+                            break
+                        end -= 1
+                    else:
+                        left_list[end][1] = 0
+        all_list.append(left_list)
 
+        m = 0
+        for left in all_list:
+            count = 0
+            for i in left:
+                if i[1] == 0:
+                    count += 1
+                else:
+                    if count > m:
+                        m = count
+                    count = 0
+            if count > m:
+                m = count
+        return m*2
 
 
 s = Solution()
-print(s.findSubstring2("ababaab", ["ab","ba","ba"]))
+print(s.longestValidParentheses(")()())()()("))
 # array = [[1,2,3],[4,5,6]]
 # print(array[0][1])

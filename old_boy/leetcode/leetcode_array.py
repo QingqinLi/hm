@@ -332,24 +332,47 @@ class Solution:
     """
     Given a set of candidate numbers (candidates) (without duplicates) and a target number (target),
     find all unique combinations in candidates where the candidate numbers sums to target.The same repeated number may be chosen from candidates unlimited number of times.
+    暴力解法：
+        组合任意多数， 然后确认是否为目标数字，并返回所有可能的组合，必须要遍历所有的可能性才能求解
     """
     def combinationSum(self, candidates, target):
-        candidates.reverse()
+
+        # 递归算法 实现
         result = []
+
+        def rerc(l, t, r):
+            print("start", l, t, r)
+            if t in l:
+                r.append(t)
+                result.append(r)
+            elif l:
+                need_t = t
+                print("need_t", t)
+                print("=="*10)
+                for i in range(len(l)):
+                    print("hello", i, l[i], t, need_t)
+                    r.append(l[i])
+                    t -= l[i]
+                    if l and t >= 0:
+                        return rerc(l, t, r)
+                    else:
+                        print("else", l, t, need_t)
+                        t = need_t
+                print("||" * 10)
+
+        candidates.sort(reverse=True)
+        print("c", candidates)
+        # result = []
         for i in range(len(candidates)):
             if not candidates[i] > target:
                 if candidates[i] == target:
                     result.append(candidates[i])
                 else:
-                    l = [candidates[i],]
-                    while target - i:
-                        if len(candidates) > i:
-                            for j in range(i+1, len(candidates)):
-                                if
+                    print("*" * 20)
+                    l = candidates[i:]
+                    rerc(l, target, [])
 
-
-
-        pass
+        print(result)
 
 
 s = Solution()
