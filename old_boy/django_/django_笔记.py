@@ -564,6 +564,7 @@ ORM:（对象和关系型数据库的映射，将程序中的对象自动持久�
         有一定的局限性，效率低
     常用字段(记住常用的自定义类型）
         autoField 一个model不能有两个autoField
+            不指定主键的话，系统会自动添加一个主键字段到model
         DateTimeFiled9(auto_now_add--添加的时候把当前时间数据填进去，auto_now, 修改的时候也会更新时间数据) auto_now/auto_now_add/default是互斥的，不能同时设置
         charField
         IntegerField
@@ -664,6 +665,9 @@ ORM:（对象和关系型数据库的映射，将程序中的对象自动持久�
             obj.author_set.all()
             在author中book设置related_name. 替代author_set
     在关联的任何一段，不需要调用save方法
+    
+    Meta:
+        模型的元数据，指的是"除了字段外的所有内容"， eg 排序方式， 数据库表名，人类刻度的单数或者复数名
     
             
 聚合和分组：
@@ -1066,6 +1070,8 @@ django自带的用户认证
             一旦执行类新的认证系统所用的表，就要在数据库中创建该表，不能继续使用原来默认的auth_user表了
          
                         
-        
+自定义权限系统：
+    扩展User模型 ／ 实现一个完全定制的权限
+    在setting文件中 AUTH_USER_MODEL 设置覆盖默认的User模型，应该在创建任何迁移或者第一次运行manage.py migrate前设置它
     
 """
