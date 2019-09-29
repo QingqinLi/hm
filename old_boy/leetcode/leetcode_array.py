@@ -374,6 +374,95 @@ class Solution:
 
         print(result)
 
+    """
+    Given an integer array nums, find the contiguous subarray (containing at least one number) which has the largest sum and return its sum.
+    """
 
-s = Solution()
-print(s.combinationSum([2, 3, 6, 7], 7))
+    def maxSubArray(self, nums):
+        max_index = nums.index(max(nums))
+        # print(max_index)
+        pre_list = []
+        for i in nums[0: max_index]:
+            if i <= 0:
+                pass
+            else:
+
+                pre_list.append(i)
+            print(i)
+    """
+    Students are asked to stand in non-decreasing order of heights for an annual photo.
+    Return the minimum number of students not standing in the right positions.  (This is the number of students that must move in order for all students to be standing in non-decreasing order of height.)
+    list复制：
+        使用切片法： 会生成原来对象的一个copy
+        new_list = list(old_list)
+        new_list = copy.copy(old_list) 速度较慢 需要先确定要复制内容的数据类型
+        new_list = copy.deepcopy(old_list) copy库中的深拷贝 
+    """
+    def heightChecker(self, heights):
+        high = list(heights)
+        high.sort()
+        count = 0
+        for i in range(0, len(heights)):
+            if not heights[i] == high[i]:
+                count += 1
+        return count
+
+    """
+    Given an unsorted integer array, find the smallest missing positive integer.
+    """
+
+    def firstMissingPositive(self, nums):
+        for i in range(1, len(nums) + 1):
+            if i not in nums:
+                return i
+        else:
+            return len(nums) + 1
+
+    """
+    You are given an n x n 2D matrix representing an image.
+    Rotate the image by 90 degrees (clockwise).
+    solution:
+        1、对称交换
+        2、反转每一行
+    """
+
+    def rotate(self, matrix):
+        """
+        Do not return anything, modify matrix in-place instead.
+        """
+        for i in range(0, len(matrix)):
+            for j in range(0, i):
+                matrix[i][j], matrix[j][i] = matrix[j][i], matrix[i][j]
+        for line in matrix:
+            line.reverse()
+
+    """
+    Given an array of integers arr, write a function that returns true if and only if the number of occurrences of 
+    each value in the array is unique.
+    """
+
+    def uniqueOccurrences(self, arr) -> bool:
+        set_arr = set(arr)
+        count_list = []
+        for i in set_arr:
+            count = arr.count(i)
+            if count in count_list:
+                return False
+            count_list.append(count)
+        else:
+            return True
+
+    """
+    Given n non-negative integers representing an elevation map where the width of each bar is 1, compute how much water it is able to trap after raining.
+    """
+    def trap(self, height) -> int:
+        for i in range(len(height)-1):
+            for j in range(i+1, len(height)):
+                if height[j] < 1:
+                    pass
+
+
+
+if __name__ == '__main__':
+    s = Solution()
+    print(s.uniqueOccurrences([1,2]))

@@ -84,4 +84,93 @@ modelForm (比form使用方便）
         from django.utils.safestring import mark_safe  字符串不转义
         from django.utils.html import format_html
 
+
+编辑：
+    form_obj = CustomerForm(instance=obj)
+	form_obj带着原有的数据，根据数据生成input的值
+    form_obj = CustomerForm(request.POST,instance=obj)
+    将提交的数据和要修改的实例交给form对象
+    form_obj.save()  对要修改的实例进行修改
+
+公户变私户：
+    CBV
+        self.request
+        self.user属性 已经当前用户 获取到的是AnonymousUser对象 如果用户未登录，该属性的值是一个AnonymousUser实例（匿名用户）
+    反射：
+        orm操作：
+            1、models.Customer.objects.filter(id__in=ids).update(consultant=self.request.user) 用多的一方修改
+			2、self.request.user.customers.add(*models.Customer.objects.filter(id__in=ids)) 用少的一方修改
+
+私户变公户：
+    orm操作：
+        models.Customer.objects.filter(id__in=ids).update(consultant=None)
+        只有在models中设置null=True的外键才有remove 和clear方法
+		self.request.user.customers.remove(*models.Customer.objects.filter(id__in=ids))
+	模糊查询：
+
+		all_customer = models.Customer.objects.filter(Q(qq__contains=query) | Q(name__contains=query),
+                                                          consultant__isnull=True)
+		all_customer = models.Customer.objects.filter(Q(('qq__contains',query) --- 一个元组) | Q(('name__contains',query)),
+                                                          consultant__isnull=True)
+
+		def get_search_contion(self,query_list):
+
+			query = self.request.GET.get('query', '')
+
+			q = Q()
+			q.connector = 'OR'
+			for i in query_list:
+				q.children.append(Q(('{}__contains'.format(i), query)))
+
+        return q
+保留搜索条件：
+    from django.http import QueryDict
+    print('query',request.GET)  #  <QueryDict: {'query': ['alex']}>
+    print(request.GET.urlencode()) query=alex
+    request.GET.copy()  深拷贝
+
+    QueryDict对象
+    QueryDict对象._mutable = True   # 对字典进行修改
+
+    QueryDict对象['page'] = 页码数  # 多个值
+    QueryDict对象.urlencode()       # query=alex&page=1     ?query=alex&page=1
+
+添加和编辑后跳转回原页面
+    qd = QueryDict()
+    qd._mutable = True
+
+    qd['next'] = request.get_full_path()
+    qd.urlencode()
+    传递qd到要跳转的链接
+
+展示客户的跟进记录 增加 和编辑
+
+
+缴费记录
+
+公户变私户的问题解决：
+    多个销售同时申请一个客户
+        先到先得
+    mysql中添加行级锁
+        begin
+        for update 加锁 select * from student where id=1 for update
+        commit
+
+班主任的功能：
+    班级的管理
+        班级的展示
+        添加班级
+        编辑班级
+    课程的管理：
+        关联班级
+
+    学习记录的管理
+        批量添加
+            student_list = []
+            for student in all_students:
+                student_list.append(modes.StudentRecord(course_record=course_obj. student=student))
+            models.StudyRecord.objects.bulk_create(student_list)
+
+        展示编辑学习记录
+            FormSet = modelformset_factory(models.StudyRecord
 """
