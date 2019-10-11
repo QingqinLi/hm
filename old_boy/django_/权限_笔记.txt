@@ -23,3 +23,145 @@
     对于可以设置的变量，一般放在setting中动态配置，全局的控制放在中间件中
     白名单 ，正则匹配
 
+    动态生成一级菜单：
+        修改数据表结构，在权限表中，增加字段，是否为菜单，菜单的icon
+        在登录的时候，把菜单信息写入session中，动态生成菜单
+
+    应用rbac组件步骤：
+        拷贝rbac组件到新的项目中，并注册app
+        配置权限的相关信息
+            * 权限相关的配置 *
+            #  ###### 权限相关的配置 ######
+			PERMISSION_SESSION_KEY = 'permissions'
+			MENU_SESSION_KEY = 'menus'
+			WHITE_URL_LIST = [
+				r'^/login/$',
+				r'^/logout/$',
+				r'^/reg/$',
+				r'^/admin/.*',
+			]
+		创建与权限相关的表（删除之前的迁移记录）
+		    python manage.py makemigrations
+		    python manage.py migrate
+		录入权限信息
+		    创建超级用户
+		    录入所有的权限信息
+		    创建角色，给角色权限
+		    创建用户，给用户角色
+		在登录成功之后，写入权限和菜单信息到session
+		配置上中间件，进行权限的校验
+		使用动态菜单
+		    导入静态文件
+		    使用inclusion_tag
+    动态生成二级菜单
+
+        信息管理
+            客户列表
+        财务管理
+            缴费列表
+
+        单独建一个menu的表，存放一级菜单
+        在权限表中，修改字段 增加是否为菜单，是菜单则外键关联一级菜单
+
+    三级菜单：
+        信息管理
+            客户列表
+                添加客户
+                编辑客户
+                删除客户
+                （修改表结构）
+    面包屑导航：
+        显示走到的路径，最后一级没有跳转链接
+        在中间件中 request.breadcrumb_list 存放当前访问的路径
+        templatestags中循环展示request.breadcrumb_list中的内容，最后一级目录不需要跳转链接（forloop.last)
+
+    权限控制到按钮级别：
+        permissions 写别名 作为permissions_list的key
+        filter 判断当前权限是不是当前用户的权限，来控制是否展示相应的按钮
+
+    怎么做权限控制：
+        1、url代表权限
+        2、表结构（哪些表， 表中的字段）：
+            用户：
+                user
+                password
+                manytomany:roles
+            角色：
+                title
+                manytomany: permissions
+            权限：
+                title
+                url
+                foreign: menu
+                foreign: self(parent)
+                name
+            用户角色：
+                user
+                role
+            角色权限：
+                role
+                permission
+
+            菜单：
+                title
+                icon
+                weight
+
+
+
+        3、流程：
+            中间件：
+                白名单
+                breadcrumb_list = ['url', 'title']
+                权限的校验
+                    从session中获取信息
+                        循环权限信息
+                            正则
+                                匹配成功
+                                    pip    是子权限/没有则是二级菜单，不需要向上取路径
+                                    pname  取父权限（导航用）
+
+
+            登录成功后：
+                权限信息的初始化
+                    ORM
+                    数据结构：
+                        权限相关：
+                            permissions_dict = {
+                                'URL别名':{
+                                'url', 'name', 'title', 'id', 'pid',
+                                }
+
+                            }
+                        菜单相关：
+                            menu_dict = {
+                                '菜单ID': {
+                                    'title', 'icon', 'weight',
+                                    'children': [
+                                        {'url', 'title', 'pid', 'id'}...
+                                    ]
+                                }
+                            }
+                        session : 什么是session， 为什么要放在session中
+
+            视图：
+                模板：
+                    二级菜单
+                        inclusion_tag 两重for循环
+                        控制访问菜单 一级菜单展开，其他菜单闭合
+                    路径导航
+                        inclusion_tag
+                        循环 request.breadcrumb_list
+                    权限粒度控制到按钮级别
+                        修改表结构 别名（unique）
+                        filter
+                            判断当前的路径是不是在权限dict中
+                            url反向解析
+
+
+
+
+
+
+
+
