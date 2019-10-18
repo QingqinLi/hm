@@ -1074,4 +1074,302 @@ django自带的用户认证
     扩展User模型 ／ 实现一个完全定制的权限
     在setting文件中 AUTH_USER_MODEL 设置覆盖默认的User模型，应该在创建任何迁移或者第一次运行manage.py migrate前设置它
     
+    
+formset_factory
+    在form中创建响应的modelform
+    view文件中导入使用
+        class RecordScoreView(View):
+        def get(self, request,class_study_record_id):
+            model_formset_cls=modelformset_factory(model=StudentStudyRecord,form=StudentStudyRecordModelForm,extra=0)
+            queryset = StudentStudyRecord.objects.filter(classstudyrecord=class_study_record_id)
+            formset = model_formset_cls(queryset=queryset)
+            return render(request,"student/record_score.html",locals())
+    
+        def post(self, request,class_study_record_id):
+            model_formset_cls = modelformset_factory(model=StudentStudyRecord, form=StudentStudyRecordModelForm, extra=0)
+            queryset = StudentStudyRecord.objects.filter(classstudyrecord=class_study_record_id)
+            print("request.POST",request.POST)
+            formset=model_formset_cls(request.POST)
+            if formset.is_valid():
+                formset.save()
+            print(formset.errors)
+            return redirect(request.path)
+            
+    在html文件中 一定要加 {{ formset.management_form }} 这句话，生成4个隐藏标签， {{ formset.id }}--目的是找对应的对象(隐藏）
+    循环添加实例化的对象
+        # 方式一：每次create
+        # models.StudyRecord.objects.create(course_record=obj, student=student)
+        # 方式二：实例StudyRecrord对象
+        stu_rec_obj_lst.append(models.StudyRecord(course_record=obj, student=student))
+        
+        models.StudyRecord.objects.bulk_create(stu_rec_obj_lst)
+        
+        
+        def studyrecordlst(request, course_rec_id):
+            
+            # 生成一个modelformset的类
+            Formset = modelformset_factory(models.StudyRecord, form=StudyRecordForm, extra=0)
+            # 实例化formset，得到的对象就是类似于form_obj的东西，后面循环直接取对象.属性直接取
+        
+            formset_obj = Formset(queryset=models.StudyRecord.objects.filter(course_record_id=course_rec_id))
+            if request.method == 'POST':
+                formset_obj = Formset(data=request.POST)
+                if formset_obj.is_valid():
+                    formset_obj.save()
+            return render(request, 'headmaster/study_rec_lst.html', {'formset_obj': formset_obj})
+            
+    批量操作(bulk_create)：
+        def multi_init(self):
+        '''
+        # 根据当前提交的课程id批量初始化学生的学习记录
+        # :return:
+       '''
+        course_ids = self.request.POST.getlist('id')
+        course_obj_list = models.CourseRecord.objects.filter(id__in=course_ids)
+
+        for course in course_obj_list:
+            all_student = course.re_class.customer_set.filter(status='studying')
+            student_list = []
+            for student in all_student:
+                student_list.append(models.StudyRecord(course_record=course, student=student))
+            models.StudyRecord.objects.bulk_create(student_list)
+    
+缓存：https://www.cnblogs.com/maple-shaw/articles/7563029.html
+    什么放到混存中，过期事件 简单分布式 memchache 是一个软件，防止数据库崩溃的情况
+    把数据先保存在某个地方，下次在读取的时候不用去原位置读取
+    
+    django的缓存方式：
+        开发调试
+        '''
+        '''
+        内存
+        文件
+        数据库
+        Memcache缓存（python-memcached模块）
+            # 此缓存使用python-memcached模块连接memcache
+
+            CACHES = {
+                'default': {
+                    'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
+                    'LOCATION': '127.0.0.1:11211',
+                }
+            }
+        
+            CACHES = {
+                'default': {
+                    'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
+                    'LOCATION': 'unix:/tmp/memcached.sock',
+                }
+            }   
+        
+            CACHES = {
+                'default': {
+                    'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
+                    'LOCATION': [
+                        '172.19.26.240:11211',
+                        '172.19.26.242:11211', 简单的分布式
+                    ]
+                }
+            }
+        Memcache缓存（pylibmc模块）
+    
+    配置
+        CACHES = {
+            'default': {'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+                'LOCATION': 'unique-snowflake',
+                'TIMEOUT': 300,  # 缓存超时时间（默认300，None表示永不过期，0表示立即过期） 如果在视图函数中制定了过期时间， 则以视图函数的过期时间为准
+                'OPTIONS': {
+                    'MAX_ENTRIES': 300,  # 最大缓存个数（默认300）
+                    'CULL_FREQUENCY': 3,  # 缓存到达最大个数之后，剔除缓存个数的比例，即：1/CULL_FREQUENCY（默认3）
+                    },
+                    }
+                    }
+        - redis  
+            django-redis django默认不支持redis，使用模块
+    应用：
+        应用到视图上： 粒度适中
+        方法一：
+            from django.views.decorators.cache import cache_page
+            
+            @cache_page(15)
+            def user_list(request):
+                print("user_list")
+                users = models.User,objects.all()
+                return render(request, 'user_list.html', {'users': users})
+            
+        方法二：
+            from django.views.decorators.cache import cache_page
+            
+            urlpatterns = [
+                url(r'^foo/([0-9](1,2})/$', cache_page(10*15)(my_view)),
+                ]
+        中间件：
+            多个中间件：最后一个放缓存，第一个更新缓存 （全站使用缓存）
+        全站应用：
+            粒度最大
+            使用中间件
+            MIDDLEWARE = [
+            'django.middleware.cache.UpdateCacheMiddleware', 获取缓存
+            # 其他中间件
+            'django.middleware.cache.FetchFromCacheMiddleware' 将缓存保存至缓存，实现全站缓存
+            ]
+            CACHE_MIDDLEWARE_ALIAS = ""
+            CACHE_MIDDLEWARE_SECONDS = ""
+            CACHE_MIDDLEWARE_KEY_PREFIX = ""
+        
+        局部视图：(去掉全局的缓存中间件）粒度最细
+            时实性不高的加缓存
+                1、引入TemplateTag
+                    {% load cache %}
+                2、只用缓存
+                    {% cache 5000 缓存key %}
+                        缓存内容
+                    {% endcache %}
+                
+                
+序列化：
+    json pickle
+    把字符串转换为json
+    
+    serializers
+    from django.core import serializers
+    
+    ret = models.BookType.objects.all()
+    data = serializers.serialize("json", ret)
+    
+    json.dumps无法处理datetime类型，使用自定义处理器来做拓展
+    
+    ret = models.BookType.objects.all()
+    data = serializers.serialize("json", ret)
+    自定义序列化
+    class JsonCustomEncoder(json.JSONEncoder):
+        def default(self, field):
+            if isinstance(field, datetime):
+                return field.strftime('%Y-%m-%d %H:%M:%S')
+            elif isinstance(filed, date):
+                return fielf.strftime('%Y-%m-%d")
+            else:
+                return json.JSONEncoder.default(self, field)
+    json.dumps(data, cls=JsonCustomEncoder))
+
+信号：
+    问题：数据库增加一条数据的时候，记录一条日志。
+        信号 预留存在，达到某种条件中，就会触发
+        比中间件的粒度更细
+        
+    内置信号：
+        内置信号	
+		Model signals
+			pre_init                    # django的model执行其构造方法前，自动触发
+			post_init                   # django的modal执行其构造方法后，自动触发
+			pre_save                    # django的modal对象保存前，自动触发
+			post_save                   # django的modal对象保存后，自动触发
+			pre_delete                  # django的modal对象删除前，自动触发
+			post_delete                 # django的modal对象删除后，自动触发
+			m2m_changed                 # django的modal中使用m2m字段操作第三张表（add,remove,clear）前后，自动触发
+			class_prepared              # 程序启动时，检测已注册的app中modal类，对于每一个类，自动触发
+		Management signals
+			pre_migrate                 # 执行migrate命令前，自动触发
+			post_migrate                # 执行migrate命令后，自动触发
+		Request/response signals
+			request_started             # 请求到来前，自动触发
+			request_finished            # 请求结束后，自动触发
+			got_request_exception       # 请求异常后，自动触发
+		Test signals
+			setting_changed             # 使用test测试修改配置文件时，自动触发
+			template_rendered           # 使用test测试渲染模板时，自动触发
+		Database Wrappers
+			connection_created          # 创建数据库连接时，自动触发
+   
+    写在init中
+    注册方法：
+        1、def callback(sender, **kwargs):
+                print("hh")
+                print(sender, kwargs)
+            post_save.connect(callback)  -- 事件
+        2、
+        @receiver(post_save)  --事件
+        def my_callback(sender, **kwargs):
+            print(";;")
+            print
+        
+    def callback(sender, **kwargs) 固定写法
+    信号.connect(callback) 触发之后会执行
+    
+    导入信号
+    信号触发后要执行的功能，指定sender 谁可以触发
+    
+    自定义信号
+        手动调用触发
+        1、定义信号
+            import django.dispatch
+            pizza_dome = django.dispatch.Signal(providing_args=['toppings", "size"])
+        2、注册信号
+            在__init__中注册信号
+                def callback(sender, **kwargs):
+                    print("callback")
+                    print(sender, kwargs)
+                pizza_done.connect(callback)
+        3、触发信号
+            from 路径 import pizza_done
+            pizza_done.send(sender="seven", toppings, size=456)
+        由于内置信号的触发者已经集成到django中，所以会自动调用。二对与自定义信号则需要开发者在任意位置触发
+        
+性能：
+    log模块
+    优化：
+    all_users = models.User.objects.all().values('name','age','role__name') 需要跨表查询，最慢
+    1、
+    models.User,objects.all() 需要查询多次
+    models.User,objects.all().values() 不需要查询多次（字典）
+    2、外间 外键 一对一 连表
+    models.User.objects.all().select_related('role') -- 外键 字段
+    
+    公司直接存储内容（性能高） 外键主要是为了
+    
+    跨表有效率问题
+    
+    3、不连表 与数据量有关， 查询两张表的数据
+    models.User.objects.all().prefatch_related('role') -- 外键 字段
+    
+    4、只想要对象和某些字段,只拿指定字段， defer()---除了指定字段，其他的字段
+    models.User,objects.all().only('name')
+    models.User,objects.all().defer('name')
+    
+    尽量避免拿all（）
+    
+验证码：
+    from PIL import Image, IageDraw, ImageFOnt
+    import random
+    
+    def random_color():
+        return random.randint(0, 255), random.randint(0, 255), random.randint(0, 255)
+
+
+    def v_code(request):
+        img_obj = Image.new('RGB', (250, 35), random_color())
+        
+        # 在该图片对象上生成一个画笔对象
+        draw_obj = ImageDraw.Draw(img_obj)
+        
+        font_obj = ImageFont.truetype('static/font/kumo.ttf', 28)
+        
+        temp = []
+        for i in range(5):
+            l = chr(random.randint(97, 122))  # 小写字母
+            b = chr(random.randint(65, 90))  # 大写字母
+            n = str(random.randint(0, 9))
+            
+            t = random.choice([l, b, n])
+            temp.append(t)
+            
+            draw_obj.text((i * 40 + 35, 0), t, fill=random_color(), font=font_obj)
+        
+        from io import BytesIO
+        f1 = BytesIO()
+        img_obj.save(f1, format="PNG")
+        img_data = f1.getvalue()
+        
+        return HttpResponse(img_data, content_type='image/png')
+    
 """
