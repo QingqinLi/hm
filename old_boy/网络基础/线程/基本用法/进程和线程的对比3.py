@@ -11,7 +11,6 @@ def func():
     num = tmp - 1
 
 
-
 if __name__ == '__main__':
     num = 100
     t_l = []

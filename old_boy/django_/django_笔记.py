@@ -114,7 +114,7 @@ from表单提交数据：
 
 Django基础必会三件套
     from django.shortcuts import HttpResponse, render, redirect
-        1、HttpResponse 返回一个指定的字符串时, 把一个字符串成二进制，按照HT，TP响应的格式要求返回
+        1、HttpResponse 返回一个指定的字符串时, 把一个字符串成二进制，按照HTTP响应的格式要求返回
         2、render： 返回一个HTML文件，打开文件，读取内容，按照响应格式返回， {'key': 'value'} 替换特殊符号，按照响应格式返回.特殊符号的替换发生在Django服务端
         3、redirect 跳转 绝对地址（不同网站之间的跳转），相对地址（同一个网站之间的跳转），锚点（同一个网站页面位置的跳转），给浏览器返回的是一个特殊的响应，这个响应类似于一个命令，让浏览器去访问我指定的URL
     request相关的属性

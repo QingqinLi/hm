@@ -1,15 +1,16 @@
 # 列表推导式
 lst1 = [i for i in range(1, 101) if i % 3 == 0]
 lst2 = [i ** 2 for i in range(1, 101) if i % 3 == 0]
-print(lst1, "\n", lst2)
+# print(lst1, "\n", lst2)
 names = [["name", "luara", "mikeee", "Alice", "ee"], ['ad', 'dd', 'ff', 'gg']]
 # 双层循环
 name = [name for first in names for name in first if name.count("e") > 2]
 print(name)
 
 # 生成器表达式
-# 与列表生成器基本相同。【】换成（）,数据：要一个给一个
+# 与列表生成器基本相同。[]换成（）,数据：要一个给一个
 g = (i for i in range(10))
+print("g", g)
 for i in g:
     print(i)
 
@@ -40,12 +41,12 @@ def add(a, b):
     return a+b
 
 
-def test():
+def hell():
     for i in range(4):
         yield i
 
 
-g = test()
+g = hell()
 
 """
  g = (add(n, i) for i in 【0， 1， 2， 3)
@@ -55,7 +56,7 @@ g = test()
 for n in [2, 10]:
     g = (add(n, i) for i in g)
 
-print(list(g))
+print("test", list(g))
 
 # s = input("input a+b：")
 # print(eval(s))

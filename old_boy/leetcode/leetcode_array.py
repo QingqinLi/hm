@@ -585,7 +585,78 @@ class Solution:
 
         return intervals
 
+    """
+    排序数组
+    """
+    def sortArray(self, nums):
+        if len(nums) < 2:
+            return nums
+        else:
+            # 需要重复的过程
+            mid = nums[0]
+            left = [i for i in nums[1:] if i <= mid]
+            right = [i for i in nums[1:] if i > mid]
+        return self.sortArray(left) + [mid] + self.sortArray(right)
+
+
+    """
+     按奇偶排序数组，给定一个非负整数数组 A，返回一个数组，在该数组中， A 的所有偶数元素之后跟着所有奇数元素。
+    你可以返回满足此条件的任何数组作为答案。
+    """
+
+    def sortArrayByParity(self, A):
+        result = []
+        for i in A:
+            if i % 2 == 0:
+                result.insert(0, i)
+            else:
+                result.append(i)
+        return result
+
+    """
+    给定一个非负整数数组 A， A 中一半整数是奇数，一半整数是偶数。
+    对数组进行排序，以便当 A[i] 为奇数时，i 也是奇数；当 A[i] 为偶数时， i 也是偶数。
+    你可以返回任何满足上述条件的数组作为答案。
+    """
+
+    def sortArrayByParityII(self, A):
+        jishu = []
+        oushu = []
+        result = []
+        for i in A:
+            if i % 2 == 0:
+                oushu.append(i)
+            else:
+                jishu.append(i)
+        for i in range(len(A)):
+            if i % 2 == 0:
+                result.append(oushu.pop())
+            else:
+                result.append(jishu.pop())
+
+        return result
+
+    """
+    给定一个排序数组，你需要在原地删除重复出现的元素，使得每个元素最多出现两次，返回移除后数组的新长度。
+    不要使用额外的数组空间，你必须在原地修改输入数组并在使用 O(1) 额外空间的条件下完成。
+    """
+
+    def removeDuplicates(self, nums):
+        remove = []
+        for i in range(len(nums)):
+            print(nums[:i], nums[i], nums[:i].count(nums[i]))
+            if nums[:i].count(nums[i]) >= 2:
+                remove.append(i)
+
+        print(remove)
+        for i in remove:
+            nums.pop(i)
+        print(nums)
+        return len(nums)
+
+
+
 
 if __name__ == '__main__':
     s = Solution()
-    print(s.merge([[1,4],[1,4]]))
+    print(s.removeDuplicates([1,1,1,2,2,3]))

@@ -314,14 +314,14 @@ copy.deepcopy()深拷贝
 深度拷贝 把元素内部的元素完全进行拷贝复制. 不会产省一个改变另以个跟着改变的问题
 """
 
-# lst1 = ["何炅", "杜涛", "周"]
-# lst2 = lst1.copy()
-# lst1.append("嘉诚")
-# print(lst1)
-# print(lst2)
-# print(id(lst1), id(lst2))
-# 结果:
-# 两个lst完全  样. 内存地址和内容也  样. 发现实现 内存的拷
+# l1 = ["何炅", "杜涛", "周"]
+# l2 = l1.copy()
+# l1.append("嘉诚")
+# print(l1)
+# print(l2)
+# print(id(l1), id(l2))
+# # 结果:
+# # 两个lst完全  样. 内存地址和内容也  样. 发现实现 内存的拷
 # import copy
 # lst1 = ["何炅", "杜涛", "周渝 ", ["麻花藤", "芸", "周笔畅"]]
 # lst2 = lst1.copy()
@@ -333,10 +333,11 @@ copy.deepcopy()深拷贝
 # print(list3)
 # print(id(lst1[3]))
 # print(id(lst2[3]))
+# print(id(list3[3]))
 # 结果:
 # ['何炅', '杜 涛', '周渝 ', ['麻花藤', ' 芸', '周笔畅', ' 敌是多磨寂寞'
 #
 # # 面试题目 a的内存地址赋给a[1] 此时a[1]就是a，多层循环的效果
-# a = [1, 2]
-# a[1] = a
-# print(a[1])
+a = [1, 2]
+a[1] = a
+print(a[1])

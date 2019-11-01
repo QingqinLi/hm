@@ -160,7 +160,40 @@ def insertSort2(nums):
     print(nums)
 
 
+"""
+归并排序：
+    一开始先把数组从中间划分为两个子数组，一直递归的把子数组划分为更小的数组，直到子数组里只有一个元素，才开始排序
+    排序的方法就是按照大小顺序合并两个元素，接着依次按照递归的返回顺序，不断的合并排好序的子数组，直到最后把整个数组的顺序排好
+"""
+
+
+def merge(a, b):
+    result = []
+    i = j = 0
+    while i < len(a) and j < len(b):
+        if a[i] < b[j]:
+            result.append(a[i])
+            i += 1
+        else:
+            result.append(b[j])
+            j += 1
+    result += a[i:]
+    result += b[j:]
+    return result
+
+
+def sort(data):
+    length = len(data)
+    if length <= 1:
+        return data
+
+    mid = length // 2
+    a = sort(data[:mid])
+    b = sort(data[mid:])
+    return merge(a, b)
+
+
 if __name__ == '__main__':
-    print(quickSort([2, 5, 6, 1, 8, 0, 4, 6, 8, 7, 9, -1]))
+    print(sort([2, 5, 6, 1, 8, 0, 4, 6, 8, 7, 9, -1]))
 
 

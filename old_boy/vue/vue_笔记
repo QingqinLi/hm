@@ -396,6 +396,37 @@ vue: 一个库一个框架 前后端分离 渲染数据 渐进式框架
         我在组件上的属性，可以在组件元素内使用
 
 生命周期：
+    beforeCreate:
+        el:没有
+        data:没有
+        事件：没有被初始化
+        innerHtml:
+            <div>
+                {{ name }}
+                <button @click="myCLick">点击事件</button>
+            </div>
+    created:
+        el:没有
+        data：数据有了
+        事件：事件有了
+        innerHTML:
+            <div>
+            {{name}}
+            <button @click="myClick">点击事件</button>
+            </div>
+    beforeMount:
+        el: 找到了
+        data： 数据有了
+        事件：事件有了
+        innerHtml
+            <div>
+            {{name}}
+            <button @click="myClick">点击事件</button>
+            </div>
+
+    mounted：
+        el：找到了，并且数据被渲染进标签
+        data：数据有了，被监听
     beforemount（挂载） 找到el， 但是不渲染
 
     挂载：
@@ -405,7 +436,95 @@ vue: 一个库一个框架 前后端分离 渲染数据 渐进式框架
     activated
     console.group()
 
+node.jd:不是javascript框架，也不是浏览器的库，是一个可以让javascript运行在服务端的开发平台
 
+    安装：node.js官网：https://nodejs.org/en/ 下载安装
+
+    使用：
+
+npm：包管理工具， node.js中的第三方库管理工具, 源，安装cnpm
+    全局安装
+        npm install -g <package>
+        -g global
+
+    局部安装（局部环境-虚拟环境）
+        npm install <package> --save ／ npm install vue@version --save
+        --save 局部安装
+        在node_moudle中使用
+
+    npm托管环境步骤：
+        pass
+
+webpack:打包工具
+    模块化编程， 一种软件设计技术，开发者将程序分解成离散功能块，称之为模块
+    webpack是一个现代js应用程序的静态模块打包器，当webpack处理应用程序时，他会递归的构建一个依赖关系图，其中包含应用程序需要的每个模块， 然后将这些模块打包成一个bundle
+        安装webpack_client
+        要有入口文件，出口文件
+
+
+Vue:
+
+    vue-cli:
+        一个基于Vue.js进行快速开发的完整系统， 致力于将Vue生态中的工具基础标准化，确保各种构建工具能够基于智能的默认配置即可平稳衔接，
+        程序源只需要关注业务逻辑方面
+
+         //帮助前段人员构建大型项目的一个工程化工具：脚手架
+         //安装vue vue-cli,vue-cli是是我们能够在命令行中使用vue命令的工具
+         npm install vue vue-cli
+
+         //初始化一个vue-cli项目，基于webpack
+         vue init webpack mydemo
+
+         //进入项目文件夹
+         cd mydemo
+
+         启动前段服务器
+         npm run dev
+vuex:
+    专门为vue应用程序开发的状态管理模式，适合在大型项目中使用，方便管理
+    安装：npm install vuex --save
+    最核心store
+    使用：
+        1、引入， vue中使用vuex：
+        Vue.use(Vuex)
+        2、实例化一个store对象
+        let store = new Vue.Store({
+            state:{
+                name: 'xxx'
+            }
+            mutations:{
+
+            },
+            getters:{},
+            actions:{}.
+        })
+        4通过computed来访问store的数据
+        let App = {
+            template:  `
+            <div>
+            <h3>{{name}}</h3>
+            </div>
+            `,
+            computed:{
+                name: function(){
+                    //
+                    return this.$store.state.name;
+                }
+            },
+            tempalte: '</App>'
+            cmpontents: {
+                App,
+            }
+        }
+
+        new Vue({
+            el:"#app",
+            3、注册store到根实例中
+            store:store
+        }
+
+getter 取数据
+mutations：修改数据， commit 一个mutation
 
 
 
