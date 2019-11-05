@@ -69,7 +69,7 @@ vue
         默认值函数
         箭头函数
             //箭头函数 参数 箭头 返回值
-            // 如果o个或者多个参数
+            // 如果0个或者多个参数
             () => {}
             // 多个参数
             let bar = (x, y) => {return x+y};
@@ -105,7 +105,7 @@ vue
                         v-if块
                         v-show慢
 
-            v-bind v-bind:href="" :class="active" :class="{active: isActive, , , ,}""
+            v-bind v-bind:href="" :class="active" :class="{active: isActive, , , ,}"" bind绑定属性
             v-on 绑定函数 v-on:click=""
                 new Vue({
                     el: "", 属性查找 # .
@@ -119,8 +119,9 @@ vue
                     }
 
                 })
-            v-model 数据随输入变化 双向数据绑定
+            v-model 数据随输入变化 双向数据绑定（input, textarea, select)
             计算属性：
+                放入缓存，只有数据改变的时候才会重新计算
                 {{sumScore}}
                 new Vue({
                     el: '',
@@ -151,6 +152,7 @@ vue
                             一般是做通知之类的操作
                             alert("python数据被修改"）
                         }
+                    可变类型和不可变数据类型的监听，对于可变的数据类型，只能监听到长度的变化，无法监听内容的变化
             指令修饰符
                 用户输入的都是字符串
                 number lazy 懒加载 光标失去焦点再处理 trim
@@ -192,6 +194,7 @@ vue: 一个库一个框架 前后端分离 渲染数据 渐进式框架
 
 
 组件：（页面布局）
+    每个组件的template只能识别一个作用域块
     组件是可复用的Vue实例，所以他们与new Vue接受相同的选项， 例如date， computed, watch, methods 以及生命周期钩子等，例外，el是实例特有的对象
     全局组件：
         1.1 <div id="app">
@@ -365,7 +368,13 @@ vue: 一个库一个框架 前后端分离 渲染数据 渐进式框架
                 App,
             }
         }
-    混入
+
+    非父子的通信
+        --声明中间调度器
+        --其中一个组件向中间调度器提交事件
+        --另一个组件监听中间调度器的事件
+        --注意this的问题
+    混入（相当于函数， 代码重用）
         定义
             let mixs = {
                 methods: {
@@ -394,6 +403,65 @@ vue: 一个库一个框架 前后端分离 渲染数据 渐进式框架
 
     作用域插槽：
         我在组件上的属性，可以在组件元素内使用
+
+
+路由：
+    注册
+        let url = [
+        {
+            path:'/',
+            name: 'home',
+            component:{
+                template:``,
+            }
+        }
+        ]
+        let router = new VueRouter({
+            routes:url
+        }
+        const app = new Vue({
+            el:"#app",
+            router: router
+        })
+        -- <router-link :to="/">name</router-link>
+        -- <router-view></router-view>
+
+        --子路由
+            --children:[
+                {}
+            ]
+            --在父路由对应的组件template里重写router-link router-view
+        -- 命名路由
+            -- name
+            -- to加冒号动态绑定
+
+        -- 路由参数
+            -- {
+                path: "/course/:id"
+            }
+
+            this.$route.params.id
+            this.$route.query.xxx
+            $route 是一个存放当前路由所有对象的对象
+            $router VueRouter实例化对象
+        -- 手动路由
+            --this.$router.push("/")
+            --this.$router.push({name:"xxx"})
+        -- 重定向
+            -- redirect: {name:"xxx"}
+
+        -- 路由的钩子
+            -- beforeEach
+                -- to
+                -- from
+                -- next
+            -- afterEach
+                -- to
+                -- from
+
+
+
+
 
 生命周期：
     beforeCreate:
@@ -453,9 +521,16 @@ npm：包管理工具， node.js中的第三方库管理工具, 源，安装cnpm
         在node_moudle中使用
 
     npm托管环境步骤：
-        pass
+        管理工作目录 npm init -y
+        下载包 npm i xxx@0.0.0
+        卸载 npm uninstall xxxx
+        更新 npm update xxx
 
 webpack:打包工具
+    npm i webpack webpack-cli
+    打包默认的入口文件 src下的index.js
+    出口文件 dist目录的main.js
+
     模块化编程， 一种软件设计技术，开发者将程序分解成离散功能块，称之为模块
     webpack是一个现代js应用程序的静态模块打包器，当webpack处理应用程序时，他会递归的构建一个依赖关系图，其中包含应用程序需要的每个模块， 然后将这些模块打包成一个bundle
         安装webpack_client
@@ -526,5 +601,5 @@ vuex:
 getter 取数据
 mutations：修改数据， commit 一个mutation
 
-
+MVVM model view viewmodel 数据驱动视图
 

@@ -1,0 +1,12 @@
+节点：
+    元素、属性、文本、命名空间、处理指令、注释、文档（根）节点，树的根被称为文档节点或者根节点
+    基本值是无父或者无子的节点
+    项目：基本值或者节点
+    谓语：被嵌套在方括号中，用来查找某个特定的节点或者包含某个指定的值的节点
+    相对定位／绝对定位：相对定位，以//开头， 绝对定位以／开头，比较繁琐，一般不推荐使用
+    文本，模糊，逻辑定位：//button[text()="登录"]    //button[contains(text(),"登录")]
+   【模糊定位】使用starts-with -- 匹配以xx开头的属性值；ends-with -- 匹配以xx结尾的属性值  如：//button[starts-with(@class,"btn")]、//input[ends-with(@class,"-special")]
+    逻辑运算符 and or //input[@name="phone" and @datatype="m"]
+    输入框的三种输入方式：
+    Action：模拟用户交互的一个类，提供了一系列的API供模拟交互
+        perform() 将之前的一系列actionchains执行
