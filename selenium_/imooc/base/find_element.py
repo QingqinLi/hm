@@ -3,6 +3,8 @@
 """
 __author__ = 'qing.li'
 """
+import sys
+sys.path.append('..')
 from util.read_ini import ReadIni
 
 

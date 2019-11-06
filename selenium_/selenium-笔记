@@ -78,6 +78,14 @@ class name 有空格的时候不能直接在getElementByClassName("name1 name2")
 操作慢的原因：
     pass
 
+流程：(case data page 分离)
+    对于页面元素信息，封装保存在config配置文件中 config ini文件
+    封装读取配置信息的类 read_ini
+    封装获取元素信息的类 find_element
+    封装测试页面的单独类 page
+    封装测试类 case
+    封装页面操作类 handle
+
 
 
 
