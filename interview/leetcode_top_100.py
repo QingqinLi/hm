@@ -348,7 +348,130 @@ class Solution:
             head = head.next
         return
 
+    """
+    三数之和
+    给定一个包含 n 个整数的数组 nums，判断 nums 中是否存在三个元素 a，b，c ，使得 a + b + c = 0 ？找出所有满足条件且不重复的三元组。
+    解法：双指针
+    """
+
+    def threeSum(self, nums):
+        result = []
+        result_set = set()
+        for i in range(len(nums)):
+            for j in range(i+1, len(nums)):
+                for k in range(j+1, len(nums)):
+                    if nums[i] + nums[j] + nums[k] == 0:
+                        result_set.add({nums[i], nums[j], nums[k]})
+                        result.append([nums[i], nums[j], nums[k]])
+
+        return result, result_set
+
+    """
+    Z 字形变换
+    将一个给定字符串根据给定的行数，以从上往下、从左到右进行 Z 字形排列。
+    比如输入字符串为 "LEETCODEISHIRING" 行数为 3 时，排列如下：
+    解:
+        将z字形转换为二位数组，初始化为0，按照规则填充，再读取，返回
+      要考虑异常的情况  
+    """
+
+    def convert(self, s: str, numRows: int) -> str:
+        # 二维数组行的长度
+        if not s:
+            return ''
+        if numRows == 1:
+            return s
+        length = len(s)//(numRows-2+numRows) + 1
+        conv_list = [[0 for i in range(length)] for i in range((numRows-2+numRows))]
+        for i in range(len(s)):
+            index_x = i % (numRows-2+numRows)
+            index_y = i // (numRows-2+numRows)
+            print(index_x, index_y)
+            conv_list[index_x][index_y] = s[i]
+        result_list = []
+        for i in range(numRows):
+            if i == 0 or i == numRows - 1:
+                for j in range(length):
+                    if not conv_list[i][j] == 0:
+                        result_list.append(str(conv_list[i][j]))
+            else:
+                for j in range(length):
+                    print()
+                    if not conv_list[i][j] == 0:
+                        result_list.append(str(conv_list[i][j]))
+                    if not conv_list[(numRows-2+numRows)-i][j] == 0:
+                        result_list.append(str(conv_list[(numRows-2+numRows)-i][j]))
+        return ''.join(result_list)
+
+    """
+     寻找两个有序数组的中位数
+     给定两个大小为 m 和 n 的有序数组 nums1 和 nums2。
+    请你找出这两个有序数组的中位数，并且要求算法的时间复杂度为 O(log(m + n))。
+    你可以假设 nums1 和 nums2 不会同时为空。
+    """
+
+    def findMedianSortedArrays(self, nums1, nums2) -> float:
         pass
+
+
+    """
+    猜数字
+    小A 和 小B 在玩猜数字。小B 每次从 1, 2, 3 中随机选择一个，小A 每次也从 1, 2, 3 中选择一个猜。他们一共进行三次这个游戏，请返回 小A 猜对了几次？
+    """
+    def game(self, guess, answer) -> int:
+        count = 0
+        for i in range(3):
+            if guess[i] == answer[i]:
+                count += 1
+        return count
+
+    """
+    宝石与石头
+     给定字符串J 代表石头中宝石的类型，和字符串 S代表你拥有的石头。 S 中每个字符代表了一种你拥有的石头的类型，
+    你想知道你拥有的石头中有多少是宝石。
+    J 中的字母不重复，J 和 S中的所有字符都是字母。字母区分大小写，因此"a"和"A"是不同类型的石头。
+    """
+
+    def numJewelsInStones(self, J: str, S: str) -> int:
+        # count = 0
+        # for i in S:
+        #     if i in J:
+        #         count += 1
+        # return count
+        return sum([S.count(i) for i in J])
+
+    """
+    ip地址无效化
+    给你一个有效的 IPv4 地址 address，返回这个 IP 地址的无效化版本。
+    所谓无效化 IP 地址，其实就是用 "[.]" 代替了每个 "."。
+    """
+
+    def defangIPaddr(self, address: str) -> str:
+        return address.replace(".", "[.]")
+
+    """
+    删除链表中的节点
+    请编写一个函数，使其可以删除某个链表中给定的（非末尾）节点，你将只被给定要求被删除的节点。
+    """
+
+    def deleteNode(self, head, node):
+        """
+        :type node: ListNode
+        :rtype: void Do not return anything, modify node in-place instead.
+        """
+        while head.next:
+            if head.next.val == node:
+                if head.next.next:
+                    head.next = head.next.next
+                    break
+                else:
+                    head.next = None
+                    break
+
+
+
+
+
 
 
 if __name__ == '__main__':
@@ -359,4 +482,4 @@ if __name__ == '__main__':
     # s2.next = ListNode(6)
     # s2.next.next = ListNode(4)
     # print(s.addTwoNumbers(s1, s2))
-    print(s.longestCommonPrefix(["dog","racecar","car"]))
+    print(s.convert("", 1))

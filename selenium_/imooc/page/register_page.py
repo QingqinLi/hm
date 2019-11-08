@@ -25,7 +25,7 @@ class RegisterPage:
         return self.fd.get_element("register_captcha")
 
     def get_button_element(self):
-        return self.fd.get_element("register_btn")
+        return self.fd.get_element("register-btn")
 
     def get_email_error_element(self):
         return self.fd.get_element("register_email_error")
@@ -38,3 +38,6 @@ class RegisterPage:
 
     def get_code_error_element(self):
         return self.fd.get_element("register_code_error")
+
+    def get_register_btn(self):
+        return self.fd.get_element("register-btn")

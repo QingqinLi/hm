@@ -32,21 +32,28 @@ class RegisterBusiness:
 
     def login_name_error(self, email, name, password, code):
         self.register(email, name, password, code)
-        if self.register_h.get_user_text("register_name_error", "字符长度必须大于等于4，。。。。"):
+        if self.register_h.get_user_text("register_name_error", "字符长度必须大于等于4，一个中文字算2个字符"):
             return True
         else:
             return False
 
     def login_password_error(self, email, name, password, code):
         self.register(email, name, password, code)
-        if self.register_h.get_user_text("register_password_error", "字符长度必须大于等于4，。。。。"):
+        if self.register_h.get_user_text("register_password_error", "最少需要输入 5 个字符"):
             return True
         else:
             return False
 
     def login_code_error(self, email, name, password, code):
         self.register(email, name, password, code)
-        if self.register_h.get_user_text("code_text_error", "字符长度必须大于等于4，。。。。"):
+        if self.register_h.get_user_text("code_text_error", "验证码错误"):
             return True
         else:
             return False
+
+    def register_success(self, email, name, password, code):
+        self.register(email, name, password, code)
+        if self.register_h.get_register_btn():
+            return False
+        else:
+            return True

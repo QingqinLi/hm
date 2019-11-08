@@ -18,7 +18,7 @@ selenium 如何保证操作元素的成功率：
 提升用例的稳定性：
     测试专属的profile，尽量让静态资源缓存
     尽量使用显示等待
-    尽量使用测试专用环境，避免踢啊类型的测试同时进行，对测试环境造成干扰
+    尽量使用测试专用环境，避免同一类型的测试同时进行，对测试环境造成干扰
 
 自动化用例的执行策略：
     每日执行：like 每天晚上在主干执行一次
@@ -86,7 +86,46 @@ class name 有空格的时候不能直接在getElementByClassName("name1 name2")
     封装测试类 case
     封装页面操作类 handle
 
+    util 配置信息
+    page 操作的页面
+    base find_element 常用操作
+    handle 查找元素，给页面元素赋值等
+    business 测试case的操作步骤
+    case 调用business，串联case
 
+unitest:
+    运行：
+        unittest.run() case的执行顺序是按照字母／数字的生序顺序执行
+        suite（容器）:
+            suite = unittest.TestSuite()
+            suite.addTest(className('caseName'))
+            unittest.TextTestRunner().run(suite)
+            执行顺序是按照添加case的顺序执行的
+        跳过case
+            @unittest.skip() 装饰器
+        大批量运行case
+            使用统一的入口类   case-run_case.py
+                suite = unittest.defaultTestLoader.discover(case_path, 'unittest_*.py')
+                unittest.TextTestRunner().run(suite)
+    assert:
+        https://www.cnblogs.com/mengyu/p/7170568.html
+    生成测试报告：
+        下载htmltestrunner代码：py3：https://github.com/linyuli861/Automated-Test
+        把改文件放到/资源库/Frameworks/Python.framework/Versions/3.6/lib/python3.6，找到这个目录后把文件放在这个文件夹里面就可以了
+        导入 import HTMLTestRunner
+        报告文件的路径：file_path
+        要运行的case：unite
+        运行：
+            runner = HTMLTestRunner.HTMLTestRunner(stream = f, title, description)
+            runner.run(suite)
+    流程：
+        首先导入unittest模块 ；
+        创建一个测试类,继承TestCase；
+        定义setUp和tearDown方法；
+        setUp是进行测试前的初始化工作。
+        tearDown是测试后的清除工作。
+        创建测试用例，测试用例需要以test开头，每个测试用例，测试目的和测试内容应很明确。通过调用断言来判断程序执行结果和预期值是否相符
+        调用unittest.main()启动测试。
 
 
 

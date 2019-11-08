@@ -32,15 +32,18 @@ class RegisterHandle:
 
     # 获取文字信息
     def get_user_text(self, info, user_info):
-        if info == 'register_email_error':
-            text = self.register_p.get_email_error_element().get_attribute("value")
-        elif info == 'register_name_error':
-            text = self.register_p.get_name_error_element().get_attribute("value")
-        elif info == 'register_password_error':
-            text = self.register_p.get_password_error_element().get_attribute("value")
-        elif info == 'rcode_text_error':
-            text = self.register_p.get_code_error_element().get_attribute("value")
-        else:
+        try:
+            if info == 'register_email_error':
+                text = self.register_p.get_email_error_element().text
+            elif info == 'register_name_error':
+                text = self.register_p.get_name_error_element().text
+            elif info == 'register_password_error':
+                text = self.register_p.get_password_error_element().text
+            elif info == 'rcode_text_error':
+                text = self.register_p.get_code_error_element().text
+            else:
+                text = None
+        except:
             text = None
         if text == user_info:
             return True
@@ -50,4 +53,7 @@ class RegisterHandle:
     # 点击注册按钮
     def click_register_button(self):
         self.register_p.get_button_element().click()
+
+    def get_register_btn(self):
+        return self.register_p.get_register_btn()
 
