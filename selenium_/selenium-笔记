@@ -127,6 +127,60 @@ unitest:
         创建测试用例，测试用例需要以test开头，每个测试用例，测试目的和测试内容应很明确。通过调用断言来判断程序执行结果和预期值是否相符
         调用unittest.main()启动测试。
 
+   失败截图的封装：
+        1、在find_element中找不到元素的时候截图
+        2、在tear_down中截图操作：
+            加容错处理
+            封装到tear_down中,用_outcome.errors判断用例是否出错
+
+
+验证码：
+    保存验证码图片到本地，解析
+    封装到工具类中
+
+    按照元素截图：
+        def get_picture(self, file_path):
+            self.driver.save_screenshot(file_path)
+            code_image = self.get_user_element("code_image")
+            left = code_image.location['x']
+            top = code_image.location['y']
+            right = code_image.size['width'] + left
+            bottom = code_image.size['height'] + top
+            im = Image.open(file_path)
+            img = im.crop((left, top, right, bottom))
+            img.save(file_path)
+            return file_path
+    # pytesseract 可以识别比较规则的验证码
+    # image = Image.open(file_path)
+    # text = pytesseract.image_to_string(image)
+
+    不规则的验证码：
+        r = ShowapiRequest("http://route.showapi.com/184-4", "110187", "31fead27b6414c27b467e278ec3a62ed" )
+        r.addBodyPara("typeId", "35")
+        r.addBodyPara("convert_to_jpg", "0")
+        r.addFilePara("image", file_path)
+        res = r.post()
+        text = res.json()['showapi_res_body']['Result']
+
+
+数据驱动（参数化，以数据为导向，左右结果）：
+    相关的包：ddt
+    case包下创建数据驱动
+    精简po模型case
+    以excel文件驱动：
+        xlrd
+        操作excel，在ddt中使用数据驱动
+
+
+pytest的运行方式：
+    为什么不生成测试报告
+    edit_config中设置python的执行方式
+    https://www.cnblogs.com/fuxinxin/p/10299501.html
+    excel实现数据驱动(xls,新版本的不支持），设置文本格式为"文本"
+    操作excel，安装xlrd
+
+
+关键字模型：
 
 
 

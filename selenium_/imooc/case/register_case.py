@@ -12,6 +12,7 @@ from business.register_business import RegisterBusiness
 from base.register_function import RegisterFunction
 import unittest
 import HTMLTestRunner
+from util.get_code import GetCode
 
 
 class FirstCase(unittest.TestCase):
@@ -19,6 +20,7 @@ class FirstCase(unittest.TestCase):
     # 某一条case的前置条件, 装饰漆
     @classmethod
     def setUpClass(cls):
+        cls.code_file = "/Users/qing.li/PycharmProjects/hm/selenium_/imooc/image/code.png"
         print("所有case执行之前的前置")
 
     @classmethod
@@ -32,10 +34,24 @@ class FirstCase(unittest.TestCase):
         self.driver.get("http://www.5itest.cn/register")
         self.driver.maximize_window()
         self.register = RegisterBusiness(self.driver)
-        self.register_function = RegisterFunction(self.driver, self.file_path)
+        # self.register_function = RegisterFunction(self.driver, self.file_path)
+        self.register_code = GetCode(self.driver, self.file_path)
+
 
     def tearDown(self):
         print("每条case执行之后")
+        # py2看case有没有异常
+        # if sys.exc_info()[0]:
+        #     self.driver.save_screenshot()
+        # py3中使用_outcome.errors, self._outcome.errors结果是一个list
+        print(self._outcome.errors)
+        for method_name, error in self._outcome.errors:
+            if error:
+                case_name = self._testMethodName
+                error_path = "/Users/qing.li/PycharmProjects/hm/selenium_/imooc/image/imooc_%s_%s.png" % (
+                    case_name, time.time())
+                self.driver.save_screenshot(error_path)
+
         self.driver.close()
 
     # def __init__(self, driver):
@@ -51,28 +67,27 @@ class FirstCase(unittest.TestCase):
         #     error_path = "/Users/qing.li/PycharmProjects/hm/selenium_/imooc/image/imooc_email_error_%s.png" % (time.time())
         #     self.driver.save_screenshot(error_path)
         # AssertionError 通过assert判断是否为error
-        email_error = self.register.login_email_error('email', 'user11188', '111111', 'test1')
-        self.assertFalse(email_error, "case执行了")
+        email_error = self.register.login_email_error('email', 'user11188', '111111', FirstCase.code_file)
+        self.assertTrue(email_error, "邮箱用例")
 
-    @unittest.skip("不执行username用例")
+    # @unittest.skip("不执行username用例")
     def test_login_username_error(self):
-        if not self.register.login_name_error('132606808@163.com', '11', '111111', 'test1'):
-            error_path = "/Users/qing.li/PycharmProjects/hm/selenium_/imooc/image/imooc_user_name_error_%s.png" % (time.time())
-            self.driver.save_screenshot(error_path)
+        name_error = self.register.login_name_error('132606808@163.com', '11', '111111', FirstCase.code_file)
+        self.assertTrue(name_error, "名字用例")
 
     def test_login_code_error(self):
-        if not self.register.login_password_error('132631808@163.com', 'user111d88', '1', 'test1'):
-            error_path = "/Users/qing.li/PycharmProjects/hm/selenium_/imooc/image/imooc_password_error_%s.png" % (time.time())
-            self.driver.save_screenshot(error_path)
+        code_error = self.register.login_password_error('132631808@163.com', 'user111d88', '1', FirstCase.code_file)
+            # error_path = "/Users/qing.li/PycharmProjects/hm/selenium_/imooc/image/imooc_password_error_%s.png" % (time.time())
+        #             # self.driver.save_screenshot(error_path)
+        self.assertTrue(code_error, "验证码错误")
 
     def test_login_success(self):
-        code = self.register_function.get_code_picture()
-        print("code", code)
-        if not self.register.register_success('132638@163.com', '3buu837', '123456', code):
-            error_path = "/Users/qing.li/PycharmProjects/hm/selenium_/imooc/image/imooc_error_%s.png" % (time.time())
-            self.driver.save_screenshot(error_path)
-        else:
-            print("校验成功")
+        login_success = self.register.register_success('12888@163.com', '388uu7', '123456', FirstCase.code_file)
+        #     error_path = "/Users/qing.li/PycharmProjects/hm/selenium_/imooc/image/imooc_error_%s.png" % (time.time())
+        #     self.driver.save_screenshot(error_path)
+        # else:
+        #     print("校验成功")
+        self.assertTrue(login_success, "登录成功")
 
     # def run_main(self):
     #     self.test_login_email_error()
@@ -93,13 +108,13 @@ if __name__ == '__main__':
     print(file_path)
     f = open(file_path, 'wb')
 
-
     # 管理执行case
     # 容器
     suite = unittest.TestSuite()
     suite.addTest(FirstCase('test_login_email_error'))
-    suite.addTest(FirstCase('test_login_success'))
+    suite.addTest(FirstCase('test_login_username_error'))
     suite.addTest(FirstCase('test_login_code_error'))
+    suite.addTest(FirstCase('test_login_success'))
     # unittest.TextTestRunner().run(suite)
 
     runner = HTMLTestRunner.HTMLTestRunner(stream=f, title="this is 5itest register page report", description="描述")

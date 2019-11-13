@@ -2,7 +2,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <title>this is 5itest register page report</title>
+    <title>this is  register page report</title>
     <meta name="generator" content="HTMLTestRunner 0.8.2"/>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.0/css/bootstrap.min.css">
@@ -199,12 +199,12 @@ function showOutput(id, name) {
 */
 --></script>
 <div class='heading'>
-<h1>this is 5itest register page report</h1>
-<p class='attribute'><strong>Start Time:</strong> 2019-11-12 15:39:57</p>
-<p class='attribute'><strong>Duration:</strong> 0:01:54.260729</p>
-<p class='attribute'><strong>Status:</strong> Pass 3 Failure 1</p>
+<h1>this is  register page report</h1>
+<p class='attribute'><strong>Start Time:</strong> 2019-11-13 10:45:36</p>
+<p class='attribute'><strong>Duration:</strong> 0:02:19.864188</p>
+<p class='attribute'><strong>Status:</strong> Pass 4 Failure 1</p>
 
-<p class='description'>描述</p>
+<p class='description'>描述ddt</p>
 </div>
 <div style="float:left; margin-left: 10px; font-size:12px">
 	<p> Test Case Pie charts </p>
@@ -242,31 +242,38 @@ function showOutput(id, name) {
 </tr>
 
 <tr class='failClass'>
-    <td>FirstCase</td>
+    <td>FirstDdtCase</td>
+    <td>5</td>
     <td>4</td>
-    <td>3</td>
     <td>1</td>
     <td>0</td>
-    <td><a href="javascript:showClassDetail('c1',4)">Detail</a></td>
+    <td><a href="javascript:showClassDetail('c1',5)">Detail</a></td>
 </tr>
 
-<tr id='pt1.1' class='hiddenRow'>
-    <td class='none'><div class='testcase'>test_login_email_error</div></td>
+<tr id='ft1.1' class='none'>
+    <td class='failCase'><div class='testcase'>test_register_error_1___test02_qq_com____mushiwshi____111111____code____register_email_error____请输入有效的电子邮件地址__</div></td>
     <td colspan='5' align='center'>
     <!--css div popup start-->
-    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_pt1.1')" >
-        pass</a>
-    <div id='div_pt1.1' class="popup_window">
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_ft1.1')" >
+        fail</a>
+    <div id='div_ft1.1' class="popup_window">
         <div style='text-align: right; color:red;cursor:pointer'>
-        <a onfocus='this.blur();' onclick="document.getElementById('div_pt1.1').style.display = 'none' " >
+        <a onfocus='this.blur();' onclick="document.getElementById('div_ft1.1').style.display = 'none' " >
            [x]</a>
         </div>
         <pre>
         
-pt1.1: 每条case执行之前
+ft1.1: 每条case执行之前
 file_path /Users/qing.li/PycharmProjects/hm/selenium_/imooc/image/code.png
+Email已存在! 请输入有效的电子邮件地址
 每条case执行之后
-[(&lt;__main__.FirstCase testMethod=test_login_email_error&gt;, None), (&lt;__main__.FirstCase testMethod=test_login_email_error&gt;, None)]
+[(&lt;__main__.FirstDdtCase testMethod=test_register_error_1___test02_qq_com____mushiwshi____111111____code____register_email_error____请输入有效的电子邮件地址__&gt;, None), (&lt;__main__.FirstDdtCase testMethod=test_register_error_1___test02_qq_com____mushiwshi____111111____code____register_email_error____请输入有效的电子邮件地址__&gt;, (&lt;class 'AssertionError'&gt;, AssertionError('False is not true : 邮箱用例',), &lt;traceback object at 0x104794ec8&gt;))]
+Traceback (most recent call last):
+  File "/Library/Frameworks/Python.framework/Versions/3.6/lib/python3.6/site-packages/ddt.py", line 145, in wrapper
+    return func(self, *args, **kwargs)
+  File "/Users/qing.li/PycharmProjects/hm/selenium_/imooc/case/first_ddt_case.py", line 94, in test_register_error
+    self.assertTrue(email_error, "邮箱用例")
+AssertionError: False is not true : 邮箱用例
 
 
         </pre>
@@ -276,7 +283,7 @@ file_path /Users/qing.li/PycharmProjects/hm/selenium_/imooc/image/code.png
 </tr>
 
 <tr id='pt1.2' class='hiddenRow'>
-    <td class='none'><div class='testcase'>test_login_username_error</div></td>
+    <td class='none'><div class='testcase'>test_register_error_2___test01____mushishi____111111____code____register_email_error____请输入有效的电子邮件地址__</div></td>
     <td colspan='5' align='center'>
     <!--css div popup start-->
     <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_pt1.2')" >
@@ -290,8 +297,9 @@ file_path /Users/qing.li/PycharmProjects/hm/selenium_/imooc/image/code.png
         
 pt1.2: 每条case执行之前
 file_path /Users/qing.li/PycharmProjects/hm/selenium_/imooc/image/code.png
+请输入有效的电子邮件地址 请输入有效的电子邮件地址
 每条case执行之后
-[(&lt;__main__.FirstCase testMethod=test_login_username_error&gt;, None), (&lt;__main__.FirstCase testMethod=test_login_username_error&gt;, None)]
+[(&lt;__main__.FirstDdtCase testMethod=test_register_error_2___test01____mushishi____111111____code____register_email_error____请输入有效的电子邮件地址__&gt;, None), (&lt;__main__.FirstDdtCase testMethod=test_register_error_2___test01____mushishi____111111____code____register_email_error____请输入有效的电子邮件地址__&gt;, None)]
 
 
         </pre>
@@ -301,7 +309,7 @@ file_path /Users/qing.li/PycharmProjects/hm/selenium_/imooc/image/code.png
 </tr>
 
 <tr id='pt1.3' class='hiddenRow'>
-    <td class='none'><div class='testcase'>test_login_code_error</div></td>
+    <td class='none'><div class='testcase'>test_register_error_3___test01_____mushishi____111111____code____register_email_error____请输入有效的电子邮件地址__</div></td>
     <td colspan='5' align='center'>
     <!--css div popup start-->
     <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_pt1.3')" >
@@ -315,8 +323,9 @@ file_path /Users/qing.li/PycharmProjects/hm/selenium_/imooc/image/code.png
         
 pt1.3: 每条case执行之前
 file_path /Users/qing.li/PycharmProjects/hm/selenium_/imooc/image/code.png
+请输入有效的电子邮件地址 请输入有效的电子邮件地址
 每条case执行之后
-[(&lt;__main__.FirstCase testMethod=test_login_code_error&gt;, None), (&lt;__main__.FirstCase testMethod=test_login_code_error&gt;, None)]
+[(&lt;__main__.FirstDdtCase testMethod=test_register_error_3___test01_____mushishi____111111____code____register_email_error____请输入有效的电子邮件地址__&gt;, None), (&lt;__main__.FirstDdtCase testMethod=test_register_error_3___test01_____mushishi____111111____code____register_email_error____请输入有效的电子邮件地址__&gt;, None)]
 
 
         </pre>
@@ -325,27 +334,50 @@ file_path /Users/qing.li/PycharmProjects/hm/selenium_/imooc/image/code.png
     </td>
 </tr>
 
-<tr id='ft1.4' class='none'>
-    <td class='failCase'><div class='testcase'>test_login_success</div></td>
+<tr id='pt1.4' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_register_error_4___111111____mushishi____111111____code____register_email_error____请输入有效的电子邮件地址__</div></td>
     <td colspan='5' align='center'>
     <!--css div popup start-->
-    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_ft1.4')" >
-        fail</a>
-    <div id='div_ft1.4' class="popup_window">
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_pt1.4')" >
+        pass</a>
+    <div id='div_pt1.4' class="popup_window">
         <div style='text-align: right; color:red;cursor:pointer'>
-        <a onfocus='this.blur();' onclick="document.getElementById('div_ft1.4').style.display = 'none' " >
+        <a onfocus='this.blur();' onclick="document.getElementById('div_pt1.4').style.display = 'none' " >
            [x]</a>
         </div>
         <pre>
         
-ft1.4: 每条case执行之前
+pt1.4: 每条case执行之前
 file_path /Users/qing.li/PycharmProjects/hm/selenium_/imooc/image/code.png
+请输入有效的电子邮件地址 请输入有效的电子邮件地址
 每条case执行之后
-[(&lt;__main__.FirstCase testMethod=test_login_success&gt;, None), (&lt;__main__.FirstCase testMethod=test_login_success&gt;, (&lt;class 'AssertionError'&gt;, AssertionError('False is not true : 登录成功',), &lt;traceback object at 0x104c2d4c8&gt;))]
-Traceback (most recent call last):
-  File "/Users/qing.li/PycharmProjects/hm/selenium_/imooc/case/register_case.py", line 90, in test_login_success
-    self.assertTrue(login_success, "登录成功")
-AssertionError: False is not true : 登录成功
+[(&lt;__main__.FirstDdtCase testMethod=test_register_error_4___111111____mushishi____111111____code____register_email_error____请输入有效的电子邮件地址__&gt;, None), (&lt;__main__.FirstDdtCase testMethod=test_register_error_4___111111____mushishi____111111____code____register_email_error____请输入有效的电子邮件地址__&gt;, None)]
+
+
+        </pre>
+    </div>
+    <!--css div popup end-->
+    </td>
+</tr>
+
+<tr id='pt1.5' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_register_error_5____________mushishi____111111____code____register_email_error____请输入有效的电子邮件地址__</div></td>
+    <td colspan='5' align='center'>
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_pt1.5')" >
+        pass</a>
+    <div id='div_pt1.5' class="popup_window">
+        <div style='text-align: right; color:red;cursor:pointer'>
+        <a onfocus='this.blur();' onclick="document.getElementById('div_pt1.5').style.display = 'none' " >
+           [x]</a>
+        </div>
+        <pre>
+        
+pt1.5: 每条case执行之前
+file_path /Users/qing.li/PycharmProjects/hm/selenium_/imooc/image/code.png
+请输入有效的电子邮件地址 请输入有效的电子邮件地址
+每条case执行之后
+[(&lt;__main__.FirstDdtCase testMethod=test_register_error_5____________mushishi____111111____code____register_email_error____请输入有效的电子邮件地址__&gt;, None), (&lt;__main__.FirstDdtCase testMethod=test_register_error_5____________mushishi____111111____code____register_email_error____请输入有效的电子邮件地址__&gt;, None)]
 
 
         </pre>
@@ -356,8 +388,8 @@ AssertionError: False is not true : 登录成功
 
 <tr id='total_row'>
     <td>Total</td>
-    <td>4</td>
-    <td class="text text-success">3</td>
+    <td>5</td>
+    <td class="text text-success">4</td>
     <td class="text text-danger">1</td>
     <td class="text text-warning">0</td>
     <td>&nbsp;</td>
@@ -386,7 +418,7 @@ var data = [
 	},
 	{
 	    name : 'pass',
-		value : 3,
+		value : 4,
 		color : "#28B463",
 		label : "Pass",
 		labelColor: 'white',

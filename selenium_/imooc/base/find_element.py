@@ -28,4 +28,5 @@ class FindElement(object):
             else:
                 return self.driver.find_element_by_xpath(value)
         except:
+            # self.driver.save_screenshot()
             return None
