@@ -56,7 +56,7 @@ class ExcelUtil:
             return data
         return None
 
-    def write_value(self, row, col, value):
+    def write_value(self, row, value):
         """
         写入数据
             可能存在的问题：覆盖的问题
@@ -66,14 +66,13 @@ class ExcelUtil:
         # 拿到整个excel的数据-复制
         read_value = self.data
         write_data = copy(read_value)
-        print(write_data)
-        write_data.get_sheet(0).write(row, 3, value)
+        print("value", value, row, 9)
+        write_data.get_sheet(0).write(row, 9, value)
         write_data.save(self.excel_path)
-        print(self.excel_path)
 
 
 if __name__ == '__main__':
     file_path = '/Users/qing.li/PycharmProjects/hm/selenium_/imooc/common/keyword.xls'
     ex = ExcelUtil(file_path)
-    print(ex.write_value(8, 1, "追加的内容为什么不展示呢"))
-    print(ex.get_data())
+    # print(ex.write_value(8, "追加的内容为什么不展示呢"))
+    # print(ex.get_data())

@@ -49,3 +49,8 @@ class ActionMethod:
     def close_browser(self):
         self.driver.close()
 
+    def get_title(self):
+        return self.driver.title
+
+
+

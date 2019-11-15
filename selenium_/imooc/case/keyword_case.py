@@ -26,7 +26,30 @@ class KeywordCase:
                     case_method = handle_excel.get_col_value(i, 4)
                     case_value = handle_excel.get_col_value(i, 5)
                     case_element = handle_excel.get_col_value(i, 6)
+                    case_except_method = handle_excel.get_col_value(i, 7)
+                    case_except_content = handle_excel.get_col_value(i, 8)
+                    # 取出来是''不是None
+                    print("*"*10)
                     self.run_method(case_method, case_value, case_element)
+                    print(case_except_method, case_except_content)
+                    if not case_except_method:
+                        except_value = self.get_except_result_value(case_except_content)
+                        print("====>", except_value)
+                        if except_value[0] == 'text':
+                            result = self.run_method(case_except_method)
+                            if case_except_content in result:
+                                # case运行成功，写入结果
+                                print("hello")
+                                handle_excel.write_value(i, 'pass')
+                            else:
+                                print("it's me")
+                                handle_excel.write_value(i, 'fail')
+                        elif except_value[0] == 'element':
+                            result = self.run_method(case_except_method, case_value[1])
+                            if result:
+                                handle_excel.write_value(i, 'pass')
+                            else:
+                                handle_excel.write_value(i, 'fail')
 
         # 判断是否执行
         # 拿到执行方法
@@ -36,14 +59,24 @@ class KeywordCase:
 
     def run_method(self, case_method, case_value=None, case_element=None):
         m = getattr(self.action_method, case_method)
-        print("case_value", case_value)
-        print(case_method, case_value, case_element)
-        if case_value:
-            m(case_element, case_value)
+        # print("case_value", case_value)
+        # print(case_method, case_value, case_element)
+        if case_value and case_element:
+            result = m(case_element, case_value)
         elif case_element:
-            m(case_element)
+            result = m(case_element)
+        elif case_value:
+            result = m(case_value)
         else:
-            m()
+            result = m()
+        return result
+
+    # 获取预期结果值
+    def get_except_result_value(self, data):
+        print("data", data, data.split("="))
+        l = data.split("=")
+        print("k", l)
+        return data.split("=")
 
 
 if __name__ == '__main__':
