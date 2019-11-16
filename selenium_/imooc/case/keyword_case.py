@@ -29,23 +29,18 @@ class KeywordCase:
                     case_except_method = handle_excel.get_col_value(i, 7)
                     case_except_content = handle_excel.get_col_value(i, 8)
                     # 取出来是''不是None
-                    print("*"*10)
                     self.run_method(case_method, case_value, case_element)
-                    print(case_except_method, case_except_content)
-                    if not case_except_method:
+                    if case_except_method:
                         except_value = self.get_except_result_value(case_except_content)
-                        print("====>", except_value)
                         if except_value[0] == 'text':
                             result = self.run_method(case_except_method)
                             if case_except_content in result:
                                 # case运行成功，写入结果
-                                print("hello")
                                 handle_excel.write_value(i, 'pass')
                             else:
-                                print("it's me")
                                 handle_excel.write_value(i, 'fail')
                         elif except_value[0] == 'element':
-                            result = self.run_method(case_except_method, case_value[1])
+                            result = self.run_method(case_except_method, except_value[1])
                             if result:
                                 handle_excel.write_value(i, 'pass')
                             else:
@@ -73,9 +68,6 @@ class KeywordCase:
 
     # 获取预期结果值
     def get_except_result_value(self, data):
-        print("data", data, data.split("="))
-        l = data.split("=")
-        print("k", l)
         return data.split("=")
 
 

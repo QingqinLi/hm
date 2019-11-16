@@ -64,9 +64,9 @@ class ExcelUtil:
         :return:
         """
         # 拿到整个excel的数据-复制
-        read_value = self.data
+        # 问题：只会保存最后一次的数据，解决办法：每次写入都重新打开文件
+        read_value = xlrd.open_workbook(self.excel_path)
         write_data = copy(read_value)
-        print("value", value, row, 9)
         write_data.get_sheet(0).write(row, 9, value)
         write_data.save(self.excel_path)
 
