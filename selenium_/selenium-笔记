@@ -184,7 +184,13 @@ pytest的运行方式：
     步骤，预期结果，检查项目都写到excel文件中，标注执行结果，写util的excel操作类，操作excel，在case中读取文件内容操作，记录结果
 
 
-
+行为驱动：
+    DBB:行为驱动开发
+    像说话一样写case
+    怎么用：Behave (框架） python selenium pycharmcrest(断言）（Behave，pycharmcrest pip安装）
+    场景分析：使用语言描述case，使用自然语言拆分case，
+            检测正确性，
+            关键字， Given When and then
 
 
 
