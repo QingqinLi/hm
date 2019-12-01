@@ -185,16 +185,109 @@ pytest的运行方式：
 
 
 行为驱动：
-    DBB:行为驱动开发
+    BDD:行为驱动开发 behavior driven development
     像说话一样写case
-    怎么用：Behave (框架） python selenium pycharmcrest(断言）（Behave，pycharmcrest pip安装）
+    怎么用：Behave (框架） python selenium pyhamcrest(断言）（Behave，pycharmcrest pip安装）
     场景分析：使用语言描述case，使用自然语言拆分case，
             检测正确性，
             关键字， Given When and then
+    步骤：
+        创建features文件夹
+        environment.py管理测试环境，用例开始前后执行的行为，before_all,after_all, context(上下文）--可以作为全局变量，传递信息（eg,driver)
+        register(your name).feature 按照一定的规则编写测试语句
+            Feature:Register User
+
+                As a developer
+                    This is my first bdd project
+                Scenario: open register website
+                    When I open the register website "http://www.5itest.cn/register"
+                    Then I except that the title is "注册"
+
+                Scenario: input username
+                    When I set with useremail 'mushishi01@qq.com'
+                    And I set with username "mushishi01"
+                    And I set with password "mushishi"
+                    And I set with code "tets"
+                    And I click with registerbutton
+                    Then I except that text "验证码错误"
+        创建解析步骤文件夹steps，创建用例解析文件
+            导入behave，按照语法规则解析register.features中的语句
+        执行：
+            在当前项目文件夹下，使用behave执行，可以查看运行结果
+
+    当前问题：没有复用性， 解决方案：结合po模型（按照页面来完成）
+    改进：集合po模型，
+        新建lib-page，建立注册页面以及base_page(封装公共操作）， step解析features时调用po中的register_page中的操作，register_page调用
+        base_page中的内容
+
+日志模块的使用：
+    使用python的logging模块
+    获取日志对象logging.getLogger()
+    设置日志级别：logger.setLevel(logging.DEBUG)
+    控制台输出日志：
+        console = Logging.StreamHandle()
+        logger.addHandle(console)
+    文件输出日志
+        file_handle = logging.FileHandle(logfile)
+        logger.addHandler(file_handle)
+    日志使用
+        logger.debug(log content)
+    关闭：
+        handler.close()
+        logger.removeHandler(handler)
+    流程
+            import logging
+
+            logger = logging.getLogger()
+            # 后续使用logger输出
+            logger.setLevel(logging.DEBUG)
+            # 给logging模块
+            # 控制台输出日志
+            # console = logging.StreamHandler()
+            # logger.addHandler(console)
+
+            # 文件输出日志
+            file_handle = logging.FileHandler("logs/test.log")
+            logger.addHandler(file_handle)
+
+            logger.debug("teste")
+
+            # 要关闭
+            # console.close()
+            # logger.removeHandler(console)
+
+            file_handle.close()
+            logger.removeHandler(file_handle)
+
+            # 输出到日志文件中， 代码部署到线上/服务器， 脱离编译器，需要日志文件
+
+      日志的格式化输出：
+        定义formatter
+        formatter = logging.Formatter('%(asctime)s  %(filename)s ---> %(funcName)s %(lineno)s: %(levelname)s----> %(message)s')
+        给handle设定formatter
+        self.file_handle.setFormatter(formatter)
+      按照日期命名log文件：
+        os.path.dirname(), os.path.abspath(__file__), os.path.join, datetime.datetime.strftime("%Y-%m-%d")
+
+      日志文件的封装与输出：
+        封装成类，主要的创建写在init中， get_log, close_handle, 在其他文件中导入模块，类方法中实例化对象，类方法中关闭handle
+
+
+项目：
+    结合po+unittest+log
 
 
 
-
+持续继承：
+    jenkins
+        两种安装方式：
+            命令行 java -jar jenkins.war --httpPort 端口号
+            msi安装
+        安装插件
+        配置文件
+        使用自定义工作空间，配置工作目录
+        邮件通知服务配置：系统配置-项目中配置, 配置发邮件的邮箱的配置（开启服务）
+        定时构建 分 小时 天 星期 月   ／-间隔
 
 
 

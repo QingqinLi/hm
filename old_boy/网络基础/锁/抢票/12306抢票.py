@@ -31,7 +31,7 @@ def buy(n, l):
 if __name__ == '__main__':
     l = Lock()
     for i in range(10):
-        p = Process(target=check, args=(i,l))
+        p = Process(target=check, args=(i, l))
         p.start()
     for i in range(10):
         p = Process(target=buy, args=(i, l))

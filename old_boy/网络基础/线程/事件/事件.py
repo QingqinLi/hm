@@ -7,7 +7,7 @@ def conn_mysql(e, i):
     while count <= 3:
         print("%s正在重新尝试连接第%s次" % (i, count))
         if e.is_set():
-            print("%s个人连接成功"%i)
+            print("%s个人连接成功" % i)
         e.wait(0.5)
         count += 1
 
