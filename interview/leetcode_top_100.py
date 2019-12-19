@@ -4,6 +4,8 @@
 __author__ = 'qing.li'
 """
 
+import random
+
 
 class ListNode:
     def __init__(self, x):
@@ -468,10 +470,134 @@ class Solution:
                     head.next = None
                     break
 
+    """
+    整数的个位积和之差
+    """
+
+    def subtractProductAndSum(self, n: int) -> int:
+        l = []
+        for i in str(n):
+            l.append(int(i))
+        s = sum(l)
+        m = 1
+        for i in l:
+            m *= i
+        print(l, s, m)
+        return m-s
+
+    """
+    编写一个函数判断它是否是2的幂次方
+    """
+
+    def isPowerOfTwo(self, n: int) -> bool:
+        if n <= 0:
+            return False
+        while n != 1:
+            s = n % 2
+            if not s == 0:
+                return False
+            n = n // 2
+        else:
+            return True
+    """
+    位1的个数（汉明重量）无符号整数
+    """
+
+    def hammingWeight(self, n: int) -> int:
+        # 现转换为二进制的格式
+        n = bin(n)
+        count = 0
+        for i in n:
+            if i == '1':
+                count += 1
+        return count
+
+    """
+    供暖器
+    思路：找到每个房屋到加热器的最短距离
+    二分查找
+    """
+
+    def findRadius(self, houses, heaters) -> int:
+        # 二分查找，找到每个房屋到加热器的最短距离
+        heaters = sorted(heaters)
+        dis = []
+
+        for house in houses:
+            start = 0
+            end = len(heaters) - 1
+            while start < end:
+                mid = start + (end - start) // 2
+                if heaters[mid] < house:
+                    start = mid + 1
+                else:
+                    end = mid
+
+        pass
+
+    """
+    保持城市天际线
+    """
+
+    def maxIncreaseKeepingSkyline(self, grid) -> int:
+        col = []
+        s = 0
+        for i in range(len(grid)):
+            c = []
+            for j in range(len(grid[0])):
+                c.append(grid[j][i])
+            col.append(max(c))
+        for i in range(len(grid)):
+            m = max(grid[i][:])
+            for j in range(len(grid[0])):
+                s += min(m, col[j]) - grid[i][j]
+        return s
+
+    """
+    三锥形体的表面积
+    考虑：凹陷的情况
+    """
+
+    def surfaceArea(self, grid) -> int:
+        # b = pow(len(grid[0]), 2)
+        # row = []
+        # col = []
+        # for i in range(len(grid)):
+        #     row.append(max(grid[i]))
+        # for i in range(len(grid)):
+        #     m = []
+        #     for j in range(len(grid[0])):
+        #         m.append(grid[j][i])
+        #     col.append(max(m))
+        # n = sum(row)
+        # l = sum(col)
+        # print(l, b, n)
+        # return 2*b + 2*n + 2*l
+        count = 0
+        for i in range(len(grid)):
+            for j in range(len(grid[0])):
+
+                count += grid[i][j]
+        print(5 * count)
 
 
+class Codec:
+    """
+    TinyURL是一种URL简化服务， 比如：当你输入一个URL https://leetcode.com/problems/design-tinyurl 时，
+    它将返回一个简化的URL http://tinyurl.com/4e9iAk.
+    要求：设计一个 TinyURL 的加密 encode 和解密 decode 的方法。你的加密和解密算法如何设计和运作是没有限制的，
+    你只需要保证一个URL可以被加密成一个TinyURL，并且这个TinyURL可以用解密方法恢复成原本的URL
+    """
 
+    _map = {}
 
+    def encode(self, longUrl: str) -> str:
+        """Encodes a URL to a shortened URL.
+        """
+
+    def decode(self, shortUrl: str) -> str:
+        """Decodes a shortened URL to its original URL.
+        """
 
 
 if __name__ == '__main__':
@@ -482,4 +608,4 @@ if __name__ == '__main__':
     # s2.next = ListNode(6)
     # s2.next.next = ListNode(4)
     # print(s.addTwoNumbers(s1, s2))
-    print(s.convert("", 1))
+    print(s.surfaceArea([[2,2,2],[2,1,2],[2,2,2]]))

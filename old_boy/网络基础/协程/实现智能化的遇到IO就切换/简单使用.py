@@ -38,8 +38,9 @@ func停止的原因：
 monkey.patch_all()  # 可以让gevent识别大部分常见的IO操作
 def func():
     print("122")
-    time.sleep(1)
+    # time.sleep(1)
     print("222")
+    s = input()
     time.sleep(2)
     print("333")
 
