@@ -19,11 +19,11 @@ s = 'this is a sentence&and this is a word too'
 def bubble_sort(nums):
     if len(nums) <= 1:
         return nums
-    for i in range(len(nums) - 1):
-        for j in range(len(nums) - 1 - i):
-            if nums[j] > nums[j+1]:
-                nums[j], nums[j+1] = nums[j+1], nums[j]
-
+    else:
+        for i in range(len(nums)-1):
+            for j in range(len(nums)-i-1):
+                if nums[j] > nums[j+1]:
+                    nums[j], nums[j+1] = nums[j+1], nums[j]
     return nums
 
 
@@ -47,8 +47,26 @@ def quick_sort(nums, left, right):
     return nums
 
 
-l = [6, 4, 6, 2, 9, 3, 1, 0, 90]
-print(quick_sort(l, 0, len(l)-1))
+# l = [6, 4, 6, 2, 9, 3, 1, 0, 90]
+# print(quick_sort(l, 0, len(l)-1))
+
+"""
+选择排序
+"""
+
+
+def selectSort(nums):
+    """
+    每次选择最大/小的元素
+    :param nums:
+    :return:
+    """
+    for i in range(len(nums)):
+        min_index = i
+        for j in range(i+1, len(nums)):
+            if nums[j] < nums[min_index]:
+                nums[j], nums[min_index] = nums[min_index], nums[j]
+    return nums
 
 
 """
@@ -66,4 +84,4 @@ def prime(n):
         return True
 
 
-print(prime(37))
+print(selectSort([1, 3, 2, 0, 45, 67, 34, 23]))

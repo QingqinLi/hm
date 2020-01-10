@@ -579,6 +579,517 @@ class Solution:
 
                 count += grid[i][j]
         print(5 * count)
+    """
+    第三大的数， 要求算法复杂度必须是O(n)
+    python中无限小的数 float("-inf")
+    """
+
+    def thirdMax(self, nums) -> int:
+
+        if len(nums) < 3:
+            return max(nums)
+        first = float("-inf")
+        second = float("-inf")
+        third = float("-inf")
+        for i in nums:
+            if i > first:
+                first, second, third = i, first, second
+            elif second < i < first:
+                second, third = i, second
+            elif third < i < second:
+                third = i
+            else:
+                pass
+        if third > float("-inf"):
+            return third
+        else:
+            return first
+
+    """
+    验证回文字符串II
+    字符串反转的方式：https://www.cnblogs.com/taceywong/p/8045127.html
+    比较是否为回文串一般：
+    """
+    def validPalindrome(self, s: str) -> bool:
+        sl = s[::-1]
+        if s == sl:
+            return True
+        i = 0
+        j = len(s) - 1
+        while i <= j:
+            if not s[i] == s[j]:
+                print(i, j, s[i], s[j])
+                # 比较去掉两边之后是不是回文串
+                if i == 0:
+                    s_old = s[1:]
+                    s_new = s_old[::-1]
+                    if s_new == s_old:
+                        return True
+                    else:
+                        s_old = s[0:len(s)-1]
+                        s_new = s_old[::-1]
+                        if s_new == s_old:
+                            return True
+                        else:
+                            return False
+                else:
+                    s_old = s[0:i]+s[i+1:]
+                    print(s[0:i], s[i+1])
+                    s_new = s_old[::-1]
+                    print(s_old, s_new)
+                    if s_new == s_old:
+                        return True
+                    else:
+                        s_old = s[0:j] + s[j + 1:]
+                        s_new = s_old[::-1]
+                        if s_new == s_old:
+                            return True
+                        else:
+                            return False
+            i += 1
+            j -= 1
+        return True
+    """
+    四位数组组成的最大时间
+    """
+
+    def largestTimeFromDigits(self, A) -> str:
+        l = []
+        if 2 in A:
+            A.remove(2)
+            if 3 in A:
+                A.remove(3)
+            elif 2 in A:
+                A.remove(2)
+            elif 1 in A:
+                A.remove(1)
+            elif 0 in A:
+                A.remove(0)
+            else:
+                pass
+    """
+    统计位数为偶数的数字
+    """
+
+    def findNumbers(self, nums) -> int:
+        count = 0
+        for num in nums:
+            if len(str(num)) % 2 == 0:
+                count += 1
+
+        return count
+
+    """
+    访问所有点的最小时间
+    解答：走折线最快，先看两个点之间的距离（转换成长方形），走完之后剩下的走直线
+    """
+
+    def minTimeToVisitAllPoints(self, points) -> int:
+        count = 0
+        for i in range(len(points)-1):
+            start = points[i]
+            end = points[i+1]
+            x = abs(start[0]-end[0])
+            y = abs(start[1]-end[1])
+            common = min(x, y)
+            if x == y:
+                big = 0
+            else:
+                big = max(x, y) - common
+            count = count + common + big
+        return count
+
+    """
+     螺旋矩阵 II
+     螺旋矩阵的解法：
+        
+    """
+
+    def generateMatrix(self, n: int):
+        l = [[0 for j in range(n)] for i in range(n)]
+        count = 1
+
+        top = 0
+        right = n-1
+        bottom = n-1
+        left = 0
+
+        for i in range(4):
+            if i == 0:
+                # 第一行
+                pass
+        print(l)
+
+    """
+    和为零的N个唯一整数
+    """
+
+    def sumZero(self, n: int):
+        l = []
+        if n % 2 == 0:
+            for i in range(1, n//2 + 1):
+                l.append(i)
+                l.append(-i)
+        else:
+            for i in range(1, n//2 + 1):
+                l.append(i)
+                l.append(-i)
+            l.append(0)
+        return l
+
+    """
+    奇数值单元格的数目
+    """
+
+    def oddCells(self, n: int, m: int, indices) -> int:
+        l = [[0 for i in range(m)] for j in range(n)]
+        for indice in indices:
+            row = indice[0]
+            for i in range(m):
+                l[row][i] += 1
+            col = indice[1]
+            for j in range(n):
+                l[j][col] += 1
+        count = 0
+        for i in range(n):
+            for j in range(m):
+                if not l[i][j] % 2 == 0:
+                    count += 1
+
+        return count
+
+    """
+    将每个元素替换为右侧最大元素
+    将中间部分省略
+    """
+
+    def replaceElements(self, arr):
+        result = []
+        max_num = arr[0]
+        for i in range(len(arr) - 1):
+            if arr[i] >= max_num:
+                max_n = max(arr[i+1:])
+                result.append(max_n)
+                max_num = max_n
+            else:
+                result.append(max_num)
+        result.append(-1)
+        return result
+
+    """
+    翻转图像
+    """
+    def flipAndInvertImage(self, A):
+        for i in range(len(A)):
+            A[i].reverse()
+        for i in range(len(A)):
+            for j in range(len(A[0])):
+                if A[i][j] == 0:
+                    A[i][j] = 1
+                else:
+                    A[i][j] = 0
+        return A
+    """
+    删除排序数组中的重复项
+    设置快慢双指针
+    """
+
+    def removeDuplicates(self, nums) -> int:
+        if not nums:
+            return 0
+        else:
+            i, j = 0, 0
+            count = 1
+            while j < len(nums):
+                if nums[i] >= nums[j]:
+                    j += 1
+                else:
+                    nums[i+1] = nums[j]
+                    i += 1
+                    j += 1
+                    count += 1
+        return count
+
+    """
+    高度检查器
+    先排序，再和之前没有排序的数组进行比较
+    """
+    def heightChecker(self, heights) -> int:
+        origin = heights[:]
+        heights.sort()
+        count = 0
+        for i in range(len(origin)):
+            if not origin[i] == heights[i]:
+                count += 1
+        return count
+    """
+    有序数组的平方
+    """
+
+    def sortedSquares(self, A):
+        result = []
+        for i in A:
+            result.append(i*i)
+        # 冒泡排序
+        # for i in range(len(result)):
+        #     for j in range(i, len(result)):
+        #         if result[i] > result[j]:
+        #             result[i], result[j] = result[j], result[i]
+
+        # 快排
+        def quicksort(nums, left, right):
+            if left >= right:
+                return
+            ref = nums[left]
+            start = left
+            end = right
+            while left < right:
+                while left < right and nums[right] >= ref:
+                    right -= 1
+                nums[left], nums[right] = nums[right], nums[left]
+                while left < right and nums[left] < ref:
+                    left += 1
+                nums[left], nums[right] = nums[right], nums[left]
+            quicksort(nums, start, left-1)
+            quicksort(nums, left+1, end)
+        quicksort(result, 0, len(result)-1)
+
+        return result
+
+    """
+    数组拆分 I
+    给定长度为 2n 的数组, 你的任务是将这些数分成 n 对, 例如 (a1, b1), (a2, b2), ..., (an, bn) ，使得从1 到 n 的 min(ai, bi) 总和最大。
+    """
+
+    def arrayPairSum(self, nums) -> int:
+        nums.sort()
+        result = []
+        for i in range(0, len(nums), 2):
+            result.append([nums[i], nums[i+1]])
+        count = 0
+        for i in result:
+            count += min(i)
+        return count
+
+    """
+    可被 5 整除的二进制前缀
+    python二进制转10进制， int("100100", 2)
+    """
+
+    def prefixesDivBy5(self, A):
+        # mid = [str(A[0])]
+        result = [int(str(A[0]), 2) % 5 == 0]
+        num = str(A[0])
+        for i in range(1, len(A)):
+            num = num + str(A[i])
+            result.append(int(num, 2) % 5 == 0)
+
+        return result
+
+    """
+    转置矩阵
+    """
+
+    def transpose(self, A):
+        n = len(A)
+        m = len(A[0])
+        result = [[0 for i in range(n)] for j in range(m)]
+        for i in range(m):
+            for j in range(n):
+                result[i][j] = A[j][i]
+        return result
+    """
+    玩筹码
+    """
+
+    def minCostToMoveChips(self, chips) -> int:
+        odd = 0
+        even = 0
+        for i in chips:
+            if i%2 == 0:
+                even += 1
+            else:
+                odd += 1
+        return min(odd, even)
+    """
+    查找公共字符
+    字符串转换为列表，使用for循环查看元素是不是在每一个list中for else
+    """
+
+    def commonChars(self, A):
+        l = [list(s) for s in A]
+        result = []
+        for i in l[0]:
+            for j in range(1, len(l)):
+                if i not in l[j]:
+                    break
+                else:
+                    l[j].remove(i)
+            else:
+                result.append(i)
+        return result
+
+    """
+    分割平衡字符串
+    """
+
+    def balancedStringSplit(self, s: str) -> int:
+        # count = 0
+        # l = []
+        # for i in s:
+        #     l.append(i)
+        #     if l and (l.count('L') == l.count('R')):
+        #         l = []
+        #         count +=1
+        # return count
+        l = 0
+        count = 0
+        for i in s:
+            if i == 'L':
+                l += 1
+            else:
+                l -= 1
+            if l == 0:
+                count += 1
+        return count
+
+    """
+    转换成小写字母
+    """
+
+    def toLowerCase(self, str: str) -> str:
+        s = list(str)
+        for i in range(len(s)):
+            if 65 <= ord(s[i]) <= 90:
+                s[i] = chr(ord(s[i])+32)
+        return "".join(s)
+    """
+    解码字母到整数映射,倒序查看元素是否为三位连在一起需要解析的
+    """
+
+    def freqAlphabets(self, s: str) -> str:
+        d = {
+            '1': 'a',
+            '2': 'b',
+            '3': 'c',
+            '4': 'd',
+            '5': 'e',
+            '6': 'f',
+            '7': 'g',
+            '8': 'h',
+            '9': 'i',
+            '10#': 'j',
+            '11#': 'k',
+            '12#': 'l',
+            '13#': 'm',
+            '14#': 'n',
+            '15#': 'o',
+            '16#': 'p',
+            '17#': 'q',
+            '18#': 'r',
+            '19#': 's',
+            '20#': 't',
+            '21#': 'u',
+            '22#': 'v',
+            '23#': 'w',
+            '24#': 'x',
+            '25#': 'y',
+            '26#': 'z',
+        }
+        l = []
+        result = []
+        for i in range(len(s)-1, -1, -1):
+            if s[i] == '#':
+                l.append(s[i-2:i+1])
+            elif i < len(s)-1 and s[i+1] == '#':
+                pass
+            elif i < len(s)-2 and (s[i+1] == '#' or s[i+2] == '#'):
+                pass
+            else:
+                # print("test", s[i], s[i + 1], s[i + 2])
+                l.append(s[i])
+        for i in l:
+            result.append(d[i])
+        print(result, l)
+        return "".join(reversed(result))
+    """
+    斐波那契数
+    """
+
+    def fib(self, N: int):
+        if N == 0:
+            return 0
+        elif N == 1:
+            return 1
+        else:
+            return self.fib(N-1)+self.fib(N-2)
+
+    """
+    车的可用捕获量
+    """
+
+    def numRookCaptures(self, board) -> int:
+        row = 0
+        col = 0
+        for i in range(len(board)):
+            for j in range(len(board[0])):
+                if board[i][j] == 'R':
+                    row = i
+                    col = j
+                    break
+        count = 0
+        print("row, col", row, col)
+        for i in range(col-1, -1, -1):
+            print(row, i)
+            if board[row][i] == 'B':
+                break
+            elif board[row][i] == 'p':
+                count += 1
+                break
+
+        for i in range(col+1, len(board[0])):
+            print(row, i)
+            if board[row][i] == 'B':
+                break
+            elif board[row][i] == 'p':
+                count += 1
+                break
+
+        for i in range(row-1, -1, -1):
+            print(i, col, list(range(row-1, -1, -1)), board[i][col])
+            if board[i][col] == 'B':
+                break
+            elif board[i][col] == 'p':
+                count += 1
+                break
+
+        for i in range(row+1, len(board)):
+            print(i, col)
+            if board[i][col] == 'B':
+                break
+            elif board[i][col] == 'p':
+                count += 1
+                break
+
+        return count
+
+    """
+    唯一摩尔斯密码词
+    """
+
+    def uniqueMorseRepresentations(self, words) -> int:
+        moss_code = [".-","-...","-.-.","-..",".","..-.","--.","....","..",".---","-.-",".-..","--","-.","---",".--.","--.-",".-.","...","-","..-","...-",".--","-..-","-.--","--.."]
+        result = []
+        for word in words:
+            word_list = list(word)
+            l = []
+            for i in word_list:
+                code = moss_code[ord(i) - 97]
+                l.append(code)
+            result.append(''.join(l))
+        return len(set(result))
+
+
 
 
 class Codec:
@@ -608,4 +1119,4 @@ if __name__ == '__main__':
     # s2.next = ListNode(6)
     # s2.next.next = ListNode(4)
     # print(s.addTwoNumbers(s1, s2))
-    print(s.surfaceArea([[2,2,2],[2,1,2],[2,2,2]]))
+    print(s.uniqueMorseRepresentations(["gin", "zen", "gig", "msg"]))
