@@ -1088,6 +1088,242 @@ class Solution:
                 l.append(code)
             result.append(''.join(l))
         return len(set(result))
+    """
+    杨辉三角
+    """
+
+    def generate(self, numRows: int):
+        if numRows == 1:
+            return [[1]]
+        elif numRows == 2:
+            return [[1], [1, 1]]
+        result = [[1], [1, 1]]
+        for i in range(2, numRows):
+            l = [1, ]
+            for j in range(len(result[-1])-1):
+                l.append(result[-1][j]+result[-1][j+1])
+            l.append(1)
+            result.append(l)
+        return result
+
+    """
+     数组的相对排序
+    """
+
+    def relativeSortArray(self, arr1, arr2):
+        result = []
+        for i in arr2:
+            while i in arr1:
+                result.append(i)
+                arr1.remove(i)
+        arr1.sort()
+        result.extend(arr1)
+        return result
+
+    """
+    机器人能否返回原点
+    """
+
+    def judgeCircle(self, moves: str) -> bool:
+        result_u = 0
+        result_l = 0
+        for i in list(moves):
+            if i == 'R':
+                result_l += 1
+            elif i == 'L':
+                result_l -= 1
+            elif i == 'U':
+                result_u += 1
+            elif i == 'D':
+                result_u -= 1
+        if result_l == 0 and result_u == 0:
+            return True
+        else:
+            return False
+
+    """反转字符串中的单词 III"""
+
+    def reverseWords(self, s: str) -> str:
+        word_list = s.split(" ")
+        word_reversed_list = []
+        for i in word_list:
+            reverse_word = i[::-1]
+            word_reversed_list.append(reverse_word)
+        return ' '.join(word_reversed_list)
+
+    """快乐数"""
+    def isHappy(self, n: int) -> bool:
+        nums = [n, ]
+
+        while 1:
+            sum = 0
+            for i in list(str(nums[-1])):
+                num = int(i)
+                sum += pow(num, 2)
+            print(sum)
+            if sum == 1:
+                return True
+            if sum in nums:
+                return False
+            else:
+                nums.append(sum)
+
+    """最小绝对差"""
+    def minimumAbsDifference(self, arr):
+        arr.sort()
+        result = {}
+        for i in range(len(arr)-1):
+            key = arr[i+1] - arr[i]
+            if key not in result.keys():
+                result[key] = [[arr[i], arr[i+1]], ]
+            else:
+                result[key].append([arr[i], arr[i+1]])
+        r = sorted(result.items(), key=lambda x: x[0])
+        print(r)
+        return r[0][1]
+
+    """拼写单词"""
+    def countCharacters(self, words, chars: str) -> int:
+        result = []
+        char_list = list(chars)
+        for i in words:
+            c = char_list[:]
+            l = list(i)
+            for j in l:
+                if j in c:
+                    c.remove(j)
+                else:
+                    break
+            else:
+                result.append(i)
+        count = 0
+        for i in result:
+            count += len(i)
+        return count
+
+    """特殊等价字符串组"""
+
+    def numSpecialEquivGroups(self, A):
+        result = []
+        for a in A:
+            l = []
+            r = []
+            ll = list(a)
+            for i in range(len(ll)):
+                if i % 2 == 0:
+                    r.append(ll[i])
+                else:
+                    l.append(ll[i])
+            l.sort()
+            r.sort()
+            result.append([a, r, l])
+        # print(result)
+        already = []
+        result_l = []
+        for i in range(len(result)):
+            if result[i][0] in already:
+                continue
+            rl = []
+            rl.append(result[i][0])
+            r = result[i][1]
+            l = result[i][2]
+            for j in range(i+1, len(result)):
+                if r == result[j][1] and l == result[j][2]:
+                    rl.append(result[j][0])
+                    already.append(result[j][0])
+
+            result_l.append(rl)
+        print(result_l)
+        return len(result_l)
+
+    """
+    最长特殊序列I
+    """
+
+    def findLUSlength(self, a: str, b: str) -> int:
+        if not len(a) == len(b):
+            return max(len(a), len(b))
+        else:
+            if a == b:
+                return -1
+            else:
+                return len(a)
+
+                
+    """
+    独特的电子邮件地址
+    """
+
+    def numUniqueEmails(self, emails) -> int:
+        result = []
+        for email in emails:
+            e = email.split("@")
+            local = e[0]
+            n = e[1]
+            if "." in local:
+                local = local.replace(".", "")
+            if "+" in local:
+                local = local.split("+")[0]
+            if local+"@"+n not in result:
+                result.append(local+"@"+n)
+        return len(result)
+
+    """
+     比较字符串最小字母出现频次
+     """
+
+    def numSmallerByFrequency(self, queries, words):
+        result = []
+
+        def f(s):
+            # n = []
+            # for i in list(s):
+            #     n.append(ord(i))
+            # m = min(n)
+            # return n.count(m)
+            s = list(s)
+            s.sort()
+            count = 0
+            for i in s:
+                if i == s[0]:
+                    count += 1
+                else:
+                    break
+            return count
+
+        w = []
+        for i in words:
+            w.append(f(i))
+        w.sort(reverse=True)
+
+        q = []
+        for i in queries:
+            q.append(f(i))
+        for i in q:
+            count = 0
+            for j in w:
+                if i < j:
+                    count += 1
+                else:
+                    break
+            result.append(count)
+        return result
+
+
+    """将整数转换为两个无零整数的和"""
+
+    def getNoZeroIntegers(self, n: int):
+
+        result = []
+        for i in range(1, n):
+            if '0' not in str(n - i) and '0' not in str(i):
+                result.append(i)
+                result.append(n-i)
+                break
+        return result
+
+
+
 
 
 
@@ -1119,4 +1355,4 @@ if __name__ == '__main__':
     # s2.next = ListNode(6)
     # s2.next.next = ListNode(4)
     # print(s.addTwoNumbers(s1, s2))
-    print(s.uniqueMorseRepresentations(["gin", "zen", "gig", "msg"]))
+    print(s.getNoZeroIntegers(4102))
