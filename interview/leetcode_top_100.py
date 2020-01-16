@@ -1309,9 +1309,7 @@ class Solution:
             result.append(count)
         return result
 
-
     """将整数转换为两个无零整数的和"""
-
     def getNoZeroIntegers(self, n: int):
 
         result = []
@@ -1322,10 +1320,45 @@ class Solution:
                 break
         return result
 
+    """旋转数字"""
+    def rotatedDigits(self, N: int) -> int:
+        result = []
+        for i in range(1, N+1):
+            l = list(str(i))
+            if '3' in l or '4' in l or '7' in l:
+                continue
+            if '2' in l or '5' in l or '6' in l or '9' in l:
+                result.append(i)
+        return len(result)
 
+    """山羊拉丁文"""
 
+    def toGoatLatin(self, S: str) -> str:
+        l = S.split(" ")
+        for w in range(len(l)):
+            if l[w][0] in ['a', 'e', 'i', 'o', 'u', 'A', 'E', 'I', 'O', 'U']:
+                l[w] = l[w] + 'ma' + (w+1) * 'a'
+            else:
+                l[w] = l[w][1:] + l[w][0] + 'ma' + (w+1) * 'a'
+        return ' '.join(l)
+    """重塑矩阵"""
 
-
+    def matrixReshape(self, nums, r: int, c: int):
+        m = len(nums)
+        n = len(nums[0])
+        if not m*n == r*c:
+            return nums
+        else:
+            l = []
+            result = [[0 for i in range(c)] for j in range(r)]
+            for i in range(m):
+                for j in range(n):
+                    l.append(nums[i][j])
+            for i in range(r):
+                for j in range(c):
+                    result[i][j] = l[0]
+                    l.pop(0)
+            return result
 
 
 class Codec:
@@ -1355,4 +1388,4 @@ if __name__ == '__main__':
     # s2.next = ListNode(6)
     # s2.next.next = ListNode(4)
     # print(s.addTwoNumbers(s1, s2))
-    print(s.getNoZeroIntegers(4102))
+    print(s.matrixReshape([[1,2], [3,4]], 2, 4))
