@@ -16,14 +16,14 @@ if __next__ in dir(obj): 使用__next__来获取到一个迭代器的元素(超�
 """
 
 
-# def func1():
-#     name = 'alex'
-#
-#     def func2():
-#         print(name)
-#     func2()
-#     print(func2.__closure__)
-# func1()
+def func1():
+    name = 'alex'
+
+    def func2():
+        print(name)
+    func2()
+    print(func2.__closure__)
+func1()
 
 l = [1, 3, 4, 6, 7, 22, 55, 653]
 c = l.__iter__()

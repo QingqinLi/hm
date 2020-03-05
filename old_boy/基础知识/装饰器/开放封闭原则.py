@@ -11,13 +11,6 @@ __author__ = 'qing.li'
 2. 硬改已经存在的代码是封闭的
 """
 
-"""
-不改变函数原来的调用方式 动态地 给函数 添加功能
-开放 封闭原则
-1. 对添加新功能是开放的
-2. 硬改已经存在的代码
-"""
-
 
 def create_people():
     # print("加口唾沫~")  # 违背了封闭原则
@@ -42,7 +35,6 @@ def koushui_create_people(arg):
 # ret = koushui_create_people(create_people)
 # print(ret)
 # ret()
-
 
 create_people = koushui_create_people(create_people)
 

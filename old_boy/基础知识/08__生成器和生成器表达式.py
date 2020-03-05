@@ -26,27 +26,27 @@ len(生成器）
 """
 
 
-# def func():
-#     print(111)
-#     yield 222
-#     print(33)
-#     yield 44
-#
-#
-# # func() #这是一个生成器函数，通过函数的执行获得一个生成器, 使用__next__()来执行
-# gener = func()
-# print(gener.__next__())
+def func():
+    print(111)
+    yield 222
+    print(33)
+    yield 44
+
+
+# func() #这是一个生成器函数，通过函数的执行获得一个生成器, 使用__next__()来执行
+gener = func()
+print(gener.__next__())
 # print(gener.__next__())
 # yield 来分段执行函数
 
-# def cloth():
-#     for i in range(0, 10000):
-#         yield "cloth" + str(i)
-#
-#
-# cl = cloth()
-# print(cl.__next__())
-# print(cl.__next__())
+def cloth():
+    for i in range(0, 10000):
+        yield "cloth" + str(i)
+
+
+cl = cloth()
+print(cl.__next__())
+print(cl.__next__())
 
 
 def eat():
@@ -95,18 +95,18 @@ print(gen.__next__())
 # print(s)
 
 # 面试题目 惰性机制, 不到最后不会拿值,所以最后n是10
-# def add(a, b):
-#     return a + b
-#
-#
-# def test():
-#     for r_i in range(4):
-#         yield r_i
-#
-#
-# g = test()
-#
-# for n in [2, 10]:
-#     g = (add(n, i) for i in g)
-# #     g = (add(n, i) for i in ((add(n, i) for i [0, 1, 2, 3]))
-# print(list(g))
+def add(a, b):
+    return a + b
+
+
+def test():
+    for r_i in range(4):
+        yield r_i
+
+
+g = test()
+
+for n in [2, 10]:
+    g = (add(n, i) for i in g)
+#     g = (add(n, i) for i in ((add(n, i) for i [0, 1, 2, 3]))
+print(list(g))

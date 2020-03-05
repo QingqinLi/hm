@@ -103,6 +103,5 @@ def func_1():
         print("这 是函数", name)
     # print("这 是函数1")
     return func_2
-
 fn = func_1() # 执 函数1. 函数1返回的是函数2, 这时fn指向的就是上 函数2
 fn()

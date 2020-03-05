@@ -1360,6 +1360,221 @@ class Solution:
                     l.pop(0)
             return result
 
+    """实现strStr"""
+
+    def strStr(self, haystack: str, needle: str) -> int:
+        if needle == '':
+            return 0
+        if needle in haystack:
+            return haystack.index(needle)
+        else:
+            return -1
+
+    """27. 移除元素"""
+
+    def removeElement(self, nums, val) -> int:
+        last = len(nums) - 1
+        start = 0
+        count = 0
+        while last > start:
+            if nums[last] == val:
+                last -= 1
+                count += 1
+                continue
+            if nums[start] == val and not nums[last] == val:
+                nums[start], nums[last] = nums[last], nums[start]
+                last -= 1
+                count += 1
+            start += 1
+        print(nums, len(nums) - count)
+
+    """53. 最大子序和"""
+
+    def maxSubArray(self, nums) -> int:
+        result = []
+        s = 0
+        for i in range(len(nums) - 1):
+            if nums[i] > 0:
+                result.append(nums[i])
+
+    """统计有序矩阵中的负数"""
+    def countNegatives(self, grid) -> int:
+        count = 0
+        for i in range(len(grid)):
+            for j in range(len(grid[0])):
+                if grid[i][j] < 0:
+                    count += 1
+        return count
+
+    """打印从1到最大的n位数"""
+
+    def printNumbers(self, n: int):
+        if n <= 0:
+            return [0]
+        m = pow(10, n)
+        result = []
+        for i in range(1, m):
+            result.append(i)
+        return result
+
+    """合并排序的数组"""
+
+    def merge(self, A, m: int, B, n: int) -> None:
+        """
+        Do not return anything, modify A in-place instead.
+        """
+        A[m:] = B
+        low = 0
+        high = m
+        while low < m:
+            print(low, high)
+            if A[low] <= A[high]:
+                low += 1
+            else:
+                A[low], A[high] = A[high], A[low]
+                # low += 1
+                # high += 1
+        print(A)
+
+    """替换空格"""
+
+    def replaceSpace(self, s: str) -> str:
+        s1 = s.replace(" ", "%20")
+        return s1
+
+    """ 剪绳子"""
+
+    def cuttingRope(self, n: int) -> int:
+        s = 1
+        for i in range(2, n):
+            pass
+    """有多少小于当前数字的数字"""
+
+    def smallerNumbersThanCurrent(self, nums):
+        result = []
+        for i in range(len(nums)):
+            count = 0
+            for j in range(len(nums)):
+                if nums[j] < nums[i]:
+                    count += 1
+            result.append(count)
+
+        return result
+    """左旋转字符串"""
+
+    def reverseLeftWords(self, s: str, n: int) -> str:
+        s1 = s[0:n]
+        s2 = s[n:]
+        return s2+s1
+
+    """腐烂的橘子"""
+
+    def orangesRotting(self, grid) -> int:
+        bad_guys = []
+        for i in range(len(grid)):
+            for j in range(len(grid[0])):
+                if grid[i][j] == 2:
+                    bad_guys.append([i, j])
+        if len(bad_guys) == 0:
+            return -1
+
+        direction_list = [[0, 1], [0, -1], [1, 0], [-1, 0]]
+        minute = 0
+        visit = [[False] * len(grid[0]) for i in range(len(grid))]
+        for i in range(len(bad_guys)):
+            visit[bad_guys[i][0]][bad_guys[i][1]] = True
+        while True:
+            new_bad_guys = []
+            while bad_guys:
+                guy = bad_guys.pop()
+                for d in direction_list:
+                    x = guy[0] + d[0]
+                    y = guy[1] + d[1]
+                    if 0 <= x < len(grid) and 0 <= y < len(grid[0]) and grid[x][y] == 1 and not visit[x][y]:
+                        grid[x][y] = 2
+                        print(x, y)
+                        new_bad_guys.append([x, y])
+            if new_bad_guys:
+                bad_guys = new_bad_guys
+                minute += 1
+            else:
+                break
+        for i in range(len(grid)):
+            for j in range(len(grid[0])):
+                if grid[i][j] == 1:
+                    return -1
+        else:
+            return minute
+
+    """把数字变成0的步骤"""
+
+    def numberOfSteps(self, num: int) -> int:
+        count = 0
+        while num:
+            if num % 2 == 0:
+                num = num / 2
+            else:
+                num -= 1
+            count += 1
+        return count
+    """只出现一次的数字"""
+
+    def singleNumber(self, nums) -> int:
+        double_list = []
+        pre_list = []
+        for i in nums:
+            if i in pre_list:
+                double_list.append(i)
+            if i not in pre_list:
+                pre_list.append(i)
+        result = set(nums) - set(double_list)
+        print(double_list, list(result)[0])
+        return list(result)[0]
+    """缺失数字"""
+
+    def missingNumber(self, nums) -> int:
+        nums.sort()
+        for i in range(len(nums)):
+            if not nums[i] == i:
+                return i
+
+    """分糖果 II"""
+
+    def distributeCandies(self, candies: int, num_people: int):
+        result = [0 for i in range(num_people)]
+        candy = 1
+        while True:
+            if candies > 0:
+                # 该发出几个糖果了candy， 计算出应该给哪个小朋友了
+                children = candy % num_people
+                if children == 0:
+                    children = num_people
+                # 看剩下的糖果够不够
+                if candies - candy > 0:
+                    should_candy = candy
+                else:
+                    should_candy = candies
+                result[children-1] += should_candy
+                candies -= should_candy
+                candy += 1
+            else:
+                break
+        return result
+
+    """ 解压缩编码列表"""
+
+    def decompressRLElist(self, nums):
+        l = int(len(nums) / 2)
+        result = []
+        for i in range(l):
+            new_number = nums[i*2+1]
+            new_len = nums[i*2]
+            new_need = [new_number for j in range(new_len)]
+            result.extend(new_need)
+        return result
+
+    """"""
+
 
 class Codec:
     """
@@ -1388,4 +1603,4 @@ if __name__ == '__main__':
     # s2.next = ListNode(6)
     # s2.next.next = ListNode(4)
     # print(s.addTwoNumbers(s1, s2))
-    print(s.matrixReshape([[1,2], [3,4]], 2, 4))
+    print(s.decompressRLElist([1,2,3,4]))

@@ -5,17 +5,17 @@
 # is:身份运行 内存地址相等 ==值相等
 
 #
-# class A: pass
-#
-#
-# class B(A): pass
-#
-#
-# # b = B()
-# # print(isinstance(b, A))
-# # print(type(b) is A)
-#
-# print(issubclass(B, A), issubclass(A, B))
+class A: pass
+
+
+class B(A): pass
+
+
+b = B()
+print(isinstance(b, A))
+print(type(b) is A)
+
+print(issubclass(B, A), issubclass(A, B))
 
 
 """
@@ -87,20 +87,20 @@ __init__()初始化方法
 
 
 # 重要 单例类
-# class Single:
-#     __ISINSTANCE = None
-#
-#     def __new__(cls, *args, **kwargs):
-#         if not cls.__ISINSTANCE:
-#             cls.__ISINSTANCE = object.__new__(cls)
-#         return cls.__ISINSTANCE
-#
-#     def __init__(self):
-#         print("in init", self)
-#
-#
-# s1 = Single()
-# s2 = Single()
+class Single:
+    __ISINSTANCE = None
+
+    def __new__(cls, *args, **kwargs):
+        if not cls.__ISINSTANCE:
+            cls.__ISINSTANCE = object.__new__(cls)
+        return cls.__ISINSTANCE
+
+    def __init__(self):
+        print("in init", self)
+
+
+s1 = Single()
+s2 = Single()
 # # 此时s1, s2是同一个对象
 
 
@@ -170,10 +170,10 @@ zip()把元素打包成一个个元祖
 
 """
  # 字符
-# print(format('test', '<20'))
-# print(format('test', '>20'))
-# print(format('test', '^20'))
-# # 数值
+print(format('test', '<20'))
+print(format('test', '>20'))
+print(format('test', '^20'))
+# 数值
 # print(format(3, 'b'))
 # print(format(97, 'c'))
 # print(format(11, 'd'))
@@ -198,12 +198,12 @@ zip()把元素打包成一个个元祖
 # name = 'taibai'
 # print('我叫%r' % name)
 #
-# l1 = [1,2,3,]
-# l2 = ['a','b','c',5]
-# l3 = ('*','**',(1,2,3))
-# print(zip(l1, l2, l3))
-# for i in zip(l1, l2, l3):
-#     print(i)
+l1 = [1,2,3,]
+l2 = ['a','b','c',5]
+l3 = ('*','**',(1,2,3))
+print(zip(l1, l2, l3))
+for i in zip(l1, l2, l3):
+    print(i)
 
 """
 lamda(): 匿名函数。不需要def来声明
@@ -221,13 +221,13 @@ iterable: 可迭代对象
 map（function, itrerable）函数 对每一个可迭代对象中的每一个元素进行映射，分别去执行function
 
 """
-# lst = ["麻花藤", "冈本次郎", "中央情报局", "狐仙"]
-# lst2 = sorted(lst, key=lambda s: len(s))
-# print(lst2)
+lst = ["麻花藤", "冈本次郎", "中央情报局", "狐仙"]
+lst2 = sorted(lst, key=lambda s: len(s))
+print(lst2)
 
-# lst = [1,2,3,4,5,6,7]
-# ll = filter(lambda x: x % 2 == 0, lst)
-# print(list(ll))
+lst = [1,2,3,4,5,6,7]
+ll = filter(lambda x: x % 2 == 0, lst)
+print(list(ll))
 
 # lst1 = [1, 2, 3, 4, 5]
 # lst2 = [2, 4, 6, 8, 10]

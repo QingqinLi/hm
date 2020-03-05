@@ -53,6 +53,62 @@ class Solution:
         cur.next = pre
         return cur
 
+    """倒数第k个节点"""
+
+    def getKthFromEnd(self, head: ListNode, k: int) -> ListNode:
+        # 先算出link的长度
+        count = 0
+        l = head
+        while l.next:
+            l = l.next
+            count += 1
+        count += 1
+        my = count - k + 1
+        print(my)
+        m = 0
+        while head.next:
+            if m == my:
+                return head
+            else:
+                m += 1
+
+    """ 反转链表"""
+
+    def reverseList(self, head: ListNode) -> ListNode:
+        if not head or not head.next:
+            return head
+        pre = None
+        cur = head
+        while cur.next:
+            lat = cur.next
+            cur.next = pre
+            cur = lat
+            pre = cur
+        cur.next = pre
+        return cur
+
+    """返回倒数第k个节点的值"""
+
+    def kthToLast(self, head: ListNode, k: int) -> int:
+        count = 0
+        cur = head
+        while cur.next:
+            count += 1
+            cur = cur.next
+        count += 1
+        need = count - k + 1
+        m = 1
+        while head:
+            if m == need:
+                return head.val
+            else:
+                head = head.next
+                m += 1
+        return None
+
+
+
+
 
 
 if __name__ == '__main__':
@@ -60,7 +116,9 @@ if __name__ == '__main__':
     l = ListNode(1)
     l.next = ListNode(0)
     l.next.next = ListNode(1)
-    print(s.getDecimalValue(l))
+    l.next.next.next = ListNode(2)
+    l.next.next.next.next = ListNode(3)
+    print(s.reverseList(l))
 
 
 

@@ -137,19 +137,20 @@ staticmethod 静态方法的装饰漆 内置函数
 # print(Person.func)  # 真实的func地址的值
 # print(a.func)  # 不是同一个。对象的内存空间存的是记录类中属性 的变量 的地址
 
-# class Foo:
-#     def __init__(self):
-#         self.func()
+class Foo:
+    def __init__(self):
+        self.func()
+
+    def func(self):
+        print("FOO.Func")
+
+
+class Son(Foo):
+    def Func(self):
+        print("SON.Func")
 #
-#     def func(self):
-#         print("FOO.Func")
 #
-#
-# class Son(Foo):
-#     def Func(self):print("SON.Func")
-#
-#
-# s = Son()  # 调用的是子类的func
+s = Son()  # 调用的是子类的func
 
 # class A:
 #
@@ -183,27 +184,27 @@ staticmethod 静态方法的装饰漆 内置函数
 # # 遵循mro的顺序 多继承的继承顺序
 
 # 装饰器
-# class Goods:
-#
-#     __diccount = 0.8
-#
-#     def __init__(self, price):
-#         self.__price = price
-#
-#     @property
-#     def price(self):
-#         return self.__price * Goods.__diccount
-#
-#     @classmethod
-#     def change_discount(cls, new_count):
-#         cls.__diccount = new_count
-#
-#
-# a = Goods(9)
-# b = Goods(5)
-# print(a.price, b.price)
-# Goods.change_discount(1)
-# print(a.price, b.price)
+class Goods:
+
+    __diccount = 0.8
+
+    def __init__(self, price):
+        self.__price = price
+
+    @property
+    def price(self):
+        return self.__price * Goods.__diccount
+
+    @classmethod
+    def change_discount(cls, new_count):
+        cls.__diccount = new_count
+
+
+a = Goods(9)
+b = Goods(5)
+print(a.price, b.price)
+Goods.change_discount(1)
+print(a.price, b.price)
 
 
 class Person:

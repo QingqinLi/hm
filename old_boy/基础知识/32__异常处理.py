@@ -17,9 +17,9 @@
     尽量少用异常处理
     使用异常一般会在最外层加一个大的异常处理
 """
-# l = ['登录','注册','退出']
-# for i in enumerate(l,1):
-#     print(i[0],i[1])
+l = ['登录','注册','退出']
+for i in enumerate(l,1):
+    print(i[0],i[1])
 #
 # while 1:
 #     try:
@@ -73,12 +73,12 @@
 # class EvaException(Exception):
 #     def __init__(self,msg):
 #         self.msg = msg
-#
-# try:
-#     num = int(input('>>>'))
-# except Exception:
-#     print('在出现了异常之后做点儿什么,再让它抛异常')
-#     raise NameError('这是一个name error的异常')
+
+try:
+    num = int(input('>>>'))
+except Exception:
+    print('在出现了异常之后做点儿什么,再让它抛异常')
+    raise NameError('这是一个name error的异常')
 
 
 # 断言  使用assert raise主动抛出异常

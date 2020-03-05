@@ -1,26 +1,26 @@
-# class Animal:
-#
-#     def __init__(self, name, age):
-#         self.name = name
-#         self.age = age
-#
-#     def eat(self):
-#         return "%s吃东西" % self.name
-#
-#     def drink(self):
-#         return "%s喝水" % self.name
-#
-#
-# class Bird(Animal):
-#
-#     # super()
-#     def __init__(self, name, age, wind):
-#         super().__init__(name, age)
-#         self.wind = wind
+class Animal:
+
+    def __init__(self, name, age):
+        self.name = name
+        self.age = age
+
+    def eat(self):
+        return "%s吃东西" % self.name
+
+    def drink(self):
+        return "%s喝水" % self.name
 #
 #
-# bird = Bird("1", 1, "str")
-# print(bird.name)
+class Bird(Animal):
+
+    # super()
+    def __init__(self, name, age, wind):
+        super().__init__(name, age)
+        self.wind = wind
+
+
+bird = Bird("1", 1, "str")
+print(bird.name)
 
 """
 简单总结:
@@ -132,15 +132,15 @@ super()的作用：在子类中调用父类的方法
 
 
 # # 变量是可变的数据类型,内存中存的是一个变量+地址，添加值的时候改的是地址对应的值，地址不变，所以不会报错
-# class A:
-#     name = []
-#
-#
-# p1 = A()
-# p2 = A()
-# p1.name.append(1)
-#
-# print(p1.name, p2.name, A.name)
+class A:
+    name = []
+
+
+p1 = A()
+p2 = A()
+p1.name.append(1)
+
+print(p1.name, p2.name, A.name)
 
 # 不可变的数据类型 内存存的是数据本身，相当于给对象新增了一个属性
 class A:
