@@ -1,0 +1,12 @@
+三引号可以保持字符的格式
+特殊字符的转义：r/R/(//)
+%.2f 指定浮点数的小数点后的个数
+format{} 不指定数值，会按顺序取值
+format里面的数据，也是有索引的，从0开始标记数据
+
+字符串的内建函数：upper(), lower(), replace(原来的字符，要替换成的字符，替换次数），split("用什么来切割")返回列表类型的数据，strip("处理头尾的什么函数")
+
+元组：元组的值一旦确定就无法更改
+列表：list.pop(index) 删除指定索引的元素，list.pop() 删除尾部的元素, list.remove(),删除元素 list.sort() list.reverse() 倒置 list.clear()清空
+字典：dict.pop(key) 删除 clear（）清空 del dict[key] 删除某个key dict.popitem() 随机删除， keys(),values(),items()
+    dict1.update(dict2) 有相同的，dict2会覆盖dict1的内容

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="content-type" charset="UTF-8">
+    <meta http-equiv="x-ua-compatible" content="IE=edge">
+    <title>自定义登陆校验</title>
+    <style>
+        .hide {
+            display: none;
+        }
+        #l2, #l4 {
+            color:red;
+        }
+    </style>
+</head>
+<body>
+<form action="">
+    <div>
+        <label for="username" id="l1">用户名</label>
+        <input type="text" id="username">
+        <label id="l2" class="hide">用户名不能为空</label>
+    </div>
+    <div>
+        <label for="pwd" id="l3">密码&nbsp;&nbsp;&nbsp;</label>
+        <input type="password" id="pwd">
+        <label id="l4" class="hide">密码不能为空</label>
+    </div>
+    <div>
+        <input type="button" value="登陆" id="i3">
+    </div>
+</form>
+<script src="jquery-3.4.1.min.js">
+
+</script>
+<script>
+    $("#i3").click(function () {
+        $("#l2").addClass("hide");
+        $("#l4").addClass("hide");
+        var username = $("#username").val();
+        var password = $("#pwd").val();
+        if(username.length === 0){
+            $("#l2").removeClass("hide");
+        }
+        if(password.length === 0){
+            $("#l4").removeClass("hide");
+        }
+
+    })
+</script>
+</body>
+
+</html>

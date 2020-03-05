@@ -1,0 +1,605 @@
+vue
+    前后端分离的架构
+    vue.js
+    restframework
+    逻辑
+
+    变量定义
+        let 没有变量提升（在变量定义之前使用会报undefined）必须等let声明语句执行完之后，变量才能使用，不然会报Uncatch ReferenceError错误
+            这在语法上，称为“暂时性死区”（temporal dead zone，简称 TDZ）。
+
+        之前的h5 var定义的变量：只有全局作用域和函数作用域
+        let定义的变量：全局作用域 函数作用域 局部作用域{}
+            let不能重复定义，
+            var重复定义会覆盖
+            可以先定义再赋值
+            for循环中，let定义的变量在for循环中使用的时候，变量会被固定，不会被干扰
+            for (var i = 0; i <10; i++) {
+              setTimeout(function() {  // 同步注册回调函数到 异步的 宏任务队列。
+                console.log(i);        // 执行此代码时，同步代码for循环已经执行完成
+              }, 0);
+            }
+            // 输出结果
+            10   共10个
+            // 这里面的知识点： JS的事件循环机制，setTimeout的机制等
+            如果把 var改成 let声明：
+
+            // i虽然在全局作用域声明，但是在for循环体局部作用域中使用的时候，变量会被固定，不受外界干扰。
+            for (let i = 0; i < 10; i++) {
+              setTimeout(function() {
+                console.log(i);    //  i 是循环体内局部作用域，不受外界影响。
+              }, 0);
+            }
+            // 输出结果：
+            0  1  2  3  4  5  6  7  8 9
+
+        const定义变量
+            也没有变量提升
+            不能重复定义
+            块级作用域
+            定义之后不能修改
+            定义的时候必须赋值
+
+        ES6的let让js真正拥有了块级作用域，更安全规范
+
+    模板字符串
+        反引号进行字符串的拼接
+        ${变量名字} 来存储变量
+
+    数据的解构和赋值
+        数组的解构和赋值
+            let ary = [1, 2, 3]
+            let[a, b, c] = ary
+            console.log(a, b, c)
+        对象的解构和赋值
+            let obj = {
+            username: 'aaa',
+            age: 23
+            }
+            let {username:user(新的变量名）, age} = obj
+            console.log(user, age)
+        简单的用途：
+            数据的交换：
+                let a = 1
+                let b = 2
+                [a, b] = [b, a]
+                console.log(a, b)
+
+    函数的拓展：
+        默认值函数
+        箭头函数
+            //箭头函数 参数 箭头 返回值
+            // 如果0个或者多个参数
+            () => {}
+            // 多个参数
+            let bar = (x, y) => {return x+y};
+            // 一个参数
+            v => v;
+            箭头函数的this指向定义时的作用域
+            普通函数的this指向调用者的作用域
+
+    类：
+        class关键字定义一个类
+            必须要有constructor方式（构造方法） 如果没有，使用constructor(){}
+            必须使用new来实例化，否则报错
+        类的继承 extends
+            必须在子类的constructor方法里面写super方法
+    模块化编程
+    对象的单体模式
+        解决箭头函数的this指向问题
+
+
+    数据模版引擎
+
+    vue.js 2.0代码复用和抽象的主要形式是组件
+        常用指令：帮助我们渲染数据
+            v-text
+            v-html
+            v-for
+            v-if v-else if v-else
+            v-show
+                    切换性能：
+                        v-show 切换性能高 使用的是display:None
+                        v-if append 慢
+                    加载性能：
+                        v-if块
+                        v-show慢
+
+            v-bind v-bind:href="" :class="active" :class="{active: isActive, , , ,}"" bind绑定属性
+            v-on 绑定函数 v-on:click=""
+                new Vue({
+                    el: "", 属性查找 # .
+                    data: {
+                        //数据
+                    }，
+                    methods:{
+                        //方法
+                        changeColor: function(){},
+                        ...
+                    }
+
+                })
+            v-model 数据随输入变化 双向数据绑定（input, textarea, select)
+            计算属性：
+                放入缓存，只有数据改变的时候才会重新计算
+                {{sumScore}}
+                new Vue({
+                    el: '',
+                    data:{
+                        python: 33,
+                        Vue:33
+                        },
+                    methods:{},
+                    computed: { 每次变化都执行 内存中
+                        sumScore: function(){
+                            return this.python + this.Vue;
+                        }
+                    }
+                    //监听单个数据,已经存在的数据
+                    watch:{
+                        python: function(){
+                            一般是做通知之类的操作
+                            alert("python数据被修改"）
+                        }
+                    }
+
+
+
+                })
+            监听属性：watch
+                    watch:{
+                        python: function(){
+                            一般是做通知之类的操作
+                            alert("python数据被修改"）
+                        }
+                    可变类型和不可变数据类型的监听，对于可变的数据类型，只能监听到长度的变化，无法监听内容的变化
+            指令修饰符
+                用户输入的都是字符串
+                number lazy 懒加载 光标失去焦点再处理 trim
+            获取DOM元素 .$refs 元素的ref
+                <div ref="myRef">hell0</div>
+                <button v-on:click="changecolor"></button>
+
+                new Vue({
+                    el:"#app",
+                    methods: {
+                        changeColor: function(){
+                            this.$refs.(div).myRef(element).style.color = 'red',
+                        }
+                    }
+                }
+            自定义指令：对普通DOM元素进行底层操作
+                // 注册一个全局自定义指令 `v-focus`
+                Vue.directive('focus', {
+                  // 当被绑定的元素插入到 DOM 中时……
+                  inserted: function (el) {
+                    // 聚焦元素
+                    el.focus()
+                  }
+                })
+
+
+                <div v-pos = "isShow"></div>
+                Vue.directive("pos", function(el-元素, bindding-绑定的东西){
+                    bingding.value; --- 数据 （isShow的值）
+                })
+
+            重要：v-model v-show
+
+            elment_ui https://element.eleme.cn/#/zh-CN
+            导入，放到vue的下面
+
+
+vue: 一个库一个框架 前后端分离 渲染数据 渐进式框架
+
+
+组件：（页面布局）
+    每个组件的template只能识别一个作用域块
+    组件是可复用的Vue实例，所以他们与new Vue接受相同的选项， 例如date， computed, watch, methods 以及生命周期钩子等，例外，el是实例特有的对象
+    全局组件：
+        1.1 <div id="app">
+            </div>
+
+            Vue.component("全局组件明层", {
+                template:`
+                    <div>
+                        <h1>{{ 使用data数据 }}</h1>
+                    </div>
+                `
+                data(){
+                    return {
+                        greeting: "hello Vue",
+                    }
+                }
+            }
+
+            let Header = {
+                template: `
+                    <div>
+                        <h1>{{ greeting }}</h1>
+                    </div>
+                `
+                data(){
+                    return{
+                        ...
+                    }
+                }
+            }
+
+            let App = {
+                template: `
+                    <div>
+                        <my-header></my-header>
+                    </div>
+                `,
+                components: {
+                    "my-header": Header, // 嵌套其他的子组件
+                },
+                //组件的私有数据
+                data(){
+                    pass
+                }
+            }
+
+            new Vue({
+                el: "#app",
+                template: `
+                    <div>
+                        <my-header></my-header>
+                    </div>
+                `,
+                //子组件最后的入口
+                components: {
+                    "app-header": Header,
+                }
+            }
+
+            data必须是函数， 没有el属性
+
+
+    局部组件：js object对象 除了name，其他与全局组件一样， 简化入口
+            注册使用
+            2.1 创建局部组件，其实就是创建一个javaScript object
+                let Header = {
+                    template:`
+                    <div>
+                    </div>
+                    `
+
+                }
+            2.2注册
+                1 new Vue({
+                    el: "#app",
+                    template: `<app-header></app-header>`
+                    components:{
+                        "app-header": Header,
+                    }
+                })
+                2 let App = {
+                    template:`
+                        <div>
+                            <app-header></app-header>
+                        </div>
+                    `,
+                    //嵌套使用
+                    components: {
+                        "app-header": Header
+                    }
+
+                }
+
+    组件放组件
+        找到最底层组件数据渲染
+    组件的复用：
+
+    父子组件之间的通信
+        <script>
+            let Header = {
+                template:`
+                    <div>
+                        <h1>{{ fatherData }}</h1>
+                    </div>
+                `
+                props : ["fatherData"]  //子组件接受父组件传递的内容
+
+            };
+
+            let App = {
+                template:`
+                    <div>
+                        <app-header :fatherData="count"></app-header>
+                    </div>
+                `
+                components: {
+                    "app-header": Header,
+                }
+                data(){
+                    return {
+                        count: 100,
+                    }
+                }
+            }
+
+            new Vue({
+                el: "#app",
+                template:  `<App></App>`,
+                components : {
+                    App,
+                }
+            }
+        </script>
+
+    子父组件之间的通信
+        let Header = {
+            template:`
+                <div>
+                    <button @click--父组件监听的事件="sendData">点击传递数据给父亲</button>
+                </div>
+            `,
+            methods:{
+                sendData: function() {
+                    this.$emit("change-size"--传递数据的事件, 0.1--传递的数据)
+                }
+            }
+
+        }；
+
+        let App = {
+            template:`
+                <div>
+                    <h1>内容</h1>
+                    <app-header v-on:change-size="changeSize:></app-header>
+                </div>
+            `
+            components: {
+                'app-header': Header
+            },
+            methods: {
+                changeSize: function(value){
+                    count += value
+                }
+            }
+        }
+
+        new Vue({
+            el:"#app",
+            template: `<App></App>`
+            components:{
+                App,
+            }
+        }
+
+    非父子的通信
+        --声明中间调度器
+        --其中一个组件向中间调度器提交事件
+        --另一个组件监听中间调度器的事件
+        --注意this的问题
+    混入（相当于函数， 代码重用）
+        定义
+            let mixs = {
+                methods: {
+                    show: function(){},
+                    hide: function(){},
+                }
+            }
+        使用
+            mixins(固定写法）: [mixs]
+
+    插槽：https://www.cnblogs.com/chinabin1993/p/9115396.html
+    插槽：让组件中的内容可以显示，没有插槽的情况下组件标签内的一些内容是不起作用的，当我在组件中声明了slot元素后，在组件元素内写的内容就可以显示了
+        <component><slot>展示的内容</slot></component>
+        template: `
+            <div>
+                <slot><\slot>
+            </div>
+        `
+    具名插槽：有名字的插槽～～， slot一一对应（位置，内容）
+        <app-header><div slot="header"></div></app-header>
+		template: `
+			<div>
+				<slot name="header"><slot>
+			</div>
+			`
+
+    作用域插槽：
+        我在组件上的属性，可以在组件元素内使用
+
+
+路由：
+    注册
+        let url = [
+        {
+            path:'/',
+            name: 'home',
+            component:{
+                template:``,
+            }
+        }
+        ]
+        let router = new VueRouter({
+            routes:url
+        }
+        const app = new Vue({
+            el:"#app",
+            router: router
+        })
+        -- <router-link :to="/">name</router-link>
+        -- <router-view></router-view>
+
+        --子路由
+            --children:[
+                {}
+            ]
+            --在父路由对应的组件template里重写router-link router-view
+        -- 命名路由
+            -- name
+            -- to加冒号动态绑定
+
+        -- 路由参数
+            -- {
+                path: "/course/:id"
+            }
+
+            this.$route.params.id
+            this.$route.query.xxx
+            $route 是一个存放当前路由所有对象的对象
+            $router VueRouter实例化对象
+        -- 手动路由
+            --this.$router.push("/")
+            --this.$router.push({name:"xxx"})
+        -- 重定向
+            -- redirect: {name:"xxx"}
+
+        -- 路由的钩子
+            -- beforeEach
+                -- to
+                -- from
+                -- next
+            -- afterEach
+                -- to
+                -- from
+
+
+
+
+
+生命周期：
+    beforeCreate:
+        el:没有
+        data:没有
+        事件：没有被初始化
+        innerHtml:
+            <div>
+                {{ name }}
+                <button @click="myCLick">点击事件</button>
+            </div>
+    created:
+        el:没有
+        data：数据有了
+        事件：事件有了
+        innerHTML:
+            <div>
+            {{name}}
+            <button @click="myClick">点击事件</button>
+            </div>
+    beforeMount:
+        el: 找到了
+        data： 数据有了
+        事件：事件有了
+        innerHtml
+            <div>
+            {{name}}
+            <button @click="myClick">点击事件</button>
+            </div>
+
+    mounted：
+        el：找到了，并且数据被渲染进标签
+        data：数据有了，被监听
+    beforemount（挂载） 找到el， 但是不渲染
+
+    挂载：
+
+    destroy之前
+    destored 内容还在 虚拟dom，记录修改， diff
+    activated
+    console.group()
+
+node.jd:不是javascript框架，也不是浏览器的库，是一个可以让javascript运行在服务端的开发平台
+
+    安装：node.js官网：https://nodejs.org/en/ 下载安装
+
+    使用：
+
+npm：包管理工具， node.js中的第三方库管理工具, 源，安装cnpm
+    全局安装
+        npm install -g <package>
+        -g global
+
+    局部安装（局部环境-虚拟环境）
+        npm install <package> --save ／ npm install vue@version --save
+        --save 局部安装
+        在node_moudle中使用
+
+    npm托管环境步骤：
+        管理工作目录 npm init -y
+        下载包 npm i xxx@0.0.0
+        卸载 npm uninstall xxxx
+        更新 npm update xxx
+
+webpack:打包工具
+    npm i webpack webpack-cli
+    打包默认的入口文件 src下的index.js
+    出口文件 dist目录的main.js
+
+    模块化编程， 一种软件设计技术，开发者将程序分解成离散功能块，称之为模块
+    webpack是一个现代js应用程序的静态模块打包器，当webpack处理应用程序时，他会递归的构建一个依赖关系图，其中包含应用程序需要的每个模块， 然后将这些模块打包成一个bundle
+        安装webpack_client
+        要有入口文件，出口文件
+
+
+Vue:
+
+    vue-cli:
+        一个基于Vue.js进行快速开发的完整系统， 致力于将Vue生态中的工具基础标准化，确保各种构建工具能够基于智能的默认配置即可平稳衔接，
+        程序源只需要关注业务逻辑方面
+
+         //帮助前段人员构建大型项目的一个工程化工具：脚手架
+         //安装vue vue-cli,vue-cli是是我们能够在命令行中使用vue命令的工具
+         npm install vue vue-cli
+
+         //初始化一个vue-cli项目，基于webpack
+         vue init webpack mydemo
+
+         //进入项目文件夹
+         cd mydemo
+
+         启动前段服务器
+         npm run dev
+vuex:
+    专门为vue应用程序开发的状态管理模式，适合在大型项目中使用，方便管理
+    安装：npm install vuex --save
+    最核心store
+    使用：
+        1、引入， vue中使用vuex：
+        Vue.use(Vuex)
+        2、实例化一个store对象
+        let store = new Vue.Store({
+            state:{
+                name: 'xxx'
+            }
+            mutations:{
+
+            },
+            getters:{},
+            actions:{}.
+        })
+        4通过computed来访问store的数据
+        let App = {
+            template:  `
+            <div>
+            <h3>{{name}}</h3>
+            </div>
+            `,
+            computed:{
+                name: function(){
+                    //
+                    return this.$store.state.name;
+                }
+            },
+            tempalte: '</App>'
+            cmpontents: {
+                App,
+            }
+        }
+
+        new Vue({
+            el:"#app",
+            3、注册store到根实例中
+            store:store
+        }
+
+getter 取数据
+mutations：修改数据， commit 一个mutation
+
+MVVM model view viewmodel 数据驱动视图
+

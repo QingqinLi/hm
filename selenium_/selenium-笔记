@@ -1,0 +1,313 @@
+selenium 不能定位不可见的元素，dispaly = none的元素实际是不可见的元素
+selenium 如何保证操作元素的成功率：
+    网速不好的情况下，使用合适的等待时间
+    被点击的元素一定要占一定的空间，因为selenium会去点这个元素的中心点，不沾空间的元素算不出来中心点
+    被点击的元素不能被其他元素遮挡
+    被点击的元素不能在viewport之外，也就是说如果元素必须是可见的或者通过滚动条操作使元素可见
+    判断元素是否是可以点击的
+如何提高脚本执行速度
+    使用高配置的电脑和网络环境
+    使用效率更高的语言，比如java>python
+    优化代码
+    不要盲目加sleep，要尽量显示等待
+    对于firefox，考虑使用测试专用的profile，因为每次启动浏览器都会创建一个新的profile，对于这个profile，所有的静态资源都是从服务器直接下载，
+    而不死你缓冲加载，导致网络不好的时候用例执行速度特别慢的问题
+    chrome和safari浏览器的执行速度看上去是最快的
+    可以考虑分布式执行或者使用selenium grid
+
+提升用例的稳定性：
+    测试专属的profile，尽量让静态资源缓存
+    尽量使用显示等待
+    尽量使用测试专用环境，避免同一类型的测试同时进行，对测试环境造成干扰
+
+自动化用例的执行策略：
+    每日执行：like 每天晚上在主干执行一次
+    周期执行：没隔两小时在开发分支执行一次
+    动态执行：每次代码有提交就执行
+
+自动化测试尽量不要为单元测试层没做的工作还债
+
+id name class xpath css selector这些属性中，xpath和css更灵活
+
+定位页面上动态加载的元素 显式等待
+
+定位属性动态变化的元素
+    找出属性动态变化的规律，根据上下文生成动态属性
+selenium的原理设计三个部分，分别是：
+    浏览器
+    driver：下载的driver
+    client：写的代码
+    client并不知道浏览器怎么工作的，driver知道，在selenium启动之后，driver充当两服务器的角色，根client和浏览器通信，client根据webdriver协议发送请求
+    给driver，driver解析请求，并在浏览器上执行响应的操作，把执行结果返回给client，这就是selenium工作的大致原理
+webdriver的协议是什么
+    client与driver之间的约定，无论是client是使用什么语言，只要通过这个约定，client就可以准确的高度driver要做什么以及怎么做，webdriver协议
+    本身是http协议，数据传输使用json
+
+启动浏览器的时候有那个的是哪个webdriver协议：New Session 如果创建成功，返回sessoinId和capabilities
+page object设计模式：用class去表示被测页面，在class中定义页面上的元素和一些该页面上专属的方法
+page factory 实际上是官方给出的java page object的工厂模式实现
+下拉框选择option：
+
+
+selenium3 对不同的浏览器驱动进行了规范，如果想使用selenium驱动不同的浏览器，必须单独下载并设置不同的浏览器驱动
+
+
+selenium等待方式
+    因为页面加载太慢／太快造成的元素不可见，需要加等待，等待元素可见再继续运行程序
+    1、强制等待 sleep,让程序暂停一段时间后，再继续运行，缺点是不智能，时间太短导致元素没有加载出来，太长浪费时间（在case量很大的死后，会影响
+    整体的运行速度）尽量少用
+    2、隐性等待-implicitly_wait(),隐形设置时间，在一段时间内网页是否加载完成，如果完成了，就进行下一步，没有加载完成，就会报超时加载
+        driver.implicitly_wait(20)
+        缺点不智能，随着ajax的发展，页面的元素往往都可以时间局部加载，也就是在整个页面没有加载完的时候，可能我们需要的元素已经加载完成了，那就没有必要再等待整个页面
+        的加载，执行进行下一步，隐形等待无法满足这一点，时间设置是全局性的，在开头设置过之后，整个的程序执行过程中都有效，都会等待页面加载完成，不需要每次设置一遍
+    3、显性等待WebDriverWait(driver, 20, 0,5).until(expected_conditions.presence_of_element_located(locator)),每过多少秒就查看一次locator
+        的元素是否可见，如果可见就停止等待，不可见就继续等到知道超过规定的时间，报超时异常
+
+win10的没有ie，转换为webdriver.Edge()
+浏览器和webdriver的对应关系
+判断当前页面对不对
+    页面元素
+    title EC.title_contains()
+expected_conditions selenium.webdriver.support.expected_conditions 可以对网页上元素是否存在，可点击等等进行判断，一般而言用于断言或与webdriverwait
+配合使用，在webdriverwait中的until和until_not配合使用
+    常见方法：是否有alert，某元素的选中状态是否与预期相同，相同则返回True， 不同则返回False 元素是否可以点击， 元素是不是不可访问或者不存在于DOM树中...
+class name 有空格的时候不能直接在getElementByClassName("name1 name2") 有空格会报错, 应该使用父级元素定位／
+
+定位到多个，会直接操作第一个元素
+
+操作慢的原因：
+    pass
+
+流程：(case data page 分离)
+    对于页面元素信息，封装保存在config配置文件中 config ini文件
+    封装读取配置信息的类 read_ini
+    封装获取元素信息的类 find_element
+    封装测试页面的单独类 page
+    封装测试类 case
+    封装页面操作类 handle
+
+    util 配置信息
+    page 操作的页面
+    base find_element 常用操作
+    handle 查找元素，给页面元素赋值等
+    business 测试case的操作步骤
+    case 调用business，串联case
+
+unitest:
+    运行：
+        unittest.run() case的执行顺序是按照字母／数字的生序顺序执行
+        suite（容器）:
+            suite = unittest.TestSuite()
+            suite.addTest(className('caseName'))
+            unittest.TextTestRunner().run(suite)
+            执行顺序是按照添加case的顺序执行的
+        跳过case
+            @unittest.skip() 装饰器
+        大批量运行case
+            使用统一的入口类   case-run_case.py
+                suite = unittest.defaultTestLoader.discover(case_path, 'unittest_*.py')
+                unittest.TextTestRunner().run(suite)
+    assert:
+        https://www.cnblogs.com/mengyu/p/7170568.html
+    生成测试报告：
+        下载htmltestrunner代码：py3：https://github.com/linyuli861/Automated-Test
+        把改文件放到/资源库/Frameworks/Python.framework/Versions/3.6/lib/python3.6，找到这个目录后把文件放在这个文件夹里面就可以了
+        导入 import HTMLTestRunner
+        报告文件的路径：file_path
+        要运行的case：unite
+        运行：
+            runner = HTMLTestRunner.HTMLTestRunner(stream = f, title, description)
+            runner.run(suite)
+    流程：
+        首先导入unittest模块 ；
+        创建一个测试类,继承TestCase；
+        定义setUp和tearDown方法；
+        setUp是进行测试前的初始化工作。
+        tearDown是测试后的清除工作。
+        创建测试用例，测试用例需要以test开头，每个测试用例，测试目的和测试内容应很明确。通过调用断言来判断程序执行结果和预期值是否相符
+        调用unittest.main()启动测试。
+
+   失败截图的封装：
+        1、在find_element中找不到元素的时候截图
+        2、在tear_down中截图操作：
+            加容错处理
+            封装到tear_down中,用_outcome.errors判断用例是否出错
+
+
+验证码：
+    保存验证码图片到本地，解析
+    封装到工具类中
+
+    按照元素截图：
+        def get_picture(self, file_path):
+            self.driver.save_screenshot(file_path)
+            code_image = self.get_user_element("code_image")
+            left = code_image.location['x']
+            top = code_image.location['y']
+            right = code_image.size['width'] + left
+            bottom = code_image.size['height'] + top
+            im = Image.open(file_path)
+            img = im.crop((left, top, right, bottom))
+            img.save(file_path)
+            return file_path
+    # pytesseract 可以识别比较规则的验证码
+    # image = Image.open(file_path)
+    # text = pytesseract.image_to_string(image)
+
+    不规则的验证码：
+        r = ShowapiRequest("http://route.showapi.com/184-4", "110187", "31fead27b6414c27b467e278ec3a62ed" )
+        r.addBodyPara("typeId", "35")
+        r.addBodyPara("convert_to_jpg", "0")
+        r.addFilePara("image", file_path)
+        res = r.post()
+        text = res.json()['showapi_res_body']['Result']
+
+
+数据驱动（参数化，以数据为导向，左右结果）：
+    相关的包：ddt
+    case包下创建数据驱动
+    精简po模型case
+    以excel文件驱动：
+        xlrd
+        操作excel，在ddt中使用数据驱动
+
+
+pytest的运行方式：
+    为什么不生成测试报告
+    edit_config中设置python的执行方式
+    https://www.cnblogs.com/fuxinxin/p/10299501.html
+    excel实现数据驱动(xls,新版本的不支持），设置文本格式为"文本"
+    操作excel，安装xlrd
+
+
+关键字模型：
+    步骤，预期结果，检查项目都写到excel文件中，标注执行结果，写util的excel操作类，操作excel，在case中读取文件内容操作，记录结果
+
+
+行为驱动：
+    BDD:行为驱动开发 behavior driven development
+    像说话一样写case
+    怎么用：Behave (框架） python selenium pyhamcrest(断言）（Behave，pycharmcrest pip安装）
+    场景分析：使用语言描述case，使用自然语言拆分case，
+            检测正确性，
+            关键字， Given When and then
+    步骤：
+        创建features文件夹
+        environment.py管理测试环境，用例开始前后执行的行为，before_all,after_all, context(上下文）--可以作为全局变量，传递信息（eg,driver)
+        register(your name).feature 按照一定的规则编写测试语句
+            Feature:Register User
+
+                As a developer
+                    This is my first bdd project
+                Scenario: open register website
+                    When I open the register website "http://www.5itest.cn/register"
+                    Then I except that the title is "注册"
+
+                Scenario: input username
+                    When I set with useremail 'mushishi01@qq.com'
+                    And I set with username "mushishi01"
+                    And I set with password "mushishi"
+                    And I set with code "tets"
+                    And I click with registerbutton
+                    Then I except that text "验证码错误"
+        创建解析步骤文件夹steps，创建用例解析文件
+            导入behave，按照语法规则解析register.features中的语句
+        执行：
+            在当前项目文件夹下，使用behave执行，可以查看运行结果
+
+    当前问题：没有复用性， 解决方案：结合po模型（按照页面来完成）
+    改进：集合po模型，
+        新建lib-page，建立注册页面以及base_page(封装公共操作）， step解析features时调用po中的register_page中的操作，register_page调用
+        base_page中的内容
+
+日志模块的使用：
+    使用python的logging模块
+    获取日志对象logging.getLogger()
+    设置日志级别：logger.setLevel(logging.DEBUG)
+    控制台输出日志：
+        console = Logging.StreamHandle()
+        logger.addHandle(console)
+    文件输出日志
+        file_handle = logging.FileHandle(logfile)
+        logger.addHandler(file_handle)
+    日志使用
+        logger.debug(log content)
+    关闭：
+        handler.close()
+        logger.removeHandler(handler)
+    流程
+            import logging
+
+            logger = logging.getLogger()
+            # 后续使用logger输出
+            logger.setLevel(logging.DEBUG)
+            # 给logging模块
+            # 控制台输出日志
+            # console = logging.StreamHandler()
+            # logger.addHandler(console)
+
+            # 文件输出日志
+            file_handle = logging.FileHandler("logs/test.log")
+            logger.addHandler(file_handle)
+
+            logger.debug("teste")
+
+            # 要关闭
+            # console.close()
+            # logger.removeHandler(console)
+
+            file_handle.close()
+            logger.removeHandler(file_handle)
+
+            # 输出到日志文件中， 代码部署到线上/服务器， 脱离编译器，需要日志文件
+
+      日志的格式化输出：
+        定义formatter
+        formatter = logging.Formatter('%(asctime)s  %(filename)s ---> %(funcName)s %(lineno)s: %(levelname)s----> %(message)s')
+        给handle设定formatter
+        self.file_handle.setFormatter(formatter)
+      按照日期命名log文件：
+        os.path.dirname(), os.path.abspath(__file__), os.path.join, datetime.datetime.strftime("%Y-%m-%d")
+
+      日志文件的封装与输出：
+        封装成类，主要的创建写在init中， get_log, close_handle, 在其他文件中导入模块，类方法中实例化对象，类方法中关闭handle
+
+
+项目：
+    结合po+unittest+log
+
+
+
+持续继承：
+    jenkins
+        两种安装方式：
+            命令行 java -jar jenkins.war --httpPort 端口号
+            msi安装
+        安装插件
+        配置文件
+        使用自定义工作空间，配置工作目录
+        邮件通知服务配置：系统配置-项目中配置, 配置发邮件的邮箱的配置（开启服务）
+        定时构建 分 小时 天 星期 月   ／-间隔
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

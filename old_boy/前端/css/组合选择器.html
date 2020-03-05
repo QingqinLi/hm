@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta http-equiv="content-Type" charset="UTF-8">
+    <meta http-equiv="x-ua-compatible" content="IE=edge">
+    <title>Title</title>
+    <style>
+        /*<!--后代选择器-->*/
+        /*div span {*/
+            /*color: red;*/
+        /*}*/
+        /*p span {*/
+            /*color: aqua;*/
+        /*}*/
+        /*!*儿子选择器*!*/
+        /*#d1>div {*/
+            /*color:sandybrown;*/
+        /*}*/
+        /*!*毗邻选择器 往下找 只找一个*!*/
+        /*!*p+span {*!*/
+            /*!*color:crimson;*!*/
+        /*!*}*!*/
+        /*!*弟弟选择器 后面所有*!*/
+        /*p~span {*/
+            /*color: #778;*/
+        /*}*/
+        /*属性选择器 找到有s14属性的标签*/
+        /*div[s14],input[type='text'] {*/
+            /*color: darkblue;*/
+            /*background-color: sandybrown;*/
+        /*}*/
+        div[ss] {color: red}
+        /*!组合选择器*/
+        /*#d1,*/
+        /*p+span {*/
+            /*color: red;*/
+        /*}*/
+        /*找d1的后代中有c1样式的span标签*/
+        /*#d1 span.c1 {*/
+            /*color: red;*/
+        /*}*/
+
+    </style>
+</head>
+<body>
+<div id="d1">
+    <div id="d2">
+        <div id="d3">
+            divviviv
+        </div>
+        <span>span1</span>
+        <p class="c1">
+            <span class="c1">span2<span>span里的span</span></span>
+        </p>
+    </div>
+</div>
+
+<span>p标签上面的span</span>
+<p>外层的p标签
+    <span>p标签内部的span标签</span>
+</p>
+<span>外面的span</span>
+<hr>
+<span>p标签下面的下面的span标签</span>
+<hr>
+<div ss="feichanghao">div</div>
+<div s14="youxiu">div</div>
+
+
+<input type="text">
+<input type="password">
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="content-type" charset="UTF-8">
+    <meta http-equiv="x-ua-compatible" content="IE=edge">
+    <title>input实时校验</title>
+</head>
+<body>
+<input type="text" id="i1">
+<script src="jquery-3.4.1.min.js"></script>
+<script>
+    <!--input框失去焦点的时候处罚-->
+    $("#i1").blur(function () {
+        var value = $(this).val();
+        console.log(value);
+    });
+//    input框变化的后触发
+    $("#i1").on("input",function () {
+        var value = $(this).val();
+        console.log(value);
+    });
+</script>
+</body>
+
+</html>

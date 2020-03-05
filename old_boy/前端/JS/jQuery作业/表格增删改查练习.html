@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="content-type" charset="UTF-8">
+    <meta http-equiv="x-ua-compatible" content="IE=edge">
+    <title>表格增删改查练习</title>
+    <style>
+        th, td {
+            border: solid black 1px;
+        }
+        .cover {
+            position: fixed;
+            right: 0;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            background-color: rgba(0,0,0,0.4);
+            z-index: 99;
+        }
+        .modal {
+            position: fixed;
+            top:50%;
+            left: 50%;
+            margin-left: -150px;
+            margin-top: -100px;
+            width: 300px;
+            height: 180px;
+            z-index: 100;
+            background-color: white;
+        }
+        .modal>p {
+            margin-top: 30px;
+            margin-left: 50px;
+            /*font-size:15px;*/
+        }
+        .btn {
+            margin-top: 20px;
+            margin-left: 80px;
+            font-size: 15px;
+        }
+        .hide {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+<button id="add">
+    增加
+</button>
+<table border="1px">
+    <thead>
+        <tr>
+            <th>编号</th>
+            <th>姓名</th>
+            <th>爱好</th>
+            <th>操作</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>1</td>
+            <td>alex</td>
+            <td>basketball</td>
+            <td>
+                <button class="edit">编辑</button>
+                <button class="delete">删除</button>
+            </td>
+        </tr>
+        <tr>
+            <td>2</td>
+            <td>wusir</td>
+            <td>baseball</td>
+            <td>
+                <button class="edit">编辑</button>
+                <button class="delete">删除</button>
+            </td>
+        </tr>
+        <tr>
+            <td>3</td>
+            <td>king</td>
+            <td>doublecolorball</td>
+            <td>
+                <button class="edit">编辑</button>
+                <button class="delete">删除</button>
+            </td>
+        </tr>
+
+    </tbody>
+</table>
+<!--模态框-->
+<div class="cover hide">
+
+</div>
+<div class="modal hide">
+    <p>
+        <lable for="name">姓名：</lable>
+        <input type="text" id="name">
+    </p>
+
+    <p>
+        <lable for="hobby">爱好：</lable>
+        <input type="text" id="hobby">
+    </p>
+    <button class="btn" id="yes">确认</button>
+    <button class="btn" id="no">取消</button>
+</div>
+
+<script src="../jquery-3.4.1.min.js">
+
+</script>
+<script>
+    var currentNum = null;
+    function removeModal(){
+        $(".cover, .modal").removeClass("hide");
+    }
+    function addModal() {
+        $("#name, #hobby").val("");
+        $(".cover, .modal").addClass("hide");
+    }
+    $("#no").click(function () {
+        addModal();
+    });
+//    删除操作
+    $("tbody").on("click", ".delete", function () {
+    //    该记录后的数据，索引值都减-
+        $(this).parent().parent().nextAll().each(function () {
+            var num = $(this).children().first().text();
+            $(this).children().first().text(parseInt(num)-1)
+        });
+        $(this).parent().parent().remove();
+    //    删除此数据
+    });
+//    编辑操作
+    $("tbody").on("click", ".edit", function () {
+        removeModal();
+        currentNum = $(this).parent().parent().children().first().text();
+
+    });
+//    新增操作
+    $("#add").click(function () {
+        removeModal();
+    });
+    function submitData() {
+        var name = $("#name").val();
+        var hobby = $("#hobby").val();
+        if(currentNum){
+            $("tr").eq(currentNum).children().eq(1).text($name);
+            $("tr").eq(currentNum).children().eq(2).text($hobby);
+            console.log($name, $hobby);
+            currentNum = null;
+        }else{
+            var allNum = $("tr").length;
+            var trEle = document.createElement("tr");
+            trEle.innerHTML =`
+                <td>${allNum}</td>
+                <td>${name}</td>
+                <td>${hobby}</td>
+                <td>
+                    <button class="edit">编辑</button>
+                    <button class="delete">删除</button>
+                </td>`;
+            // var tdEle1 = document.createElement("td");
+            // var tdEle2 = document.createElement("td");
+            // var tdEle3 = document.createElement("td");
+            // var tdEle4 = document.createElement("td");
+            // var btn1 = document.createElement("button");
+            // var btn2 = document.createElement("button");
+            // $(tdEle1).text(allNum);
+            // $(tdEle2).text($name);
+            // $(tdEle3).text($hobby);
+            // $(btn1).text("编辑");
+            // $(btn1).addClass("edit");
+            // $(btn2).text("删除");
+            // $(btn2).addClass("delete");
+            // $(tdEle4).append(btn1);
+            // $(tdEle4).append(btn2);
+            // $(trEle).append(tdEle1);
+            // $(trEle).append(tdEle2);
+            // $(trEle).append(tdEle3);
+            // $(trEle).append(tdEle4);
+            $("tbody").append(trEle);
+        }
+
+
+    }
+    $("body").on("click", "#yes", function(){
+        submitData();
+        addModal();
+    })
+
+</script>
+</body>
+
+</html>

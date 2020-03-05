@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="content-type" charset="UTF-8">
+    <meta http-equiv="x-ua-compatible" content="IE=edge">
+    <title>Title</title>
+    <style>
+        .t1 {
+            border: 1px solid green;
+        }
+        .t0 {
+            border: 1px solid green;
+            font-size: 20px;
+        }
+        .t1>td {
+            border: 1px solid green;
+        }
+    </style>
+</head>
+<body>
+<table class="t0">
+    <tr class="t1">
+        <td><input type="checkbox" ></td>
+        <td>12</td>
+        <td>34</td>
+    </tr>
+    <tr class="t1">
+        <td><input type="checkbox"></td>
+        <td>12</td>
+        <td>34</td>
+    </tr>
+    <tr class="t1">
+        <td><input type="checkbox"></td>
+        <td>12</td>
+        <td>34</td>
+    </tr>
+    <tr class="t1">
+        <td><input type="button" value="全选" id="all"></td>
+        <td><input type="button" value="反选" id="verse"></td>
+        <td><input type="button" value="取消" id="cancel"></td>
+    </tr>
+</table>
+<script src="jquery-3.4.1.min.js"></script>
+<script>
+    $("#all").click(function () {
+        var $box = $("[type='checkbox']");
+        for(var i=0; i<$box.length;i++){
+            $($box[i]).prop("checked", true);
+        }
+       // $("[type='checkbox']").attr("checked", 1);
+    });
+    $("#verse").click(function () {
+       var $box = $("[type='checkbox']");
+       for(var i=0; i<$box.length;i++){
+            // if($($box[i]).prop("checked")===true){
+            //     $($box[i]).prop("checked", false);
+            // }
+            // else{
+            //     $($box[i]).prop("checked", true);
+            // }
+            $($box[i]).prop("checked")?$($box[i]).prop("checked", false):$($box[i]).prop("checked", true);
+        }
+    });
+    $("#cancel").click(function () {
+        var $box = $("[type='checkbox']");
+       for(var i=0; i<$box.length;i++){
+           $($box[i]).prop("checked", false)
+        }
+    })
+</script>
+
+</body>
+
+</html>

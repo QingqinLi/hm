@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="content-type" charset="UTF-8">
+    <meta http-equiv="x-ua-compatible" content="IE=edge">
+    <title>Title</title>
+    <style>
+        body {
+            margin:0;
+        }
+        .c {
+            margin: 100px auto 0;
+            height:180px;
+            width: 100%;
+            /*margin-left: 10px;*/
+        }
+        .c1 {
+            float:left;
+            margin-left: 10px;
+        }
+        .c2 {
+            float: right;
+
+        }
+        .c3 {
+            float:right;
+            margin-right:15px;
+        }
+        .c3.last {
+            margin-left: 0;
+        }
+        .clearfix:after {
+            content: "";
+            clear:both;
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div class="c clearfix">
+        <div class="c1">
+            <a href=""><img src="https://dummyimage.com/234x170/000/fff.png" alt=""></a>
+
+        </div>
+        <div class="c2">
+            <div class="c3 last"><a href=""><img src="https://dummyimage.com/316x170/f00/fff.png" alt=""></a></div>
+            <div class="c3"><a href=""><img src="https://dummyimage.com/316x170/0f0/fff.png" alt=""></a></div>
+            <div class="c3"><a href=""><img src="https://dummyimage.com/316x170/0f0/fff.png" alt=""></a></div>
+        </div>
+
+    </div>
+</body>
+
+</html>

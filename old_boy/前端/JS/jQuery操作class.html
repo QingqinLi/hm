@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="content-type" charset="UTF-8">
+    <meta http-equiv="x-ua-compatible" content="IE=edge">
+    <title>Title</title>
+    <style>
+        .c {
+            width: 200px;
+            height: 200px;
+            border-radius:50%;
+            background-color: red;
+        }
+        .c1 {
+            background-color: orange;
+        }
+    </style>
+</head>
+<body>
+<div id="d1" class="c c1"></div>
+<button id="d2">切换颜色</button>
+<script src="jquery-3.4.1.min.js">
+</script>
+<script>
+    $("#d2")[0].onclick = function () {
+        $("#d1").toggleClass("c1");
+    };
+</script>
+</body>
+
+</html>

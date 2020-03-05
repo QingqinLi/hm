@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="content-type" charset="UTF-8">
+    <meta http-equiv="x-ua-compatible" content="IE=edge">
+    <title>Title</title>
+    <style>
+        body {
+            margin:0;
+        }
+        .c {
+            height: 200px;
+            width: 200px;
+            /*background-color: red;*/
+            border: green solid 1px;
+        }
+        .c1 {
+
+        }
+        .c2 {
+            background-color: green;
+            position: relative;
+            /*左边空出300px*/
+            left:300px;
+        }
+        .c3 {
+            background: blue;
+            position: absolute;
+            left:200px;
+            top: 100px;
+
+        }
+        .c4 {
+            background-color: aqua;
+            position: absolute;
+            left: 200px;
+            top:150px;
+        }
+        .c5 {
+            height:40px;
+            width: 30px;
+            color: whitesmoke;
+            background-color: fuchsia;
+            font-size: 20px;
+            position: fixed;
+            right:20px;
+            bottom: 20px;
+        }
+        .c6 {
+            background-color: #ff4700;
+        }
+    </style>
+</head>
+<body>
+<div class="c c1"><div class="c5">返回顶部</div></div>
+<div class="c c2">
+    c2<div class="c c4">c4</div>
+</div>
+<div class="c c3">c3</div>
+<div class="c c6">c6</div>
+</body>
+
+</html>

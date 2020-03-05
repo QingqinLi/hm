@@ -110,3 +110,8 @@ def del_card(card_info):
     :return:
     """
     cards_list.remove(card_info)
+
+
+def more_func():
+    # dev分支的修改
+    pass

@@ -1,0 +1,5 @@
+2019-07-19 15:30:49,851 - root -DEBUG - debug message
+2019-07-19 15:30:49,851 - root -INFO - info message
+2019-07-19 15:30:49,851 - root -WARNING - warn message
+2019-07-19 15:30:49,851 - root -ERROR - error message
+2019-07-19 15:30:49,851 - root -CRITICAL - critical message

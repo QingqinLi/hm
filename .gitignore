@@ -1,4 +1,5 @@
-.idea/
+# from urllib  request
 .pyc
-.xml
-.iml
+.idea/
+.png
+.jpg

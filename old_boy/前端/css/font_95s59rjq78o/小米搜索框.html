@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="content-type" charset="UTF-8">
+    <meta http-equiv="x-ua-compatible" content="IE=edge">
+    <title>mi</title>
+    <link rel="stylesheet" href="./iconfont.css">
+    <style>
+        .header-search {
+            width: 100%;
+            margin-top: 25px;
+            /*margin-right: 200px;*/
+            /*position: relative;*/
+            /*left: 0;*/
+            /*top: 100px;*/
+        }
+        .clearfix:after {
+            content: "";
+            clear: both;
+            display: block;
+        }
+        /*.header-search {*/
+            /*width: 296px;*/
+            /*margin-top: 25px;*/
+        /*}*/
+        .hide {
+            /*display: none !important;*/
+            float: right;
+            line-height: 50px;
+        }
+        .search-btn {
+            /*position: absolute;*/
+            /*right: 0;*/
+            /*top: 0;*/
+            float: right;
+            z-index: 2;
+            width: 52px;
+            height: 50px;
+            border: 1px solid #e0e0e0;
+            font-size: 28px;
+            line-height: 24px;
+            background: #fff;
+            color: #616161;
+            outline: 0;
+            -webkit-transition: all .2s;
+            transition: all .2s;
+        }
+        .search-text {
+            /*position: absolute;*/
+            /*top: 0;*/
+            /*right: 51px;*/
+            float: right;
+            z-index: 1;
+            width: 223px;
+            height: 50px;
+            padding: 0 10px;
+            border: 1px solid #e0e0e0;
+            font-size: 14px;
+            line-height: 48px;
+            outline: 0;
+            -webkit-transition: all .2s;
+            transition: all .2s;
+        }
+
+        .search-btn:hover {
+            background-color: white;
+            color: black;
+        }
+        .search-form {
+            float: right;
+            height:50px;
+        }
+    </style>
+</head>
+<body>
+<div class="header-search clearfix">
+    <form id="J-searchForm" class="search-form clearfix">
+        <input type="submit" class="iconfont search-btn" value="&#xe629;">
+        <input class="search-text" type="search" id="search" name="keyword" autocomplete="off" placeholder="站内搜索">
+
+        <!--<label for="search" class="hide">站内搜索</label>-->
+    </form>
+
+</div>
+<hr>
+<i style="color:green;font-size:48px" class="iconfont icon-search-"></i>
+</body>
+
+</html>

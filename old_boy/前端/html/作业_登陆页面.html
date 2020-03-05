@@ -1,0 +1,76 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta http-equiv="content-type" charset="UTF-8">
+    <meta http-equiv="x-ua-compatible" content="IE=edge">
+    <title>Title</title>
+    <style>
+        body {
+            font-size: 16px;
+            /*background-color: antiquewhite;*/
+        }
+        .cc {
+            position: fixed;
+            left: 100px;
+            top: 100px;
+            width: 420px;
+            /*background-color: cadetblue;*/
+
+
+        }
+        .c {
+            /*height: 50px;*/
+            width: 420px;
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+        .c1 {
+            margin-left: 20px;
+            width:300px;
+        }
+        label {
+            text-align: right;
+            display:block;
+            float: left;
+            font-size: 16px;
+            font-weight: bold;
+            width: 50px;
+        }
+        input {
+            height: 30px;
+        }
+    </style>
+</head>
+
+<body>
+<h1 style="font-weight: bolder">百度注册</h1>
+<hr>
+<div class="cc">
+    <div class="c">
+        <label for="name" class="l">用户名</label>
+        <input type="text" placeholder="请设置用户名" id="name" class="c1">
+    </div>
+    <div class="c">
+        <label for="phone" class="l">手机号</label>
+        <input type="text" placeholder="可用于登陆和找回密码" id="phone" class="c1">
+    </div>
+    <div class="c">
+        <label for="pass" class="l">密码</label>
+        <input type="password" placeholder="请设置登陆密码" id="pass" class="c1">
+    </div>
+    <div class="c">
+        <label for="verify" class="l">验证码</label>
+        <input type="text" placeholder="请输入验证码" id="verify" class="c1" style="width:195px">
+        <button>获取短信验证码</button>
+    </div>
+    <div class="c">
+        <input type="checkbox" style="">&nbsp;阅读并接受<a href="http://www.baidu.com">《百度用户协议》</a>及<a href="http://www.baidu.com">《百度隐私保护声明》</a>
+        <!--<label>用户名</label>-->
+    </div>
+    <div class="c">
+        <button style="width: 380px; height: 30px">注册</button>
+    </div>
+</div>
+</body>
+</html>
+

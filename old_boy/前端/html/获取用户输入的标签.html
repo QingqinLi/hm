@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta http-equiv="content-type" charset="UTF-8">
+    <meta http-equiv="x-ua-compatible" content="IE=edge">
+    <title>前端练习</title>
+</head>
+
+<body>
+<!--enctype="multipart/form-data"上传文件的时候必须要写-->
+<form action="" method="" enctype="multipart/form-data">
+    <label for="id1">用户名</label>
+    <!--palceholder--提示语-->
+    <input id="id1" type="text" placeholder="请输入用户名">
+    <label>密码<input type="password"></label>
+    <input type="date">
+    <input type="email">
+    <hr>
+<!--checkbox-&#45;&#45;复选框-->
+    <input type="checkbox" name="hobby" value="basketball">篮球
+    <input type="checkbox" name="hobby" value="baseball" checked>足球
+    <label>乒乓球
+    <input type="checkbox" name="hobby" value="doublecolorball">
+
+    </label>
+    <br>
+
+    <input type="radio" name="gender"> man
+    <input type="radio" name="gender"> woman
+    <hr>
+    <select name="city">
+        <option value="beijing">北京</option>
+        <option value="shanghai">上海</option>
+        <option value="shenzhen" selected>深圳</option>
+
+    </select>
+    <select name="city_multi" multiple>
+        <option value="beijing" selected>北京</option>
+        <option value="shanghai" selected>上海</option>
+        <option value="shenzhen" selected>深圳</option>
+
+    </select>
+    <hr>
+    <textarea name="info" cols="50" rows="30"></textarea>
+    <input type="file" name="avator">
+    <hr>
+    <input type="submit" value="提交按钮">
+    <input type="button" value="普通按钮">
+    <input type="submit" value="重置按钮">
+
+
+</form>
+</body>
+
+</html>

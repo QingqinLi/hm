@@ -1,0 +1,11 @@
+主流浏览器：chrome firefox ie
+web自动化 ui自动化 黑盒测试
+工具：编程语言（java、python）+ 工具（selenium）
+selenium:
+    用于web应用程序测试的工具
+    直接运行在浏览器，模拟用户操作
+    覆盖linux，mac，windows（多平台覆盖）
+    覆盖ie，chrome，firefox等浏览器
+    java、python多语言脚本编写
+
+    下载地址：

@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="content-type" charset="UTF-8">
+    <meta http-equiv="x-ua-compatible" content="IE=edge">
+    <title>左侧菜单</title>
+    <style>
+        .d1 {
+            position: fixed;
+            float:left;
+            width:10%;
+            top:0;
+            bottom: 0;
+            background-color: white;
+        }
+        .d2{
+            margin-bottom: 15px;
+            /*border: 4px solid red;*/
+        }
+        .s1,
+        .s2 {
+            margin-top: 5px;
+            display: block;
+        }
+        .s1 {
+            font-size: 20px;
+            font-weight: bolder;
+            text-align: center;
+            background-color: dodgerblue;
+        }
+        .s2 {
+            text-align: center;
+        }
+        .s1:hover {
+            font-size: 22px;
+            color:grey;
+        }
+        .hide {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+<div class="d1">
+    <div class="d2">
+        <span id="s1" class="s1">一级菜单</span>
+        <div id="d31" class="d3 hide">
+            <span class="s2">二级菜单</span>
+            <span class="s2">二级菜单</span>
+            <span class="s2">二级菜单</span>
+        </div>
+
+    </div>
+    <div class="d2">
+        <span id="s2" class="s1">一级菜单</span>
+        <div id="d32" class="d3 hide">
+            <span class="s2">二级菜单</span>
+            <span class="s2">二级菜单</span>
+            <span class="s2">二级菜单</span>
+        </div>
+    </div>
+    <div class="d2">
+        <span id="s3" class="s1">一级菜单</span>
+        <div id="d33" class="d3 hide">
+            <span class="s2">二级菜单</span>
+            <span class="s2">二级菜单</span>
+            <span class="s2">二级菜单</span>
+        </div>
+    </div>
+
+</div>
+<script src="jquery-3.4.1.min.js">
+
+</script>
+<script>
+    var menu = $(".s1");
+    var menu_s = $(".d3");
+    console.log(menu, menu_s);
+    for(var i=0;i<menu.length; i++){
+        // console.log(menu[i]);
+        // var m_item = menu[i];
+        // $(m_item).click(function () {
+        //     console.log("mw", $(m_item).next());
+        //     $(m_item).next().removeClass("hide")
+        //
+        // })
+        menu[i].onclick = function () {
+            $(this).next().toggleClass("hide");
+            $(this).parent().siblings().find(".d3").addClass("hide");
+        }
+    }
+    // $("#s1")[0].onclick = function () {
+    //     $("#d31").toggleClass("hide");
+    // };
+    // $("#s2")[0].onclick = function () {
+    //     $("#d32").toggleClass("hide");
+    // };
+    // $("#s3")[0].onclick = function () {
+    //     $("#d33").toggleClass("hide");
+    // };
+</script>
+</body>
+
+</html>

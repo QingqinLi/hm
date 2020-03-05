@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="content-type" charset="UTF-8">
+    <meta http-equiv="x-ua-compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>sweetalert</title>
+    <link rel="stylesheet" href="bootstrap-sweetalert-master/dist/sweetalert.css">
+</head>
+<body>
+
+<script src="../JS/jquery-3.4.1.min.js"></script>
+<script src="bootstrap-sweetalert-master/dist/sweetalert.js"></script>
+<script>
+    // swal({
+    //     title:"Error",
+    //     text:"Here is my error message1",
+    //     // type:"error",
+    //     imageUrl:"banner/banner_1.jpg",
+    //     confirmButtonText:"COOL",
+    // })
+    swal({
+            title: "确定删除吗？",
+            text: "你将无法恢复该虚拟文件！",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#DD6B55",
+            confirmButtonText: "确定删除！",
+            cancelButtonText: "取消删除！",
+            closeOnConfirm: false,
+            closeOnCancel: false
+        },
+        function (isConfirm) {
+            if (isConfirm) {
+                swal("删除！", "你的虚拟文件已经被删除。",
+                    "success");
+            } else {
+                swal("取消！", "你的虚拟文件是安全的:)",
+                    "error");
+            }
+        });
+</script>
+</body>
+
+</html>
