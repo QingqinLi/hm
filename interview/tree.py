@@ -44,4 +44,22 @@ class Solution:
 
     """创建最小高度树"""
     def sortedArrayToBST(self, nums) -> TreeNode:
-        pass
+        # 使用递归，当前list中还有元素，就给他创建左右子树
+        def create_tree(node, left, right=None):
+            if right:
+                node.left = left
+                node.right = right
+            else:
+                node.left = left
+            return node.left, node.right
+
+        first = nums.pop()
+        head = TreeNode(first)
+
+        while nums:
+            left = TreeNode(nums.pop())
+            if nums:
+                right = TreeNode(nums.pop())
+
+
+

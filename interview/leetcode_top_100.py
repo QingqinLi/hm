@@ -1573,8 +1573,37 @@ class Solution:
             result.extend(new_need)
         return result
 
-    """"""
+    """和为s的连续正数序列"""
 
+    def findContinuousSequence(self, target: int):
+        result = []
+        start = 1
+        while start < target:
+
+            end = start + 1
+            now = [start, end]
+            sum = start + end
+            while end < target and sum <= target:
+                # print(now, sum)
+                if sum == target:
+                    result.append(now)
+                    break
+                end += 1
+                sum += end
+                now.append(end)
+            # start = end
+            start += 1
+        return result
+
+    """6和9组成的最大数字"""
+
+    def maximum69Number(self, num: int) -> int:
+        num_list = list(str(num))
+        for i in range(len(num_list)):
+            if num_list[i] == '6':
+                num_list[i] = '9'
+                break
+        return int(''.join(num_list))
 
 class Codec:
     """
@@ -1603,4 +1632,4 @@ if __name__ == '__main__':
     # s2.next = ListNode(6)
     # s2.next.next = ListNode(4)
     # print(s.addTwoNumbers(s1, s2))
-    print(s.decompressRLElist([1,2,3,4]))
+    print(s.maximum69Number(9966))
