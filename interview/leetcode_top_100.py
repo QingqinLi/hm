@@ -1605,6 +1605,203 @@ class Solution:
                 break
         return int(''.join(num_list))
 
+    """删除最外层的括号"""
+
+    def removeOuterParentheses(self, S: str) -> str:
+        result_list = []
+        single = []
+        num = []
+        for i in S:
+            if i == '(':
+                single.append(i)
+                num.append(1)
+            elif i == ')':
+                single.append(i)
+                num.append(-1)
+            if sum(num) == 0:
+                single.pop(0)
+                single.pop()
+                result_list.extend(single)
+                single = []
+                num = []
+        print(result_list)
+        return ''.join(result_list)
+
+    """零钱兑换"""
+
+    def coinChange(self, coins, amount: int) -> int:
+        coins = sorted(coins, reverse=True)
+        result = 0
+
+        for i in coins:
+            n = amount // i
+            result += n
+            if n == 0:
+                pass
+            else:
+                amount = amount % i
+        print(amount)
+        if amount == 0:
+            return result
+        else:
+            return -1
+
+    """买卖股票的最佳时机"""
+
+    def maxProfit(self, prices) -> int:
+        min_price = float("inf")
+        max_profile = 0
+        for i in prices:
+            if i < min_price:
+                min_price = i
+            if i - min_price > max_profile:
+                max_profile = i-min_price
+            print(i, min_price, max_profile)
+        return max_profile
+
+    """汉明距离"""
+
+    def hammingDistance(self, x: int, y: int) -> int:
+        x_bin = str(bin(x)).replace('0b', '')
+        y_bin = str(bin(y)).replace('0b', '')
+        result = 0
+
+        if len(x_bin) > len(y_bin):
+            y_bin = '0'*(len(x_bin)-len(y_bin)) + y_bin
+        else:
+            x_bin = '0' * (len(y_bin) - len(x_bin)) + x_bin
+        print(x_bin, y_bin)
+        for i in range(len(x_bin)):
+            if not x_bin[i] == y_bin[i]:
+                result += 1
+        return result
+
+    """判定字符是否唯一"""
+
+    def isUnique(self, astr: str) -> bool:
+        l = list(astr)
+        len_s = len(l)
+        if len(set(l)) == len_s:
+            return True
+        else:
+            return False
+
+    """自除数"""
+
+    def selfDividingNumbers(self, left: int, right: int):
+        result = []
+        for num in range(left, right+1):
+            if '0' in str(num):
+                continue
+            else:
+                num_l = list(str(num))
+                for n in num_l:
+                    if not num % int(n) == 0:
+                        break
+                else:
+                    result.append(num)
+        return result
+
+    """二进制中1的个数"""
+
+    def hammingWeight(self, n: int) -> int:
+        s = str(bin(n))
+        print(s)
+        return s.count('1')
+
+    """增减字符串的匹配"""
+
+    def diStringMatch(self, S: str):
+        result = [0 for i in range(len(S)+1)]
+        print(result)
+        for i in range(1, len(S)+1):
+            if i == 'I':
+                for j in range(i, len(S)+1):
+
+                    result[j] += 1
+            else:
+                for j in range(i):
+                    result[j] += 1
+        print(result)
+
+    """判定是否互为字符重排"""
+
+    def CheckPermutation(self, s1: str, s2: str) -> bool:
+        for i in s1:
+            if i in s2:
+                s2.remove(i)
+            else:
+                return False
+        if not s2:
+            return True
+
+    """Nim 游戏"""
+
+    def canWinNim(self, n: int) -> bool:
+        # 巴什博弈
+        if (n-1) % 4 == 0:
+            return False
+        else:
+            return True
+
+    """ 将数组分成和相等的三个部分"""
+
+    def canThreePartsEqualSum(self, A) -> bool:
+
+        if not sum(A) % 3 == 0:
+            return False
+        target = sum(A)//3
+        for i in range(1, len(A)-1):
+            if sum(A[:i]) == target:
+                target_index = i
+                break
+        else:
+            return False
+        for i in range(target_index+1, len(A)):
+            if sum(A[target_index:i]) == target:
+                if A[i:] and sum(A[i:]) == target:
+                    print(A[:target_index], A[target_index:i], A[i:])
+                    return True
+        return False
+
+    """ 将数组分成和相等的三个部分"""
+
+    def canThreePartsEqualSum2(self, A) -> bool:
+        # S使用双指针的方法
+        s = sum(A)
+        if not s % 3 == 0:
+            return False
+        t = s // 3
+        left = 1
+        right = len(A) - 1
+        while left < right:
+            print(A[:left], A[left: right], A[right:])
+            if not sum(A[:left]) == t:
+                left += 1
+            if not sum(A[right:]) == t:
+                right -= 1
+            if sum(A[:left]) == t and sum(A[right:]) == t:
+                print(A[:left], A[left: right], A[right:])
+                return True
+        else:
+            return False
+
+
+    """生成每种字符都是奇数个的字符串"""
+
+    def generateTheString(self, n: int) -> str:
+        if n%2 == 0:
+            num1 = 1
+            num2 = n-1
+            num3 = 0
+        else:
+            num1 = 1
+            num2 = 1
+            num3 = n-2
+        return 'a'*num1+'b'*num2+'c'*num3
+
+
+
 class Codec:
     """
     TinyURL是一种URL简化服务， 比如：当你输入一个URL https://leetcode.com/problems/design-tinyurl 时，
@@ -1626,10 +1823,4 @@ class Codec:
 
 if __name__ == '__main__':
     s = Solution()
-    # s1 = ListNode(-129)
-    # s1.next = ListNode(-129)
-    # s2 = ListNode(5)
-    # s2.next = ListNode(6)
-    # s2.next.next = ListNode(4)
-    # print(s.addTwoNumbers(s1, s2))
-    print(s.maximum69Number(9966))
+    print(s.canThreePartsEqualSum2([18,12,-18,18,-19,-1,10,10]))

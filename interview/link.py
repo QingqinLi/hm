@@ -106,9 +106,44 @@ class Solution:
                 m += 1
         return None
 
+    """从尾到头打印链表"""
 
+    def reversePrint(self, head: ListNode):
+        result = []
+        while head:
+            result.append(head.val)
+            head = head.next
+        result.reverse()
+        return result
+    """删除中间节点"""
 
+    def deleteNode(self, node):
+        """
+        :type node: ListNode
+        :rtype: void Do not return anything, modify node in-place instead.
+        """
+        # 当前节点替换为下一个节点，删除下一个节点
+        node.val, node.next = node.next.val, node.next.next
 
+    """合并两个排序的链表"""
+
+    def mergeTwoLists(self, l1: ListNode, l2: ListNode) -> ListNode:
+        list1 = []
+        list2 = []
+        while l1:
+            list1.append(l1.val)
+            l1 = l1.next
+        while l2:
+            list2.append(l2.val)
+            l2 = l2.next
+        result = list1 + list2
+        result.sort()
+        head = ListNode(result[0])
+        first = head
+        for i in range(len(result)-1):
+            head.next = ListNode(result[i])
+            head = head.next
+        return first
 
 
 if __name__ == '__main__':
