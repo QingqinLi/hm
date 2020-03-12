@@ -1360,6 +1360,129 @@ class Solution:
                     l.pop(0)
             return result
 
+    """外观数列"""
+    def countAndSay(self, n: int) -> str:
+        result = [[1,], [1, 1]]
+        if n == 1:
+            return '1'
+        for i in range(2, n):
+            num = 0
+            s = []
+            for j in range(len(result[-1])):
+                if j == len(result[-1]) - 1:
+                    if result[-1][j] == result[-1][j-1]:
+                        pass
+                    else:
+                        s.append(1)
+                        s.append(result[-1][j])
+                else:
+                    if result[-1][j] == result[-1][j+1]:
+                        num += 1
+                        if j == len(result[-1])-2:
+                            s.append(num + 1)
+                            s.append(result[-1][j])
+                    else:
+                        s.append(num+1)
+                        s.append(result[-1][j])
+                        num = 0
+            result.append(s)
+        return ''.join([str(i) for i in result[-1]])
+
+
+    """
+    托普利茨矩阵
+    和左上角比较，相等即可
+    """
+
+    def isToeplitzMatrix(self, matrix) -> bool:
+        for i in range(1, len(matrix)):
+            for j in range(1, len(matrix[0])):
+                if not matrix[i][j] == matrix[i-1][j-1]:
+                    return False
+        else:
+            return True
+
+    """检测大写字母"""
+
+    def detectCapitalUse(self, word: str) -> bool:
+        l = list(word)
+        cap = ord(l[0])
+        print(cap)
+        if cap > 90:
+            for i in range(1, len(l)):
+                print(l[i], ord(l[i]))
+                if ord(l[i]) <= 90:
+                    return False
+            else:
+                return True
+        else:
+            if ord(l[1]) <= 90:
+                for i in range(2, len(l)):
+                    if ord(l[i]) > 90:
+                        return False
+                else:
+                    return True
+            else:
+                for i in range(2, len(l)):
+                    if ord(l[i]) <= 90:
+                        return False
+                else:
+                    return True
+
+    """ 多数元素"""
+
+    def majorityElement(self, nums) -> int:
+        s_num = set(nums)
+        l = len(nums) / 2
+        for i in s_num:
+            if nums.count(i) > l:
+                return i
+
+    """仅仅反转字母"""
+    def reverseOnlyLetters(self, S: str) -> str:
+        alpha_list = []
+        special_list = {}
+        for i in range(len(S)):
+            if ord('a') <= ord(S[i]) <= ord('z') or ord('A') <= ord(S[i]) <= ord('Z'):
+                alpha_list.append(S[i])
+            else:
+                special_list[i] = S[i]
+        # alpha_list.reverse()
+        result_list = []
+        for i in range(len(S)):
+            if i in special_list.keys():
+                result_list.append(special_list[i])
+            else:
+                result_list.append(alpha_list[-1])
+                alpha_list.pop()
+        return ''.join(result_list)
+
+    """有序数组中出现次数超过25%的元素"""
+
+    def findSpecialInteger(self, arr) -> int:
+        l = len(arr) // 4
+        s = set(arr)
+        for i in s:
+            if arr.count(i) > l:
+                return i
+
+    """二进制求和"""
+
+    def addBinary(self, a: str, b: str) -> str:
+        print(int(a, 2), int(b, 2), int(a, 2)+int(b, 2))
+        return str(bin(int(a, 2) + int(b, 2))).replace("0b", "")
+
+    """移动零"""
+
+    def moveZeroes(self, nums) -> None:
+        """
+        Do not return anything, modify nums in-place instead.
+        """
+        for i in range(1, len(nums)):
+            if nums[i] == 0:
+                nums[i], nums[i+1] = nums[i+1], nums[i]
+
+
 
 class Codec:
     """
@@ -1388,4 +1511,4 @@ if __name__ == '__main__':
     # s2.next = ListNode(6)
     # s2.next.next = ListNode(4)
     # print(s.addTwoNumbers(s1, s2))
-    print(s.matrixReshape([[1,2], [3,4]], 2, 4))
+    print(s.addBinary("1010", "1011"))
