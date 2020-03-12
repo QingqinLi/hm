@@ -2,12 +2,13 @@ import os
 from functools import reduce
 # 递归 主要用来遍历树形结构
 
-filePath = "/Users/qing.li/PycharmProjects/hm"
+filePath = "D:\\moji\\index_v2"
 
 
 # 递归文件树
 def read(filePath, n):
     files = os.listdir(filePath)
+    print("files", files)
     for l_file in files:
         # print(os.path.join(filePath + l_file))
         file_name = os.path.join(filePath, l_file)
@@ -17,7 +18,7 @@ def read(filePath, n):
         else:
             print("\t" * n, l_file)
 
-
+# n用来控制缩进， 代表层级关系
 # read(filePath, 0)
 
 

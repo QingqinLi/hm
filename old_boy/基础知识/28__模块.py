@@ -176,9 +176,9 @@ import time
 # print(time.strftime("%c"))
 
 # 时间 对象结构的
-# time_obj = time.localtime()
-# print(time_obj.tm_year)
-# print(time.localtime(1500000000))
+time_obj = time.localtime()
+print(time_obj.tm_year)
+print(time.localtime(1500000000))
 
 # time_obj = time.localtime(2500000000)
 # print(time.strftime("%Y-%m-%d %H:%M:%S", time_obj))
@@ -189,11 +189,12 @@ import time
 
 # 计算本月一号的时间戳
 # 结构化时间
-# struct_time = time.localtime()
-# struct_time = time.strptime("%s-%s-1" % (struct_time.tm_year, struct_time.tm_mon), "%Y-%m-%d")
-# timestamp = time.mktime(struct_time)
-# print(timestamp)
-# print(time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(timestamp)))
+print("*"*10)
+struct_time = time.localtime()
+struct_time = time.strptime("%s-%s-1" % (struct_time.tm_year, struct_time.tm_mon), "%Y-%m-%d")
+timestamp = time.mktime(struct_time)
+print(timestamp)
+print(time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(timestamp)))
 #
 # # 格式化时间
 # ret = time.strftime("%Y-%m-01")
@@ -332,16 +333,16 @@ s = 'alex1321'
 # print(md51.hexdigest())
 
 # 大文件的一致性校验
-# md5_obj = hashlib.md5()
-# with open('29_正则表达式.py', 'rb') as f:
-#     while True:
-#         c = f.read(10240)
-#         if len(c) > 0:
-#             md5_obj.update(c)
-#         else:
-#             break
-#
-#         print(md5_obj.hexdigest())
+md5_obj = hashlib.md5()
+with open('29_正则表达式.py', 'rb') as f:
+    while True:
+        c = f.read(10240)
+        if len(c) > 0:
+            md5_obj.update(c)
+        else:
+            break
+
+    print(md5_obj.hexdigest())
 #
 # md51 = hashlib.md5()
 # with open('29_正则表达式.py', 'rb') as f:

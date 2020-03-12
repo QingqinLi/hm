@@ -102,15 +102,15 @@ re模块：
 import re
 # ret = re.findall('\d+', '19277vvgvuhuhu344h')
 # print(ret)
-
-ret2 = re.search('\d+', '*7@hbnnjj2233kkk333')
-print(ret2)  # 匹配到会输出一个对象，否则输出None
-if ret2:
-    print(ret2.group())  # 返回的对象通过group来获取匹配的第一个结果
+#
+# ret2 = re.search('\d+', '*7@hbnnjj2233kkk333')
+# print(ret2)  # 匹配到会输出一个对象，否则输出None
+# if ret2:
+#     print(ret2.group())  # 返回的对象通过group来获取匹配的第一个结果
 
 # match 从头开始匹配
 # ret4 = re.match('\d+', '123hhh345')
-# print(ret4)
+# print(type(ret4), ret4.group())
 # ret5 = re.match('\d+', 'ff55666')
 # print(ret5)
 
@@ -119,8 +119,8 @@ if ret2:
 # sub(要替换的目标字符，要替换成的字符串，字符串, [n--替换几个]）
 # ret = re.sub('\d+', "H", 'replace789bbbbb')
 # print(ret)
-ret2 = re.sub('\d', "H", "replae789jjjj", 1)
-print(ret2)
+# ret2 = re.sub('\d', "H", "replae789jjjj", 1)
+# print(ret2)
 #
 # # subn 返回的是一个元祖，一个替换之后的字符串，一个替换了几次的整数
 # ret3 = re.subn('\d', "H", "replace334ddd44ddd")
@@ -141,7 +141,7 @@ print(ret2)
 
 # ret = re.compile('-0\.\d+|-[1-9]\d+(\.\d+)?')
 # res = ret.search('alex83egon-20taibai-40')
-# print(res.group())
+# print(res, res.group())
 
 # finditer 节省空间效率 同生成器原理
 # ret = re.finditer("\d+", "sjkhkdy982ufejwsh02yu93jfpwcmc")
@@ -155,36 +155,37 @@ print(ret2)
 # print(c1)
 
 # ret = re.split("\d+", 'alex83egon20taibai40')
-# # print(ret)
+# print(ret)
 # ret1 = re.split("(\d+)", 'alex83egon20taibai40')
 # print(ret1)
-
-ret = re.search('\d+(.\d+)(.\d+)(.\d+)?', '1.2.3.4-2*(60+(-40.35/5)-(-4*3))')
-print(ret.group(), ret.group(1), ret.group(2), ret.group(3))
+#
+# ret = re.search('\d+(.\d+)(.\d+)(.\d+)?', '1.2.3.4-2*(60+(-40.35/5)-(-4*3))')
+# print(ret.group(), ret.group(1), ret.group(2), ret.group(3))
 
 # 分组练习
 # ret = re.findall(r"\d+(?:\.\d+)|(\d+)", "1-2*(60+(-40.35/5)-(-4*3))")
 # print(ret)
-
-# ret = re.findall('>(\w)<', r'<a>wahaha<\a>')
+#
+# ret = re.findall('>(\w*)<', r'<a>wahaha<\a>')
 # print(ret)
-
+#
 # ret = re.search(r'<(\w+)>(\w+)</(\w+)>', r'<a>wahaha</b>')
-# # print(ret.group(), ret.group(1), ret.group(2), ret.group(3))
+# print(ret.group(), ret.group(1), ret.group(2), ret.group(3))
 
 # 分组命名
 # ret = re.search('<(?P<name>\w+)>\w+<(?P=name)>', r'<a>hello<a>')
 # print(ret.group('name'))
 # ret = re.search("<(?P<name>\w+)>\w+</(?P=name)>","<h1>hello</h1>")
 # print(ret.group('name'))  #结果 ：h1
-# # print(ret.group())
+# print(ret.group())
 
-# ret = re.search(r"<(\w+)>\w+</\1>", "<h1>hello</h1>")
+# ret = re.search(r"<(\w+)>\w+</.1>", "<h1>hello</h1>")
+# print(ret)
 # print(ret.group(1))
 # print(ret.group())  #结果 ：<h1>hello</h1>
 
 # 分组命名 根据名字取值
-# ret = re.search(r'<(?P<tag>\w+)>(?P<c>\w+)</(\w+)>', r'<a>wahaha</b>')
-# print(ret.group())
-# print(ret.group('tag'))
-# print(ret.group('c'))
+ret = re.search(r'<(?P<tag>\w+)>(?P<c>\w+)</(\w+)>', r'<a>wahaha</b>')
+print(ret.group())
+print(ret.group('tag'))
+print(ret.group('c'))

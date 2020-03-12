@@ -21,16 +21,17 @@ json 模块
 """
 import json
 
-# dic = {'aaa': 'bbb',
-# #        1: 'ddd',
-# #        }
+# dic = {"aaa": "bbb",
+#        1: "ddd",
+#        }
 # dic = {'aaa': 'bbb',
 #        'bbb': (1, 3),
 #        }
 # str_dic = json.dumps(dic)
 # print(dic)
 # print(type(str_dic), str_dic)
-# print(type(json.loads(str_dic)), json.loads(str_dic))
+# print(type(json.loads(str_dic)), str_dic, json.loads(str_dic))
+# print("end")
 #
 # with open('json_dump', 'w') as f:
 #     json.dump(dic, f)
@@ -51,7 +52,7 @@ import json
 #        'ccc': 'ddd',
 #        }
 # lst = [1, 3, 5, '45', 'ss']
-#
+# #
 # with open('json_dump_mix', 'w') as f:
 #     # json.dump(dic, f)
 #     # json.dump(lst, f)
@@ -60,6 +61,7 @@ import json
 #     f.write(str_dic + "\n")
 #     f.write(str_lst + "\n")
 #
+# #
 # with open('json_dump_mix') as f:
 #     # print(json.load(f))
 #     for line in f:
@@ -106,7 +108,7 @@ import pickle
 # ret = pickle.dumps(alex)
 # print(ret)
 # print(pickle.loads(ret).name)
-
+#
 # with open('pickle_demo', 'wb') as f:
 #     pickle.dump(alex, f)
 # with open('pickle_demo', 'rb') as f:
