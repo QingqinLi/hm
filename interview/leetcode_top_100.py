@@ -1597,7 +1597,29 @@ class Solution:
             result.extend(new_need)
         return result
 
-    """"""
+    """字符串压缩"""
+
+    def compressString(self, S: str) -> str:
+        t = []
+        for i in S:
+            if t and not i == t[-1][0]:
+                t.append([i, 1])
+            elif t:
+                t[-1][1] += 1
+            else:
+                t = [[i, 1]]
+        result = []
+        for i in t:
+            i[1] = str(i[1])
+            result.append(''.join(i))
+        print(result)
+        print(t)
+        r = ''.join(result)
+        if len(r) >= len(S):
+            return S
+        else:
+            return r
+
 
 
 class Codec:
@@ -1627,4 +1649,4 @@ if __name__ == '__main__':
     # s2.next = ListNode(6)
     # s2.next.next = ListNode(4)
     # print(s.addTwoNumbers(s1, s2))
-    print(s.decompressRLElist([1, 2, 3, 4]))
+    print(s.compressString("aabcccccaaa"))
