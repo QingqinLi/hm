@@ -34,12 +34,13 @@ import os
 
 def func(i):
     time.sleep(1)
+    print(i)
     print("this is son, the pid is %s his parents's pip is %s" % (os.getpid(), os.getppid()))
 
 
 if __name__ == '__main__':
     for i in range(3):
-        p = Process(target=func, args=(1,))
+        p = Process(target=func, args=(i,))
         p.start()
         p.join()
     print('this is father process the pid is %s and his father is %s' % (os.getpid(), os.getppid()))

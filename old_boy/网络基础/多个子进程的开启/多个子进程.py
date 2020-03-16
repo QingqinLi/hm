@@ -15,4 +15,4 @@ if __name__ == '__main__':
         p.start()
         l.append(p)
     [p.join() for p in l]
-    print(random.choice(addr))
+    print("hellp")

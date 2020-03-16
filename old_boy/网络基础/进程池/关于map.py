@@ -1,8 +1,10 @@
 from multiprocessing import Pool
 import os
+import time
 
 
 def func(num):
+    time.sleep(1)
     num += 1
     print(num)
     return num
@@ -14,4 +16,4 @@ if __name__ == '__main__':
     res = p.map(func, [i for i in range(20)])
     p.close()
     p.join()
-    print(type(res))
+    print(res, type(res))

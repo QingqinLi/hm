@@ -13,7 +13,10 @@ def func(i, num):
 
 if __name__ == '__main__':
     n = 9999
+    l = []
     for i in range(4):
         p = Process(target=func, args=(i, n))  # 通过传值的方式，其实是拷贝了一份， 修改的不是原来的那个变量
         p.start()
+        l.append(p)
+    [p.join() for p in l]
     print("result n", n)
