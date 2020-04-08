@@ -81,7 +81,7 @@ body中的常用标签：
                 form标签必须把获取用户输入的标签包起来
                 form标签必须有action属性，method属性（默认是get）
                 form标签必须有一个submit提交数据
-                form标签中的获取用户输入的标签必须有name属性（否则收不到数据）
+                form标签中的获取用户输入的标签必须有name属性（否则后台接收不到数据）
 
         input标签
             text, password, email, date, checkbox, radio

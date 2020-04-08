@@ -198,7 +198,8 @@ def sort(data):
     return merge(a, b)
 
 """
-https://blog.51cto.com/me2xp/1973414
+https://blog.51cto.com/me2xp/1973414、
+一般升序用大顶堆， 降序用小顶堆
 堆排序， 堆排序对简单选择排序进行了改进， 堆是一个完全二叉树
 大顶堆：每个非叶子节点都要大于或者等于其左右孩子节点的值称为大顶堆
 小顶堆：每个非叶子节点都要小于或者等于其左右孩子节点的值称为小顶堆
@@ -217,7 +218,76 @@ https://blog.51cto.com/me2xp/1973414
 """
 
 
+def heapify(arr, n, i):
+    largest = i
+    # print(i, arr[i])
+    l = 2 * i + 1  # left = 2*i + 1
+    r = 2 * i + 2  # right = 2*i + 2
+
+    if l < n and arr[i] < arr[l]:
+        largest = l
+
+    if r < n and arr[largest] < arr[r]:
+        largest = r
+
+    if largest != i:
+        arr[i], arr[largest] = arr[largest], arr[i]  # 交换
+
+        heapify(arr, n, largest)
+
+
+def heapSort(arr):
+    n = len(arr)
+
+    # Build a maxheap.
+    for i in range(n, -1, -1):
+        print("i", i)
+        # print(i, arr,arr[i])
+        heapify(arr, n, i)
+
+        # 一个个交换元素
+    for i in range(n - 1, 0, -1):
+        arr[i], arr[0] = arr[0], arr[i]  # 交换
+        heapify(arr, i, 0)
+
+
+class Solution:
+    def max_heapify(self, heap, root, heap_len):
+        p = root
+        while p * 2 + 1 < heap_len:
+            l, r = p * 2 + 1, p * 2 + 2
+            if heap_len <= r or heap[r] < heap[l]:
+                nex = l
+            else:
+                nex = r
+            if heap[p] < heap[nex]:
+                heap[p], heap[nex] = heap[nex], heap[p]
+                p = nex
+            else:
+                break
+
+    def build_heap(self, heap):
+        for i in range(len(heap) - 1, -1, -1):
+            self.max_heapify(heap, i, len(heap))
+
+    def heap_sort(self, nums):
+        self.build_heap(nums)
+        for i in range(len(nums) - 1, -1, -1):
+            nums[i], nums[0] = nums[0], nums[i]
+            self.max_heapify(nums, 0, i)
+
+    def sortArray(self, nums):
+        self.heap_sort(nums)
+        return nums
+
+
+
 if __name__ == '__main__':
-    print(sort([2, 5, 6, 1, 8, 0, 4, 6, 8, 7, 9, -1]))
+    arr = [12, 11, 13, 5, 6, 7]
+    heapSort(arr)
+    n = len(arr)
+    print("排序后")
+    for i in range(n):
+        print("%d" % arr[i])
 
 

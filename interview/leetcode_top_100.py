@@ -1620,6 +1620,288 @@ class Solution:
         else:
             return r
 
+    def countPrimeSetBits(self, L: int, R: int) -> int:
+        count = 0
+        for num in range(L, R + 1):
+            num_bin = str(bin(num)).count("1")
+            if num_bin > 1:
+                for i in range(2, num_bin):
+                    if num_bin % i == 0:
+                        break
+                else:
+                    count += 1
+        return count
+    """水壶问题"""
+
+    def canMeasureWater(self, x: int, y: int, z: int) -> bool:
+        """广度优先搜索BFS"""
+        stack = [(0, 0)]
+        seened = set()
+        while stack:
+            remainedx, remainedy = stack.pop()
+            if (remainedx, remainedy) in seened:
+                continue
+            seened.add((remainedx, remainedy))
+            if remainedx + remainedy == z or remainedx == z or remainedy == z:
+                return True
+            stack.append((x, remainedy))
+            stack.append((remainedx, y))
+            stack.append((0, remainedy))
+            stack.append((remainedx, 0))
+            # 把x的水到进y，知道水倒完或者y满了
+            stack.append(((remainedx - (y-remainedy)) if remainedx > y-remainedy else 0, y if remainedx > y-remainedy else remainedy+remainedx))
+            # 把y的水倒进x， 直到水倒完了或者x满了
+            stack.append((x if x-remainedx < remainedy else remainedx+remainedy, 0 if remainedx + remainedy < x else remainedy - (x-remainedx)))
+        return False
+
+    def getKth(self, lo: int, hi: int, k: int) -> int:
+        result = {}
+        for num in range(lo, hi + 1):
+            n = num
+            step = 0
+            while not n == 1:
+                if n % 2 == 0:
+                    n = n // 2
+                else:
+                    n = 3 * n + 1
+                step += 1
+            result[num] = step
+        l = sorted(result.items(), key=lambda x: x[1])
+        print(l)
+
+    def sumFourDivisors(self, nums) -> int:
+        result = 0
+        for num in nums:
+            if num == 0 or num == 1:
+                continue
+            count = 0
+            r = set()
+            for i in range(2, num // 2 + 1):
+                if i in r:
+                    continue
+                if count > 2:
+                    break
+                if num % i == 0:
+                    print(i, num)
+                    if i == int(num // i):
+                        count += 1
+                    else:
+                        count += 2
+                    r.add(i)
+                    r.add(int(num // i))
+            print(num, count)
+            if count == 2:
+                result += sum(r)
+                result += num + 1
+        return result
+
+    def hasValidPath(self, grid) -> bool:
+        d = {
+            1: [[], [], [1, 4, 6], [1, 3, 5]],
+            2: [[2, 3, 4, 5, 6], [2, 3, 4, 5, 6], [], []],
+            3: [[], [2, 5, 6], [1, 4, 6], []],
+            4: [[], [2, 5, 6], [], [1, 3, 5]],
+            5: [[2, 3, 4], [], [1, 4, 6], []],
+            6: [[2, 3, 4], [], [], [1, 3, 5]],
+        }
+        start = [[0, 0]]
+        moved = set()
+        while start:
+            step = start.pop()
+            if tuple(step) in moved:
+                continue
+            moved.add(tuple(step))
+            s = grid[step[0]][step[1]]
+            if step[0] - 1 >= 0 and grid[step[0] - 1][step[1]] in d[s][0]:
+                start.append([step[0] - 1, step[1]])
+            if step[0] + 1 < len(grid) and grid[step[0] + 1][step[1]] in d[s][1]:
+                start.append([step[0] + 1, step[1]])
+            if step[1] - 1 >= 0 and grid[step[0]][step[1] - 1] in d[s][2]:
+                start.append([step[0], step[1] - 1])
+            if step[1] + 1 < len(grid[0]) and grid[step[0]][step[1] + 1] in d[s][3]:
+                start.append([step[0], step[1] + 1])
+        print(moved)
+
+        end_x = len(grid) - 1
+        end_y = len(grid[0]) - 1
+        if tuple([end_x, end_y]) in moved:
+            return True
+        else:
+            return False
+
+    def minIncrementForUnique(self, A) -> int:
+        count = 0
+        A.sort()
+        searched = set()
+        for i in range(len(A)):
+            while A[i] in searched:
+                A[i] += 1
+                count += 1
+            searched.add(A[i])
+
+        return count
+
+    def strToInt(self, str: str) -> int:
+        s = str.strip()
+        print(s)
+
+    def climbStairs(self, n: int) -> int:
+        # 递归方法：超时
+        # def step(left):
+        #     if left == 0:
+        #         return 1
+        #     elif left < 0:
+        #         return 0
+        #     else:
+        #         return step(left - 1) + step(left - 2)
+        #
+        # return step(n)
+
+        # 动态规划
+        # 每一个台阶是通过前n-1/n-2 个台阶过来的， 所以走到n阶的方法一共有到i-1, i-2的方法和
+        s0, s1 = 1, 2
+        for i in range(2, n):
+            t = s0+s1
+            s0, s1 = s1, t
+        return s1
+
+    def waysToStep(self, n: int) -> int:
+        # 到达i台阶的方法等于到达i-1的方法+到达i-2+到达n-3的方法和
+        if n == 1:
+            return 1
+        elif n == 2:
+            return 2
+        elif n == 3:
+            return 4
+        s0, s1, s2 = 1, 2, 4
+        for i in range(3, n):
+            s0, s1, s2 = s1, s2, (s0 + s1 + s2)%1000000007
+        return s2 % 1000000007
+
+    def longestPalindrome(self, s: str) -> str:
+        # 暴力解法
+        def is_circle(s):
+            print(s, ''.join(reversed(s)))
+            if s == ''.join(reversed(s)):
+                return True
+            else:
+                return False
+        c = ''
+        for i in range(len(s)):
+            for j in range(i, len(s)+1):
+                print("j", j)
+                print(s[i:j])
+                if is_circle(s[i:j]) and len(s[i:j]) > len(c):
+                    c = s[i:j]
+        return c
+
+    def lengthOfLongestSubstring(self, s: str) -> int:
+        length = 0
+        c = ''
+        for i in range(len(s)):
+            print("start", i, s[i], c)
+            if s[i] in c:
+                if len(c) > length:
+                    length = len(c)
+                target = c.index(s[i])
+                print("target", c, target, s[i])
+                if target == len(c) - 1:
+                    c = s[i]
+                else:
+                    c = c[target + 1:] + s[i]
+            else:
+                c += s[i]
+            print(c, length)
+        if len(c) > length:
+            length = len(c)
+        return length
+
+    def hasGroupsSizeX(self, deck) -> bool:
+        if len(deck) < 2:
+            return False
+        d = {}
+        for i in deck:
+            if i in d:
+                d[i] += 1
+            else:
+                d[i] = 1
+        l = list(set(list(d.values())))
+        l.sort()
+        print("l", l)
+        if len(l) == 1:
+            return True
+        else:
+            for i in range(2, l[0]+1):
+                print(i)
+                for j in range(len(l)):
+                    if not l[j] % i == 0:
+                        break
+                else:
+                    return True
+            else:
+                return False
+
+    def search(self, nums, target: int) -> int:
+        # if target in nums:
+        #     return nums.count(target)
+        # else:
+        #     return 0
+        # 二分查找
+        def search(left, right):
+            print(left, right)
+            if left >= right:
+                return
+            mid = (left + right) // 2
+            print(mid)
+            if nums[mid] == target:
+                print("mid", mid)
+                return mid
+            else:
+                if nums[mid] > target:
+                    return search(left, mid)
+                else:
+                    return search(mid + 1, right)
+
+        mid = search(0, len(nums) - 1)
+        print("mid", mid)
+        count = 1
+        left = mid - 1
+        right = mid + 1
+        while left and right:
+            while left >= 0:
+                if nums[left] == target:
+                    count += 1
+                    left -= 1
+                else:
+                    left = -1
+            while right < len(nums):
+                if nums[right] == target:
+                    count += 1
+                    right += 1
+                else:
+                    right = -1
+        return count
+
+    def converse(self, int_num, jinzhi):
+        # 循环取余数, 直到商为0
+        yushu_list = []
+
+        while int_num:
+            yushu = int_num % jinzhi
+            yushu_list.append(yushu)
+            int_num = int_num // jinzhi
+        yushu_list.reverse()
+        result = ''
+        duiying = {
+            10:'A',
+        }
+        for i in yushu_list:
+            if i < 10:
+                result += str(i)
+            else:
+                result += duiying[i]
+
+        print(result)
 
 
 class Codec:
@@ -1649,4 +1931,4 @@ if __name__ == '__main__':
     # s2.next = ListNode(6)
     # s2.next.next = ListNode(4)
     # print(s.addTwoNumbers(s1, s2))
-    print(s.compressString("aabcccccaaa"))
+    print(s.converse(235, 15))

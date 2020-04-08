@@ -21,7 +21,7 @@
     });
     $("#s1").click(function (e) {
         alert("span");
-        // 防止事件向上传递的方法；
+        // 防止事件向上传递的方法；stopPropagation(),不然会执行完本元素的操作之后，继续执行上级元素添加的行为
         e.stopPropagation();
     })
 </script>

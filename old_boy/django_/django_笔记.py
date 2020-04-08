@@ -33,7 +33,7 @@ https://www.cnblogs.com/maple-shaw/articles/9537320.html
         4. IO多路复用
     4. 网络编程  ***
         1. socket/socketserver
-        2. 粘包
+        2. 粘包(只有tcp有)
     5. 面向对象  *****
         1. 封装、继承、多态
     6. 常用模块  *****
@@ -565,7 +565,7 @@ ORM:（对象和关系型数据库的映射，将程序中的对象自动持久�
     常用字段(记住常用的自定义类型）
         autoField 一个model不能有两个autoField
             不指定主键的话，系统会自动添加一个主键字段到model
-        DateTimeFiled9(auto_now_add--添加的时候把当前时间数据填进去，auto_now, 修改的时候也会更新时间数据) auto_now/auto_now_add/default是互斥的，不能同时设置
+        DateTimeFiled(auto_now_add--添加的时候把当前时间数据填进去，auto_now, 修改的时候也会更新时间数据) auto_now/auto_now_add/default是互斥的，不能同时设置
         charField
         IntegerField
         BooleanField
@@ -592,7 +592,7 @@ ORM:（对象和关系型数据库的映射，将程序中的对象自动持久�
      
     必知必会13条       
         get 查询不到或者查询到多个就报错
-        filter 查询所有满足条件的对象 -- 对象列表
+        filter 查询所有满足条件的对象 -- 对象列表[0]
         exclude 排除 查询出所有不满足条件的对象 -- 对象列表
         values 取具体的数据，对象列表，里面的元素是字段，字段：值 没有指定参数，获取全部字段，指定字段，则获取指定的字段数据  ，返回字典序列     
         values_list 获取具体的数据，对象列表 元素 值， 返回元组序列
@@ -629,7 +629,7 @@ ORM:（对象和关系型数据库的映射，将程序中的对象自动持久�
     外键的查询：
         book_obj.publisher 查询外键的出版社对象
         obj = models.Book.objects.filter(publisher__name = 'xxx') 内联查询方式, 两张表的时候__表示跨表查询
-        obj = models.Book.objects.all().vaues("title', 'publisher__name') 查询字段。
+        obj = models.Book.objects.all().values("title', 'publisher__name') 查询字段。
         从book 到 publisher为正向查询
         
         从publisher 到 book是反向查询

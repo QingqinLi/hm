@@ -164,7 +164,7 @@ object - 如果变量是一种引用类型或 Null 类型的
         };
     Date对象：
         var d = new Date().format()
-        d.toLocaleString() 转换成当地的时间
+        d.toLocalString() 转换成当地的时间
         getDate()/getDay() 获取星期/getFullYear() 获取完整年分／getMonth()0-11/getYear()/getHours()/getMinutes()
         /getSeconds()/getTime()时间戳
     JSON对象：
@@ -191,7 +191,7 @@ object - 如果变量是一种引用类型或 Null 类型的
             round(2.675, 2) 两个版本的结果都应该是2.68 结果却是2.67---浮点数的精度----round（） 函数精确度不高
                 math.celling()天花板除法
                 正处 2.7/ 3.5// div除法
-                %.2f 保留两位消暑
+                %.2f 保留两位小数
                 对浮点数要求高用 decimal模块
 
 
@@ -228,7 +228,7 @@ BOM(Browser Object Model):
 
 DOM Document Object Model 对文档的内容进行抽象和概念化的方法
     网页被加载时候，会创建页面的文档对象模型（被构造为对象的树）
-    javascript可以通过DOM创建动态的hrml，可以改变html元素,html属性,css样式,对页面中所有时间作出反应
+    javascript可以通过DOM创建动态的html，可以改变html元素,html属性,css样式,对页面中所有时间作出反应
     直接找元素：
         document.getElementById()
         document.getElementsByCLassName()
@@ -322,7 +322,7 @@ DOM Document Object Model 对文档的内容进行抽象和概念化的方法
 
                 this是实参，表示触发事件的当前元素。
 
-                函数定义过程中的ths为形参。
+                函数定义过程中的this为形参。
 
                 方式二：
 
@@ -392,7 +392,7 @@ jquery
                 $("div:eq(index)")/$("div:gt(3)")/$("div:lt(3)")
                 eq是找索引等于index的那个元素 gt找大于给定索引值的元素，lt找小于给定索引值的元素
                 $(div:even")/$("div:odd")
-                $("div:not(.c1)")  找到没有c1样式累的div标签
+                $("div:not(.c1)")  找到没有c1样式类的div标签
                 $("div:has(.c1)")  找到内部有c1样式类的div标签（是在后代标签中查找）
             表单筛选器：
                 $(":text")/$(":password")
@@ -522,7 +522,7 @@ jquery
         // 自定义（了解即可）
         animate(p,[s],[e],[fn])
     each
-        1、$.each(要遍历的对象，fnnction(){})
+        1、$.each(要遍历的对象，function(){})
         2、$("").each(function(){
         //this 是进入循环体的标签
         console.log(this)

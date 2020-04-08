@@ -8,6 +8,7 @@ class ListNode:
         self.val = x
         self.next = None
 
+
 """移除重复节点"""
 def removeDuplicateNodes(self, head):
     result = []

@@ -6,39 +6,39 @@
     <title>Title</title>
     <style>
         /*<!--后代选择器-->*/
-        /*div span {*/
-            /*color: red;*/
-        /*}*/
-        /*p span {*/
-            /*color: aqua;*/
-        /*}*/
+        div span {
+            color: red;
+        }
+        p span {
+            color: aqua;
+        }
         /*!*儿子选择器*!*/
-        /*#d1>div {*/
-            /*color:sandybrown;*/
-        /*}*/
+        #d1>div {
+            color:sandybrown;
+        }
         /*!*毗邻选择器 往下找 只找一个*!*/
-        /*!*p+span {*!*/
-            /*!*color:crimson;*!*/
-        /*!*}*!*/
+        p+span {
+            color:crimson;
+        }
         /*!*弟弟选择器 后面所有*!*/
-        /*p~span {*/
-            /*color: #778;*/
-        /*}*/
+        p~span {
+            color: #778;
+        }
         /*属性选择器 找到有s14属性的标签*/
-        /*div[s14],input[type='text'] {*/
-            /*color: darkblue;*/
-            /*background-color: sandybrown;*/
-        /*}*/
+        div[s14],input[type='text'] {
+            color: darkblue;
+            background-color: sandybrown;
+        }
         div[ss] {color: red}
         /*!组合选择器*/
-        /*#d1,*/
-        /*p+span {*/
-            /*color: red;*/
-        /*}*/
+        #d1,
+        p+span {
+            color: pink;
+        }
         /*找d1的后代中有c1样式的span标签*/
-        /*#d1 span.c1 {*/
-            /*color: red;*/
-        /*}*/
+        #d1 span.c1 {
+            color: darkseagreen;
+        }
 
     </style>
 </head>
@@ -63,8 +63,8 @@
 <hr>
 <span>p标签下面的下面的span标签</span>
 <hr>
-<div ss="feichanghao">div</div>
-<div s14="youxiu">div</div>
+<div ss="feichanghao">div ss</div>
+<div s14="youxiu">div s14</div>
 
 
 <input type="text">

@@ -14,7 +14,7 @@
     var inEle = document.getElementById("i1");
     var b1Ele = document.getElementById("d1");
     var b2Ele = document.getElementById("d2");
-    var t
+    var t;
 
     function f() {
         var now = new Date();
@@ -23,6 +23,7 @@
     f();
     b1Ele.onclick=function () {
         if(!t) {
+            # 每1000ms执行一下f函数
             t = setInterval(f, 1000);
         }
     };
