@@ -22,6 +22,12 @@ __author__ = 'qing.li'
     稳定性：冒泡排序就是把小的元素往前调或者把大的元素往后调，比较的是相邻两个元素，交换也是发生在这两个元素之间，所以，如果两个元素相等，就不会
         再交换，如果两个相等的元素没有相邻，那么即使通过前面的两两交换把两个相邻起来，这时候也不会交换，所以相同元素的前后顺序并没有改变，所以冒泡排序
         是一种稳定排序算法
+        
+        for i in range(len(nums)-1):
+            for j in range(len(nums)-i-1):
+                if nums[j] > nums[j+1]:
+                    nums[j], nums[j+1] = nums[j+1], nums[j]
+        
 """
 
 
@@ -99,7 +105,35 @@ def quickSort(nums):
     return quickSort(left) + [mid] + quickSort(right)
 
 
-# 原地排序方法(C风格）
+# def quick_sort(num1, num2):
+#     list1 = num1.extend(num2)
+#
+#     def quick(l, left, right):
+#         if left >= right:
+#             return
+#         start = left
+#         end = right
+#         ref = l[start]
+#         while left < right:
+#             while left < right and l[right] >= ref:
+#                 right -= 1
+#             l[right], l[left] = l[left], l[right]
+#             while left < right and l[left] < ref:
+#                 left += 1
+#             l[right], l[left] = l[left], l[right]
+#         quick(l, start, left-1)
+#         quick(l, left+1, end)
+#     quick(list1, 0, len(list1)-1)
+#     return l
+#
+#
+# if __name__ == '__main__':
+#     l1 = [1, 3, 10, 4, 1]
+#     l2 = [3, 7, 19, 10]
+#     print(quick_sort(l1, l2))
+
+
+# 原地排序方法(C风格）o(nlgn)
 def quickSort2(nums, left, right):
     if left >= right:
         return
@@ -280,14 +314,23 @@ class Solution:
         self.heap_sort(nums)
         return nums
 
+    def link_node(self, headA, headB):
+        ha = headA
+        hb = headB
+        while not ha == hb:
+            ha = ha.next if ha else headB
+
+            hb = hb.next if hb else headA
+        return ha
 
 
-if __name__ == '__main__':
-    arr = [12, 11, 13, 5, 6, 7]
-    heapSort(arr)
-    n = len(arr)
-    print("排序后")
-    for i in range(n):
-        print("%d" % arr[i])
+
+# if __name__ == '__main__':
+#     arr = [12, 11, 13, 5, 6, 7]
+#     heapSort(arr)
+#     n = len(arr)
+#     print("排序后")
+#     for i in range(n):
+#         print("%d" % arr[i])
 
 

@@ -773,7 +773,7 @@ session：
         
 中间件：
     可以实现给多有请求加上相同的操作
-    是一个中间类，用来在全局范围内处理和响应的一个钩子，使用不当，会影响性能
+    是一个中间类，用来在全局范围内处理请求和响应的一个钩子，使用不当，会影响性能
     五个方法：
         process_request(self, request)
         process_view(self, request, view_func, view_args, view_kwargs)
@@ -1339,7 +1339,7 @@ formset_factory
     尽量避免拿all（）
     
 验证码：
-    from PIL import Image, IageDraw, ImageFOnt
+    from PIL import Image, IageDraw, ImageFont
     import random
     
     def random_color():

@@ -1903,6 +1903,59 @@ class Solution:
 
         print(result)
 
+    def common_str(self, str1, str2):
+        result = ''
+        for i in range(1, len(str1)):
+            for j in range(i, len(str1) - 1):
+                if str1[i:j + 1] not in str2:
+                    if len(str1[i:j]) > len(result):
+                        result = str1[i:j]
+                    break
+        return result
+
+    # 判断是否为子串
+    def is_sub(self, str1, str2):
+        if len(str1) < len(str2):
+            return -1
+        flag = 0
+        s1, s2 = 0, 0
+        while s1 < len(str1) and s2 < len(str2):
+            if str1[s1] == str2[s2]:
+                # print(str1[s1], str2[s2], s2)
+                s1 += 1
+                s2 += 1
+                flag = s1
+            else:
+                flag = 0
+                s2 = 0
+                s1 += 1
+        # print(s1, s2, flag)
+        if s2 == len(str2):
+            return flag - len(str2)
+        else:
+            return -1
+
+    """最长不重复子串"""
+
+    def lengthOfLongestSubstring(self, s: str) -> int:
+        # 滑动窗口，使用hash表来记录每个元素最新的位置
+        dic = {}
+        left = 0
+        max_length = 0
+        if s == '':
+            return 0
+        for right in range(len(s)):
+            c = s[right]
+            if c in s[left:right]:
+                ind = dic.get(c, -1)
+                left = ind + 1
+            dic[c] = right
+            right += 1
+            if right - left > max_length:
+                max_length = right - left
+
+        return max_length
+
 
 class Codec:
     """
@@ -1931,4 +1984,4 @@ if __name__ == '__main__':
     # s2.next = ListNode(6)
     # s2.next.next = ListNode(4)
     # print(s.addTwoNumbers(s1, s2))
-    print(s.converse(235, 15))
+    print(s.is_sub("1AB2345CD", "2345"))
